@@ -27,6 +27,9 @@ public class Question extends PanacheEntityBase {
     @JoinColumn(name="studyProgramId")
     public StudyProgram studyProgram;
 
-    @OneToMany(mappedBy="questions",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="question",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Answer> answers = new HashSet<>();
+
+    @OneToMany(mappedBy="question",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<TryAnswers> tryAnswers = new HashSet<>();
 }

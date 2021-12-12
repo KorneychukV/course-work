@@ -50,4 +50,7 @@ public class StudyProgram extends PanacheEntityBase {
 
     @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<Question> questions = new HashSet<>();
+
+    @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<TestTry> testTries = new HashSet<>();
 }

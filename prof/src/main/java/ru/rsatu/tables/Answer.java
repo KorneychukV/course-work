@@ -3,6 +3,8 @@ package ru.rsatu.tables;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity()
 @Table(name = "answer")
@@ -15,12 +17,14 @@ public class Answer extends PanacheEntityBase {
     @Column(name = "answer_text")
     public String answerText;
 
-    @Column(name = "isRight")
-    public String isRight;
+    @Column(name = "is_right")
+    public Boolean isRight;
 
     @ManyToOne
     @JoinColumn(name="questionId")
     public Question question;
 
+    @OneToMany(mappedBy="answer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Set<TryAnswers> tryAnswers = new HashSet<>();
 
 }

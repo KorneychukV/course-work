@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class StudyProgramLiterature extends PanacheEntityBase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "studyProgramLiterature_gen")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "study_program_literature_gen")
     private Long studyProgramLiteratureId;
 
     @Column(name = "title")
@@ -30,6 +30,5 @@ public class StudyProgramLiterature extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name="studyProgramId")
     public StudyProgram studyProgram;
-
 
 }
