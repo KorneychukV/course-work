@@ -1,19 +1,21 @@
-package ru.rsatu.admin.adminPOJO;
+package ru.rsatu.admin.adminPOJO.Course.GetAll;
 
 import ru.rsatu.common.BaseResponse;
+import ru.rsatu.tables.Course;
 import ru.rsatu.tables.StudySection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionResponse extends BaseResponse {
-    private int contentSize;
-    private List<StudySection> list = new ArrayList<>();
+public class CourseResponse extends BaseResponse {
 
-    public SectionResponse() {
+    private int contentSize;
+    private List<Course> list = new ArrayList<>();
+
+    public CourseResponse() {
     }
 
-    public SectionResponse(int contentSize, List<StudySection> list) {
+    public CourseResponse(int contentSize, List<Course> list) {
         this.contentSize = contentSize;
         this.list = list;
     }
@@ -26,11 +28,12 @@ public class SectionResponse extends BaseResponse {
         this.contentSize = contentSize;
     }
 
-    public List<StudySection> getList() {
+    public List<Course> getList() {
         return list;
     }
 
-    public void setList(List<StudySection> list) {
+    public void setList(List<Course> list) {
         this.list = list;
     }
+
 }

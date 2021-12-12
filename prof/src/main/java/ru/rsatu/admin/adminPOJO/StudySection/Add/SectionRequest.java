@@ -1,4 +1,4 @@
-package ru.rsatu.admin.adminPOJO;
+package ru.rsatu.admin.adminPOJO.StudySection.Add;
 
 import javax.validation.constraints.NotBlank;
 

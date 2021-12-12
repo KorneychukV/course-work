@@ -70,4 +70,8 @@ public class Course extends PanacheEntityBase {
     public void setDeprecated(Boolean deprecated) {
         isDeprecated = deprecated;
     }
+
+    public void setStudySection(StudySection studySection){
+        this.studySection = studySection;
+    }
 }
