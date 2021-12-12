@@ -1,5 +1,7 @@
 package ru.rsatu.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity()
@@ -15,14 +17,17 @@ public class TryAnswers {
 
     @ManyToOne
     @JoinColumn(name="testTryId")
+    @JsonIgnore
     public TestTry testTry;
 
     @ManyToOne
     @JoinColumn(name="questionId")
+    @JsonIgnore
     public Question question;
 
     @ManyToOne
     @JoinColumn(name="answerId")
+    @JsonIgnore
     public Answer answer;
 
 }

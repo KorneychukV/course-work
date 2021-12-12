@@ -21,6 +21,7 @@ public class AdminService {
     }
 
     public BaseResponse getSection() {
+//        List<StudySection> allSec = StudySection.listAll();
         List<StudySection> allSec = StudySection.listAll();
 
         return new SectionResponse(allSec.size(), allSec);

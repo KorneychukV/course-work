@@ -1,5 +1,6 @@
 package ru.rsatu.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Question extends PanacheEntityBase {
 
     @ManyToOne
     @JoinColumn(name="studyProgramId")
+    @JsonIgnore
     public StudyProgram studyProgram;
 
     @OneToMany(mappedBy="question",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

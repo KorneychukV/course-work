@@ -49,7 +49,7 @@ public class AdminResource {
     @GET
     @Path("getSection")
     @Produces("application/json")
-    @Transactional
+//    @Transactional
     //todo role
     //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
     public Response getStudy(){

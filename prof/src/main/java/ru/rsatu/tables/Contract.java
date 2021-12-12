@@ -1,5 +1,7 @@
 package ru.rsatu.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +26,7 @@ public class Contract {
 
     @ManyToOne
     @JoinColumn(name="studyGroupsId")
+    @JsonIgnore
     public StudyGroups studyGroups;
 
     @OneToMany(mappedBy="contract",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

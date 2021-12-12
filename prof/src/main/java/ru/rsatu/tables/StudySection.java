@@ -1,5 +1,6 @@
 package ru.rsatu.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
@@ -28,8 +29,42 @@ public class StudySection extends PanacheEntityBase {
     public Boolean isDeprecated;
 
     @OneToMany(mappedBy="studySection",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Set<Course> courses = new HashSet<>();
+    @JsonIgnore
+    public Set<Course> courses;
 
     public StudySection() {
     }
+
+    public Long getStudySectionId() {
+        return studySectionId;
+    }
+
+    public void setStudySectionId(Long studySectionId) {
+        this.studySectionId = studySectionId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getDeprecated() {
+        return isDeprecated;
+    }
+
+    public void setDeprecated(Boolean deprecated) {
+        isDeprecated = deprecated;
+    }
+
 }
