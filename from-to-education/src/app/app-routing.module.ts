@@ -9,11 +9,12 @@ import {ResultComponent} from './pages/result/result.component';
 import {LiteratureComponent} from './pages/literature/literature.component';
 import {RequestComponent} from './common/request/request.component';
 import {PageRequestComponent} from './pages/page-request/page-request.component';
-import {StatisticsComponent} from './pages/statistics/statistics.component';
+import {StatisticsComponent} from './pages/administration/admin-page/statistics/statistics.component';
 import {FinalProgramComponent} from './pages/final-program/final-program.component';
 import {FinalAdminTestComponent} from './pages/final-admin-test/final-admin-test.component';
 import {WebinarComponent} from './pages/webinar/webinar.component';
 import {AuthGuard} from './services/guard/auth.guard';
+import {AdminPageComponent} from './pages/administration/admin-page/admin-page.component';
 
 const routes: Routes = [
   { path: '',
@@ -36,7 +37,13 @@ const routes: Routes = [
   {
     path: 'education',
     component: EducationComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: 'administration',
+    component: AdminPageComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin'] }
   },
   {
     path: 'request',

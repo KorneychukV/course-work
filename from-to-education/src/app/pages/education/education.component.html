@@ -1,4 +1,4 @@
-<div></div>
+
 <mat-tab-group >
   <mat-tab label="Активные программы обучения" *ngIf="stat == 'false'">
     <div class="mt-3"></div>
@@ -50,13 +50,5 @@
       </div>
 
     </mat-accordion>
-  </mat-tab>
-  <mat-tab  label="Статистика" *ngIf="stat == 'true'">
-    <div class="mt-3"></div>
-    <app-statistics></app-statistics>
-  </mat-tab>
-  <mat-tab  label="Тесты" *ngIf="stat == 'true'">
-    <div class="mt-3"></div>
-    <app-admin-test></app-admin-test>
   </mat-tab>
 </mat-tab-group>

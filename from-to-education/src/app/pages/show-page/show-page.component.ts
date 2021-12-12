@@ -41,12 +41,12 @@ export class ShowPageComponent implements OnInit {
     // this.choice = 'route';
     this.currentSec = section.name;
 
-    this.restService.post('get_courses', {
+    this.restService.post('prof/edu/getSection', {
       "section_id": section.id
     }).subscribe(
       result => {
         console.log(result);
-        this.program = result.programs;
+        this.program = result.list;
         this.route = result.programs;
         this.choice = 'route';
       }, err => {
@@ -83,13 +83,10 @@ export class ShowPageComponent implements OnInit {
   }
 
   clickSection(): void {
-    // this.program = this.section;
-    // this.choice = 'section';
-    this.restService.post('get_sections', {
-    }).subscribe(
+    this.restService.get('prof/edu/getSection').subscribe(
       result => {
         console.log(result);
-        this.program = result.programs;
+        this.program = result.list;
         this.choice = 'section';
       }, err => {
       }

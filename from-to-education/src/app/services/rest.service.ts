@@ -13,6 +13,9 @@ export class RestService {
   constructor(private http: HttpClient,
               private papa: Papa) { }
 
+
+  private jsonHeaders = new HttpHeaders({'Content-Type': 'application/json; charset=UTF-8'});
+
   post(method: string, params: any): Observable<any> {
     return this.request('POST', method, params);
   }
@@ -41,19 +44,17 @@ export class RestService {
     if (!method.startsWith('/')) {
       method = '/' + method;
     }
-    //добавить
     const url = environment.restUrl + method;
-    const options: {headers: HttpHeaders, withCredentials: boolean , params: any|undefined, body: any|undefined} = {
-      body: undefined, params: undefined,
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json; charset=UTF-8'
-      }),
-      withCredentials: true
+    if (httpMethod === 'POST') {
+
+    }
+    const options = {
+      body: undefined,
+      headers: this.jsonHeaders
+      // withCredentials: true
     };
-    if (httpMethod === 'GET') {
-      options['params'] = params;
-    } else {
-      options['body'] = params;
+    if (httpMethod === 'POST') {
+      options.body = params;
     }
     return this.http.request(httpMethod, url, options).pipe(
       map((value: any) => {

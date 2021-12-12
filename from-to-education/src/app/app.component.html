@@ -9,15 +9,21 @@
       </button>
       <span class="example-spacer"></span>
       <div id="flex">
-<!--        <button *ngIf="auth.getSessionid() == null" mat-button class="example-margin login" (click)="login()">-->
-<!--          Вход-->
-<!--        </button>-->
-<!--        <button *ngIf="auth.getUser() !== null" class="login" routerLink="/education" mat-button>{{auth.getUser()}} </button>-->
-<!--        <button *ngIf="auth.getSessionid() !== null" style="padding-right: 0" [routerLink]="'show'" mat-icon-button-->
-<!--                class="example-margin login"-->
-<!--                (click)="logout()"  title="Выход">-->
-<!--           <mat-icon>exit_to_app</mat-icon>-->
-<!--        </button>-->
+        <ng-template [ngIf]="this.authService.getLoggedUser() == undefined" [ngIfElse]="loggedOut">
+          <button mat-button class="example-margin login" (click)="login()">
+            Вход
+          </button>
+        </ng-template>
+
+        <ng-template #loggedOut>
+          <button class="login" (click)="getLk()" mat-button>{{this.userName}} </button>
+          <button style="padding-right: 0" [routerLink]="'show'" mat-icon-button
+                  class="example-margin login"
+                  (click)="logout()"  title="Выход">
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+        </ng-template>
+
       </div>
     </mat-toolbar>
     <mat-sidenav-container class="example-container" style="height: 93%">
@@ -29,24 +35,6 @@
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
-
-    <div class="card-footer">
-      <div  >
-        <div *ngFor="let certificate of certificates">
-          <a target="_blank" rel="noopener noreferrer" class="block_info" (click)="openLink(certificate.image)">
-            {{certificate.title}}
-          </a>
-        </div>
-
-        <a href="https://edu.gov.ru/" target="_blank" rel="noopener noreferrer" class="block_info">
-          Сайт&nbsp;Минпросвещения России
-        </a>
-<!--        <div class="block_info-text">-->
-<!--          Лицензия на образовательную деятельность № XXXXXX от XX декабря XXXX-->
-<!--          года-->
-<!--        </div>-->
-      </div>
-    </div>
   </div>
 </div>
 
