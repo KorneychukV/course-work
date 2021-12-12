@@ -1,0 +1,20 @@
+<h2 class="mt-3 mb-3">
+  <button mat-icon-button id="exit" routerLink="/show"><mat-icon>keyboard_backspace</mat-icon></button>
+  Вебинары</h2>
+
+<div class="flex" >
+  <div  class="item" *ngFor="let web of webinars">
+    <div class="about">
+      <iframe width="600" height="300"
+              allowfullscreen
+              [src]=sanitizer.bypassSecurityTrustResourceUrl(web.youtube_link)>
+    </iframe>
+    </div>
+    <div class="title">{{web.title}}</div>
+    <div class="title">{{web.description}}</div>
+  </div >
+</div>
+
+<div id="visor-video">
+
+</div>

@@ -1,0 +1,62 @@
+<div></div>
+<mat-tab-group >
+  <mat-tab label="Активные программы обучения" *ngIf="stat == 'false'">
+    <div class="mt-3"></div>
+    <mat-accordion >
+      <div  *ngFor="let prog of eduPrograms">
+        <mat-expansion-panel  class="panel" *ngIf="!prog.studygroups__contract__is_complete"
+                              (opened)="prog.panelOpenState = true"
+                              (closed)="prog.panelOpenState = false">
+          <mat-expansion-panel-header >
+            <mat-panel-title>
+              {{prog.name}}
+            </mat-panel-title>
+            <mat-panel-description *ngIf="!prog.panelOpenState">
+              Подробнее
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class = 'flex' >
+            <ng-container *ngFor="let but of buttons" >
+              <button mat-raised-button (click)="but.action(prog.id)" class="button" >
+                {{but.name}}</button>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+    </mat-accordion>
+
+  </mat-tab>
+  <mat-tab label="Завершенные программы обучения" *ngIf="stat == 'false'">
+    <div class="mt-3"></div>
+    <mat-accordion class="mt-2">
+      <div *ngFor="let prog of eduPrograms">
+        <mat-expansion-panel  class="panel"  *ngIf="prog.studygroups__contract__is_complete"
+                              (opened)="prog.panelOpenState = true"
+                              (closed)="prog.panelOpenState = false">
+          <mat-expansion-panel-header >
+            <mat-panel-title>
+              {{prog.name}}
+            </mat-panel-title>
+            <mat-panel-description *ngIf="!prog.panelOpenState">
+              Подробнее
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class = 'flex'>
+            <button mat-raised-button (click)="getResult(prog.id)" class="button" >
+              Смотреть результат</button>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+    </mat-accordion>
+  </mat-tab>
+  <mat-tab  label="Статистика" *ngIf="stat == 'true'">
+    <div class="mt-3"></div>
+    <app-statistics></app-statistics>
+  </mat-tab>
+  <mat-tab  label="Тесты" *ngIf="stat == 'true'">
+    <div class="mt-3"></div>
+    <app-admin-test></app-admin-test>
+  </mat-tab>
+</mat-tab-group>

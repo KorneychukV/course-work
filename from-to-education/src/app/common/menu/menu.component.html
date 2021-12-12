@@ -1,0 +1,16 @@
+<div *ngFor="let menu of menuList" class="menu-width">
+  <div *ngIf="menu.route" class="menu-item-container">
+    <button mat-button [routerLink]="menu.route"
+       [ngClass]="{'route-active': rla.isActive, 'menu-item': 1}"
+       routerLinkActive
+       #rla="routerLinkActive">{{menu.title}} <mat-icon>{{menu.icon}}</mat-icon></button>
+  </div>
+  <div *ngIf="!menu.route" class="menu-title-container">
+    {{menu.title}}
+  </div>
+  <ng-container *ngIf="menu.children && menu.children.length">
+    <div style="padding-left: 10px">
+      <app-menu style="width: 220px;" [menuList]="menu.children"></app-menu>
+    </div>
+  </ng-container>
+</div>

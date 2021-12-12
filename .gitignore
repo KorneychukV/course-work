@@ -1,0 +1,86 @@
+.idea/
+database/sqldata/
+fromToEducation/lk/migrations/
+
+# Created by https://www.gitignore.io/api/macos,linux,django,python,pycharm
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+db/sqldata
+server-app/static/
+server-app/lk/migrations
+
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+

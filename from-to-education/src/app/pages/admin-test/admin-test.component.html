@@ -1,0 +1,56 @@
+<div style="height: 800px">
+  <ul class="breadcrumb">
+    <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="clickSection()">
+      <a>Раздел</a>
+    </li>
+    <span class="divider"  *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' ">
+      <mat-icon>keyboard_arrow_right</mat-icon></span>
+    <li [ngClass]="{'active': choice == 'route', 'disable':choice != 'route'}"
+        *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' "
+        (click)="clickRoute()">
+      <a>{{currentSec}}</a>
+    </li>
+    <span class="divider" *ngIf="choice == 'program' || choice == 'currentProgram' ">
+      <mat-icon >keyboard_arrow_right</mat-icon>
+    </span>
+    <li [ngClass]="{'active': choice == 'program', 'disable':choice != 'program'}"
+        *ngIf="choice == 'program'|| choice == 'currentProgram'" (click)="clickProgram()">
+      Программы обучения</li>
+    <span class="divider" *ngIf="choice == 'currentProgram' ">/</span>
+    <li [ngClass]="{'active': choice == 'currentProgram', 'disable':choice != 'currentProgram'}"
+        *ngIf="choice == 'currentProgram' ">
+      {{nameProgram}}</li>
+  </ul>
+
+
+  <!--Разделы-->
+  <div class="flex" *ngIf="choice == 'section'">
+    <div class="item"  *ngFor="let item of program " (click)="choiceRoute(item)">
+      <div class="title">{{item.name}}</div>
+      <div class="about">
+        <div>{{item.description}} </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Направления-->
+  <div class="flex" *ngIf="choice == 'route'">
+    <div class="item"   *ngFor="let item of program " (click)="choiceProgram(item)">
+      <div class="title">{{item.name}}</div>
+      <div class="about">
+        <div>{{item.description}} </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Программа обучения-->
+  <div class="flex" *ngIf="choice == 'program'">
+    <div class="item"   *ngFor="let item of program">
+      <div class="title">{{item.name}}</div>
+      <div class="about">
+        <button mat-raised-button style="background:  #146525; color: white"(click)="test(item)">Пройти тестирование</button>
+      </div>
+    </div>
+  </div>
+</div>
+

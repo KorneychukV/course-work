@@ -1,0 +1,18 @@
+version: '3'
+services:
+ keycloak1:
+  image: quay.io/keycloak/keycloak:14.0.0
+  volumes:
+   - "./theme:/opt/jboss/keycloak/themes/archive-theme"
+   - "./standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml"
+#  container_name: keycloak
+  environment:
+   DB_VENDOR: POSTGRES
+   DB_ADDR: 192.168.122.12
+   DB_PORT: 5432
+   DB_DATABASE: database_archive
+   DB_USER: keycloak
+   DB_SCHEMA: keycloak
+   DB_PASSWORD: keycloak
+  ports:
+   - "8082:8080"

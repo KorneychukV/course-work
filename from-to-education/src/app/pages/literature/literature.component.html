@@ -1,0 +1,36 @@
+
+<h2 class="mt-3 mb-3">
+  <button mat-icon-button id="exit" routerLink="/education"><mat-icon>keyboard_backspace</mat-icon></button>
+  Список литературы</h2>
+
+<mat-card class="mt-3 mb-3 panel" *ngFor="let lit of literatures">
+  <mat-card-title>{{lit.title}}</mat-card-title>
+  <mat-card-subtitle>
+    <a *ngIf="lit.link !==''" style="cursor: pointer; color: #007bff" (click)="openLink(lit.link)">Посмотреть</a>
+  </mat-card-subtitle>
+  <div style="font-size: 14px; cursor: pointer" (click)="clickEvent(lit)">
+    Подробнее
+  </div>
+  <p *ngIf="lit.status" id="false-info-block" class="mt-2 mb-2"
+     [ngClass]="'info-block-click'">
+    {{lit.description}}</p>
+
+  <div *ngIf="lit.document_url">
+    <button mat-button
+            style="padding: 0;"
+            class="example-margin login"
+            (click)="fileDownload(lit.document_url)"  title="Скачать">
+      Скачать документ
+      <mat-icon>file_download</mat-icon>
+    </button>
+  </div>
+
+<!--    <span class="material-icons-outlined">file_download</span></div>-->
+
+  <div *ngIf="lit.status" id="visor-video">
+    <iframe *ngIf="lit.youtube_link" width="600" height="300" style=" margin-left: auto;display: block;margin-right: auto;"
+            allowfullscreen
+            [src]=sanitizer.bypassSecurityTrustResourceUrl(lit.youtube_link)>
+    </iframe>
+    </div>
+</mat-card>
