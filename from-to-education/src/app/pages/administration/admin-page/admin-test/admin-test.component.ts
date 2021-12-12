@@ -1,9 +1,11 @@
 import {Component, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {RestService} from '../../services/rest.service';
-import {DialogRequestComponent} from '../../common/dialog-request/dialog-request.component';
+import {RestService} from '../../../../services/rest.service';
+import {DialogRequestComponent} from '../../../../common/dialog-request/dialog-request.component';
 import {Router} from '@angular/router';
+import {AddNewSectionComponent} from '../dialogs/add-new-section/add-new-section.component';
+import {EditSectionComponent} from '../dialogs/edit-section/edit-section.component';
 
 @Component({
   selector: 'app-admin-test',
@@ -27,7 +29,7 @@ export class AdminTestComponent implements OnInit {
               public restService: RestService) { }
 
   ngOnInit(): void {
-    this.clickSection();
+    this.loadSection();
   }
 
 
@@ -52,11 +54,6 @@ export class AdminTestComponent implements OnInit {
   }
 
   choiceProgram(route: any): void{
-    console.log(route);
-    // this.program = route.program;
-    // this.programs = route.program;
-    // this.choice = 'program';
-
     this.restService.post('get_public_programs', {
       "course_id": route.id
     }).subscribe(
@@ -79,14 +76,11 @@ export class AdminTestComponent implements OnInit {
     this.choice = 'program';
   }
 
-  clickSection(): void {
-    // this.program = this.section;
-    // this.choice = 'section';
-    this.restService.post('get_sections', {
-    }).subscribe(
+  loadSection(): void {
+    this.restService.get('prof/edu/getSection').subscribe(
       result => {
         console.log(result);
-        this.program = result.programs;
+        this.program = result.list;
         this.choice = 'section';
       }, err => {
       }
@@ -95,6 +89,35 @@ export class AdminTestComponent implements OnInit {
 
   test(program: any): void {
     this.router.navigate(['admintest/' + program.id]);
+  }
+
+  addNewSec(): void{
+    const dialogRef = this.dialog.open(AddNewSectionComponent, {
+      width: '460px',
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.loadSection();
+      }
+    });
+  }
+
+  editSec(item: any): void{
+    const dialogRef = this.dialog.open(EditSectionComponent, {
+      width: '460px',
+      autoFocus: false,
+      data: item
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.loadSection();
+      }
+    });
   }
 
 }

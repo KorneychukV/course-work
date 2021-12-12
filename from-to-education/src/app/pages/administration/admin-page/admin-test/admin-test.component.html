@@ -1,6 +1,12 @@
 <div style="height: 800px">
+  <div class="container" *ngIf="choice == 'section'">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addNewSec()">
+      Добавить новый раздел
+    </button>
+  </div>
+
   <ul class="breadcrumb">
-    <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="clickSection()">
+    <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="loadSection()">
       <a>Раздел</a>
     </li>
     <span class="divider"  *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' ">
@@ -25,12 +31,20 @@
 
   <!--Разделы-->
   <div class="flex" *ngIf="choice == 'section'">
-    <div class="item"  *ngFor="let item of program " (click)="choiceRoute(item)">
+    <mat-card class="item"  *ngFor="let item of program " (click)="choiceRoute(item)">
       <div class="title">{{item.name}}</div>
       <div class="about">
         <div>{{item.description}} </div>
       </div>
-    </div>
+      <div class="containerbtn" *ngIf="choice == 'section'">
+        <button mat-raised-button style="background:  #146525; color: white" (click)="editSec(item)">
+          Редактировать
+        </button>
+        <button mat-raised-button style="background:  #146525; color: white; margin:0 10px " (click)="addNewSec()">
+          Подробнее
+        </button>
+      </div>
+    </mat-card>
   </div>
 
   <!--Направления-->

@@ -5,6 +5,9 @@ import {LoginComponent} from './pages/login/login.component';
 import {RestService} from './services/rest.service';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './services/guard/auth.guard';
+import {AuthService} from './services/auth.service';
+import {KeycloakService} from 'keycloak-angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,17 +16,22 @@ import {AuthGuard} from './services/guard/auth.guard';
 })
 export class AppComponent  implements OnInit {
   title = 'from-to-education';
-  user: any;
+  userName: string;
   public menuList: Menu[] = [];
   certificates;
 
   constructor(public dialog: MatDialog,
               private restService: RestService,
-              public authGuard: AuthGuard) {
+              public authService: AuthService,
+              public keycloakService: KeycloakService,
+              private router: Router
+              ) {
   }
 
   ngOnInit(): void {
-    console.log(this.authGuard.checkAuth());
+    const userInfo = this.keycloakService.getKeycloakInstance().loadUserInfo();
+    // @ts-ignore
+    userInfo.then( res => this.userName = res.preferred_username );
 
     this.restService.post('get_certificates', {
     }).subscribe(
@@ -55,29 +63,30 @@ export class AppComponent  implements OnInit {
   }
 
   login() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      // width: '65%',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.authService.login();
   }
+
   openLink(link: string) {
-    // if (res && res.reportURL) {
     window.open(environment.picUrl + '/media/' +  link, '_blank');
-    //   //   if (res && res.specURL) {
-    //   //     window.open(res.specURL);
-    //   //   }
   }
 
   logout() {
-   // this.auth.logout();
-   // this.restService.post('logout', {
-   //  }).subscribe(
-   //    result => {
-   //    }, error => {
-   //    }
-   //  );
+   this.authService.logout();
+  }
+
+  getLk(): void {
+    console.log('go lk');
+   const link = this.authService.getRoles().filter(role => {
+      let result = false;
+      if (role === 'admin') {
+        this.router.navigate(['/administration']);
+        result = true;
+      }
+      return result;
+    });
+    if (link.length === 0) {
+     this.router.navigate(['/education']);
+   }
   }
 }
 

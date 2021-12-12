@@ -35,10 +35,10 @@ import { RequestComponent } from './common/request/request.component';
 import { DialogRequestComponent } from './common/dialog-request/dialog-request.component';
 import { PhoneDirective } from './common/directive/phone.directive';
 import { PageRequestComponent } from './pages/page-request/page-request.component';
-import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { StatisticsComponent } from './pages/administration/admin-page/statistics/statistics.component';
 import {AgGridModule} from 'ag-grid-angular';
 import { FinalProgramComponent } from './pages/final-program/final-program.component';
-import { AdminTestComponent } from './pages/admin-test/admin-test.component';
+import { AdminTestComponent } from './pages/administration/admin-page/admin-test/admin-test.component';
 import { FinalAdminTestComponent } from './pages/final-admin-test/final-admin-test.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
 import { WebinarComponent } from './pages/webinar/webinar.component';
@@ -46,6 +46,9 @@ import {initializeKeycloak} from './services/keycloak-init.factory';
 import {KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService} from 'keycloak-angular';
 import {AuthGuard} from './services/guard/auth.guard';
 import {AuthService} from './services/auth.service';
+import { AdminPageComponent } from './pages/administration/admin-page/admin-page.component';
+import { AddNewSectionComponent } from './pages/administration/admin-page/dialogs/add-new-section/add-new-section.component';
+import { EditSectionComponent } from './pages/administration/admin-page/dialogs/edit-section/edit-section.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +75,9 @@ import {AuthService} from './services/auth.service';
         AdminTestComponent,
         FinalAdminTestComponent,
         WebinarComponent,
+        AdminPageComponent,
+        AddNewSectionComponent,
+        EditSectionComponent,
     ],
     imports: [
         BrowserModule,

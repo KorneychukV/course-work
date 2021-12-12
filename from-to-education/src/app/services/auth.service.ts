@@ -19,6 +19,10 @@ export class AuthService {
     }
   }
 
+  public getUserInfo(): Keycloak.KeycloakPromise<{}, void>{
+    return this.keycloakService.getKeycloakInstance().loadUserInfo();
+  }
+
   public isLoggedIn(): Promise<boolean> {
     return this.keycloakService.isLoggedIn();
   }
@@ -31,8 +35,8 @@ export class AuthService {
     this.keycloakService.logout(window.location.origin);
   }
 
-  public getRoles(): void{
-    this.keycloakService.getUserRoles();
+  public getRoles(): string[]{
+    return this.keycloakService.getUserRoles();
   }
 
 
