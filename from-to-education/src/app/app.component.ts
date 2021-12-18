@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Menu} from './classes/Menu';
 import {MatDialog} from '@angular/material/dialog';
-import {LoginComponent} from './pages/login/login.component';
 import {RestService} from './services/rest.service';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './services/guard/auth.guard';
@@ -18,7 +17,6 @@ export class AppComponent  implements OnInit {
   title = 'from-to-education';
   userName: string;
   public menuList: Menu[] = [];
-  certificates;
 
   constructor(public dialog: MatDialog,
               private restService: RestService,
@@ -29,48 +27,21 @@ export class AppComponent  implements OnInit {
   }
 
   ngOnInit(): void {
+    //выгрузка username
     const userInfo = this.keycloakService.getKeycloakInstance().loadUserInfo();
     // @ts-ignore
-    userInfo.then( res => this.userName = res.preferred_username );
-
-    this.restService.post('get_certificates', {
-    }).subscribe(
-      result => {
-        console.log(result);
-        this.certificates = result.certificates;
-        console.log(this.certificates);
-      }, error => {
-      }
-    );
-
-    this.menuList = APP_MENU;
-    const roles = '';
-    this.menuList = this.menuList.filter((item) => {
-      let result = false;
-      if (item.roles === undefined) {
-        result = true;
-      }
-      if (item.children.length !== 0) {
-        item.children = item.children.filter((child) => {
-          return false;
-        });
-        if (item.children.length !== 0) {
-          result = true;
-        }
-      }
-      return result;
-    });
+    userInfo.then( res => this.userName = res.preferred_username);
   }
 
-  login() {
+  login(): void {
     this.authService.login();
   }
 
-  openLink(link: string) {
+  openLink(link: string): void {
     window.open(environment.picUrl + '/media/' +  link, '_blank');
   }
 
-  logout() {
+  logout(): void {
    this.authService.logout();
   }
 
@@ -90,23 +61,3 @@ export class AppComponent  implements OnInit {
   }
 }
 
-
-export const APP_MENU: Menu[] = [
-  {
-    title: 'Обучение',
-    route: 'education',
-    children: [],
-    icon: 'collections_bookmark'
-  },
-  {
-    title: 'Программы',
-    route: 'show',
-    children: [],
-  },
-  {
-    title: 'Администрирование',
-    route: 'про',
-    children: [],
-    roles: ['Admin']
-  }
-];

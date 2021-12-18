@@ -6,6 +6,10 @@ import {DialogRequestComponent} from '../../../../common/dialog-request/dialog-r
 import {Router} from '@angular/router';
 import {AddNewSectionComponent} from '../dialogs/add-new-section/add-new-section.component';
 import {EditSectionComponent} from '../dialogs/edit-section/edit-section.component';
+import {AddProgramComponent} from '../dialogs/add-program/add-program.component';
+import {EditProgramComponent} from '../dialogs/edit-program/edit-program.component';
+import {InfoDialogComponent} from '../../../../common/info-dialog/info-dialog.component';
+import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.component';
 
 @Component({
   selector: 'app-admin-test',
@@ -18,11 +22,11 @@ export class AdminTestComponent implements OnInit {
   firstFormGroup: FormGroup;
   @Output() program: any = [];
   choice: string;
-  route: any = [];
   section: any = [];
   nameProgram: string;
   programs: any = [];
-  currentSec: string;
+  currentSec: any;
+  currentCourse: any;
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private router: Router,
@@ -32,43 +36,22 @@ export class AdminTestComponent implements OnInit {
     this.loadSection();
   }
 
-
-
-  choiceRoute(section: any): void{
-    console.log('Выбрано направление' + section);
-    // this.program = section.route;
-    // this.choice = 'route';
-    this.currentSec = section.name;
-
-    this.restService.post('get_courses', {
-      "section_id": section.id
+  loadProgram(item: any): void{
+    this.restService.post('prof/edu/getPrograms', {
+      courseId: item.courseId
     }).subscribe(
       result => {
         console.log(result);
-        this.program = result.programs;
-        this.route = result.programs;
-        this.choice = 'route';
-      }, err => {
-      }
-    );
-  }
-
-  choiceProgram(route: any): void{
-    this.restService.post('get_public_programs', {
-      "course_id": route.id
-    }).subscribe(
-      result => {
-        console.log(result);
-        this.program = result.programs;
+        this.program = result.list;
         this.choice = 'program';
+        this.currentCourse =
+          {
+            name: item.name,
+            courseId: item.courseId
+          };
       }, err => {
       }
     );
-  }
-
-  clickRoute(): void {
-    this.program = this.route;
-    this.choice = 'route';
   }
 
   clickProgram(): void {
@@ -76,10 +59,27 @@ export class AdminTestComponent implements OnInit {
     this.choice = 'program';
   }
 
+  // загрузка всех направлений определенного раздела
+  loadCourses(item: any): void {
+    this.restService.post('prof/edu/getCourses', {
+      studySectionId: item.studySectionId
+    }).subscribe(result => {
+        this.program = result.list;
+        this.choice = 'courses';
+        this.currentSec =
+          {
+            name: item.name,
+            studySectionId: item.studySectionId
+          };
+      }, err => {
+      }
+    );
+  }
+
+  // загрузка всех направлений
   loadSection(): void {
     this.restService.get('prof/edu/getSection').subscribe(
       result => {
-        console.log(result);
         this.program = result.list;
         this.choice = 'section';
       }, err => {
@@ -91,33 +91,164 @@ export class AdminTestComponent implements OnInit {
     this.router.navigate(['admintest/' + program.id]);
   }
 
-  addNewSec(): void{
+  question(id: number): void {
+    this.router.navigate(['question/' + id]);
+  }
+
+  // добавление нового раздела/курса
+  addNewSec(razdel: string): void{
+    let data;
+    if (razdel === 'section') {
+      data = {
+        sec: razdel
+      };
+    } else {
+      data = {
+        sec: razdel,
+        id: this.currentSec.studySectionId
+      };
+    }
     const dialogRef = this.dialog.open(AddNewSectionComponent, {
       width: '460px',
-      autoFocus: false
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(razdel);
+      if ((razdel === 'section') || result) {
+        this.loadSection();
+      } else  if ((razdel === 'courses') || result) {
+        this.loadCourses(this.currentSec);
+      }
+    });
+  }
+
+  deleteSec(item: any): void{
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      width: '380px',
+      data: 'Вы действиельно хотите удалить раздел?',
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.loadSection();
+        this.restService.post('prof/edu/deleteStudySection', {
+          studySectionId: item.studySectionId
+        }).subscribe(res => {
+            if (result.type === 'ok') {
+              this.loadSection();
+            }
+          }, err => {
+          }
+        );
       }
     });
   }
 
-  editSec(item: any): void{
+  // редактирование направления/курса
+  editSec(item: any, razdel: string): void{
+    let data;
+    if (razdel === 'section') {
+      data = {
+        sec: razdel,
+        item
+      };
+    } else {
+      data = {
+        sec: razdel,
+        id: this.currentSec.studySectionId,
+        item
+      };
+    }
     const dialogRef = this.dialog.open(EditSectionComponent, {
+      width: '460px',
+      autoFocus: false,
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(razdel);
+      if ((razdel === 'section') && result) {
+        this.loadSection();
+      } else  if ((razdel === 'courses') && result) {
+        this.loadCourses(this.currentSec);
+      }
+    });
+  }
+
+  deleteCourses(item: any): void{
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      width: '380px',
+      data: 'Вы действиельно хотите удалить направление?',
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.restService.post('prof/edu/deleteCourses', {
+          courseId: item.courseId
+        }).subscribe(res => {
+            if (result.type === 'ok') {
+              this.loadSection();
+            }
+          }, err => {
+          }
+        );
+      }
+    });
+  }
+
+  deleteProgram(item: any): void{
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      width: '380px',
+      data: 'Вы действиельно хотите удалить программу?',
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.restService.post('prof/edu/deleteProgram', {
+          studyProgramId: item.studyProgramId
+        }).subscribe(res => {
+            if (result.type === 'ok') {
+              this.loadSection();
+            }
+          }, err => {
+          }
+        );
+      }
+    });
+  }
+
+  addProgram(): void{
+    const dialogRef = this.dialog.open(AddProgramComponent, {
+      width: '460px',
+      autoFocus: false,
+      data: this.currentCourse.courseId
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadProgram(this.currentCourse);
+    });
+  }
+
+  editProgram(item: any) {
+    const dialogRef = this.dialog.open(EditProgramComponent, {
       width: '460px',
       autoFocus: false,
       data: item
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result) {
-        this.loadSection();
-      }
+      this.loadProgram(this.currentCourse);
     });
   }
+
 
 }

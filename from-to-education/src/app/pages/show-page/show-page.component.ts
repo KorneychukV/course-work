@@ -6,6 +6,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {DialogRequestComponent} from '../../common/dialog-request/dialog-request.component';
 import {OkInformComponent} from '../../common/ok-inform/ok-inform.component';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
+import {AddNewSectionComponent} from '../administration/admin-page/dialogs/add-new-section/add-new-section.component';
+import {EditSectionComponent} from '../administration/admin-page/dialogs/edit-section/edit-section.component';
+import {AddProgramComponent} from '../administration/admin-page/dialogs/add-program/add-program.component';
+import {EditProgramComponent} from '../administration/admin-page/dialogs/edit-program/edit-program.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-show-page',
@@ -14,67 +20,41 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class ShowPageComponent implements OnInit {
 
+
   firstFormGroup: FormGroup;
   @Output() program: any = [];
   choice: string;
-  route: any = [];
   section: any = [];
   nameProgram: string;
   programs: any = [];
-  currentSec: string;
+  currentSec: any;
+  currentCourse: any;
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
-              private snackBar: MatSnackBar,
+              public authService: AuthService,
+              private router: Router,
               public restService: RestService) { }
 
   ngOnInit(): void {
-    this.clickSection();
-
-
+    this.loadSection();
   }
 
-
-
-  choiceRoute(section: any): void{
-    console.log('Выбрано направление' + section);
-    // this.program = section.route;
-    // this.choice = 'route';
-    this.currentSec = section.name;
-
-    this.restService.post('prof/edu/getSection', {
-      "section_id": section.id
+  loadProgram(item: any): void{
+    this.restService.post('prof/getPrograms', {
+      courseId: item.courseId
     }).subscribe(
       result => {
         console.log(result);
         this.program = result.list;
-        this.route = result.programs;
-        this.choice = 'route';
-      }, err => {
-      }
-    );
-  }
-
-  choiceProgram(route: any): void{
-    console.log(route);
-    // this.program = route.program;
-    // this.programs = route.program;
-    // this.choice = 'program';
-
-    this.restService.post('get_public_programs', {
-      "course_id": route.id
-    }).subscribe(
-      result => {
-        console.log(result);
-        this.program = result.programs;
         this.choice = 'program';
+        this.currentCourse =
+          {
+            name: item.name,
+            courseId: item.courseId
+          };
       }, err => {
       }
     );
-  }
-
-  clickRoute(): void {
-    this.program = this.route;
-    this.choice = 'route';
   }
 
   clickProgram(): void {
@@ -82,50 +62,63 @@ export class ShowPageComponent implements OnInit {
     this.choice = 'program';
   }
 
-  clickSection(): void {
-    this.restService.get('prof/edu/getSection').subscribe(
+  // загрузка всех направлений определенного раздела
+  loadCourses(item: any): void {
+    this.restService.post('prof/getCourses', {
+      studySectionId: item.studySectionId
+    }).subscribe(result => {
+        this.program = result.list;
+        this.choice = 'courses';
+        this.currentSec =
+          {
+            name: item.name,
+            studySectionId: item.studySectionId
+          };
+      }, err => {
+      }
+    );
+  }
+
+  buy(item): void{
+    if (this.authService.getLoggedUser() === undefined) {
+      this.authService.login();
+    } else {
+      this.restService.post('prof/user/buyProgram', {
+        studyProgramId: item.studyProgramId
+      }).subscribe(result => {
+
+        }, err => {
+        }
+      );
+
+
+      const dialogRef1 = this.dialog.open(OkInformComponent, {
+        width: '380px',
+        data: 'Поздравляю с покупкой'
+      });
+      dialogRef1.afterClosed().subscribe(res2 => {
+        console.log('The dialog was closed');
+      });
+    }
+  }
+
+  // загрузка всех направлений
+  loadSection(): void {
+    this.restService.get('prof/getSection').subscribe(
       result => {
-        console.log(result);
         this.program = result.list;
         this.choice = 'section';
       }, err => {
       }
     );
   }
-  goProgram(program): void{
 
-    // this.nameProgram = program.name;
-
+  test(program: any): void {
+    this.router.navigate(['admintest/' + program.id]);
   }
 
-  join(): void{
-   // window.open();
-  }
-
-  createRequest(): void{
-    const dialogRef = this.dialog.open(DialogRequestComponent, {
-      width: '430px',
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result) {
-        this.snackBar.open('Заявка отправлена', 'Ok', {  duration: 1000});
-        // const timeout = 3000;
-        // const dialogRef1 = this.dialog.open(OkInformComponent, {
-        //   width: '380px',
-        //   data: 'Заявка отправлена1',
-        //   autoFocus: false,
-        // });
-        //
-        // dialogRef1.afterOpened().subscribe(_ => {
-        //   setTimeout(() => {
-        //     dialogRef.close();
-        //   }, timeout);
-        // });
-      }
-    });
+  question(id: number): void {
+    this.router.navigate(['question/' + id]);
   }
 
 }

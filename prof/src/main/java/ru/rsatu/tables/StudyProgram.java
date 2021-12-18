@@ -21,21 +21,27 @@ public class StudyProgram extends PanacheEntityBase {
     @Column(name = "description")
     public String description;
 
-    @Column(name = "study_group_alias")
-    public String studyGroupAlias;
-
+    //Минимальное время подготовки, час.
     @Column(name = "minimal_duration")
     public Integer minimalDuration;
 
+    //Максимальное время выполнения теста, мин.
     @Column(name = "complete_time")
     public Integer completeTime;
 
+    //Количество вопросов в тесте
     @Column(name = "question_nums")
     public Integer questionNums;
 
+    //Количество попыток итогового теста
     @Column(name = "tries_count")
     public Integer triesCount;
 
+    //Стоимость
+    @Column(name = "price")
+    public Integer price;
+
+    //
     @Column(name = "is_deprecated")
     public Boolean isDeprecated;
 
@@ -45,26 +51,38 @@ public class StudyProgram extends PanacheEntityBase {
     public Course course;
 
     @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<StudyProgramLiterature> studyProgramLiteratures = new HashSet<>();
 
     @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    public Set<StudyGroups> studyGroups = new HashSet<>();
+    @JsonIgnore
+    public Set<Contract> contracts = new HashSet<>();
 
     @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<Question> questions = new HashSet<>();
 
     @OneToMany(mappedBy="studyProgram",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<TestTry> testTries = new HashSet<>();
 
-    public StudyProgram(String name, String description, String studyGroupAlias, Integer minimalDuration,
-                        Integer completeTime, Integer questionNums, Integer triesCount) {
+    public StudyProgram(String name, String description, Integer minimalDuration, Integer completeTime, 
+                        Integer questionNums, Integer triesCount, Integer price) {
         this.name = name;
         this.description = description;
-        this.studyGroupAlias = studyGroupAlias;
         this.minimalDuration = minimalDuration;
         this.completeTime = completeTime;
         this.questionNums = questionNums;
         this.triesCount = triesCount;
+        this.price = price;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public StudyProgram() {
@@ -92,14 +110,6 @@ public class StudyProgram extends PanacheEntityBase {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getStudyGroupAlias() {
-        return studyGroupAlias;
-    }
-
-    public void setStudyGroupAlias(String studyGroupAlias) {
-        this.studyGroupAlias = studyGroupAlias;
     }
 
     public Integer getMinimalDuration() {
@@ -148,5 +158,24 @@ public class StudyProgram extends PanacheEntityBase {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @Override
+    public String toString() {
+        return "StudyProgram{" +
+                "studyProgramId=" + studyProgramId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", minimalDuration=" + minimalDuration +
+                ", completeTime=" + completeTime +
+                ", questionNums=" + questionNums +
+                ", triesCount=" + triesCount +
+                ", price=" + price +
+                ", isDeprecated=" + isDeprecated +
+                ", course=" + course +
+                ", studyProgramLiteratures=" + studyProgramLiteratures +
+                ", questions=" + questions +
+                ", testTries=" + testTries +
+                '}';
     }
 }

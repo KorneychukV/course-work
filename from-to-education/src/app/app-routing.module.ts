@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {LoginComponent} from './pages/login/login.component';
 import {ShowPageComponent} from './pages/show-page/show-page.component';
 import {EducationComponent} from './pages/education/education.component';
 import {ProgramComponent} from './pages/program/program.component';
@@ -15,6 +14,8 @@ import {FinalAdminTestComponent} from './pages/final-admin-test/final-admin-test
 import {WebinarComponent} from './pages/webinar/webinar.component';
 import {AuthGuard} from './services/guard/auth.guard';
 import {AdminPageComponent} from './pages/administration/admin-page/admin-page.component';
+import {AddProgramComponent} from './pages/administration/admin-page/dialogs/add-program/add-program.component';
+import {QuestionComponent} from './pages/administration/admin-page/question/question.component';
 
 const routes: Routes = [
   { path: '',
@@ -24,10 +25,6 @@ const routes: Routes = [
   {
     path: 'show',
     component: ShowPageComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   },
   {
     path: 'final',
@@ -68,6 +65,11 @@ const routes: Routes = [
   {
     path: 'result/:id',
     component: ResultComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'question/:id',
+    component: QuestionComponent,
     canActivate: [AuthGuard]
   },
   {

@@ -1,21 +1,20 @@
 
 <div style="height: auto; margin: 1%;">
-  <img
-    src="../assets/left_big.png" width=60%;>
 </div>
 
 <div style="background:  #2ba7d2">
   <ul class="breadcrumb">
-    <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="clickSection()">
+    <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="loadSection()">
       <a style="color: white;" class="title-razdel">Раздел</a>
     </li>
-    <div class="divider"  *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' "
+    <div class="divider"  *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' "
          style="text-align: center;">
     <mat-icon class="centered">keyboard_arrow_right</mat-icon></div>
-    <li [ngClass]="{'active': choice == 'route', 'disable':choice != 'route'}"
-        *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' "
-        (click)="clickRoute()">
-      <a  style="color: white;" class="title-razdel">{{currentSec}}</a>
+    <li [ngClass]="{'active': choice == 'courses', 'disable':choice != 'route'}"
+        *ngIf="choice == 'courses' || choice == 'route' || choice == 'currentProgram' "
+        (click)="loadCourses(this.currentSec)">
+      <a  style="color: white;" class="title-razdel">{{this.currentSec.name}}</a>
+<!--      <a>{{this.currentSec.name}}</a>-->
     </li>
     <span class="divider" *ngIf="choice == 'program' || choice == 'currentProgram' " style="text-align: center;">
     <mat-icon class="centered">keyboard_arrow_right</mat-icon>
@@ -24,7 +23,6 @@
         *ngIf="choice == 'program'|| choice == 'currentProgram'" (click)="clickProgram()"  style="color: white;"
         class="title-razdel">
       Программы обучения</li>
-<!--    <span class="divider" *ngIf="choice == 'currentProgram' ">/</span>-->
     <mat-icon class="centered" *ngIf="choice == 'currentProgram' ">keyboard_arrow_right</mat-icon>
     <li [ngClass]="{'active': choice == 'currentProgram', 'disable':choice != 'currentProgram'}"
         *ngIf="choice == 'currentProgram' "  style="color: white;" class="title-razdel">
@@ -36,24 +34,17 @@
 
 <!--Разделы-->
 <div class="flex" *ngIf="choice == 'section'">
-  <div class="item"  *ngFor="let item of program " (click)="choiceRoute(item)">
+  <div class="item"  *ngFor="let item of program " (click)="loadCourses(item)">
     <div class="title">{{item.name}}</div>
     <div class="about">
       <div>{{item.description}} </div>
     </div>
   </div>
-
-  <div class="item" routerLink="/webinar">
-    <div class="title">Вебинары</div>
-<!--    <div class="about">-->
-<!--      <div>{{item.description}} </div>-->
-<!--    </div>-->
-  </div>
 </div>
 
 <!--Направления-->
-<div class="flex" *ngIf="choice == 'route'">
-  <div class="item"   *ngFor="let item of program " (click)="choiceProgram(item)">
+<div class="flex" *ngIf="choice == 'courses'">
+  <div class="item"   *ngFor="let item of program " (click)="loadProgram(item)">
     <div class="title">{{item.name}}</div>
     <div class="about">
       <div>{{item.description}} </div>
@@ -62,19 +53,21 @@
 </div>
 
 <!--Программа обучения-->
-<div class="flex" *ngIf="choice == 'program'">
-  <div class="item"   *ngFor="let item of program" (click)="goProgram(item)">
+<div class="flex-program" *ngIf="choice == 'program'">
+  <div class="item-program"   *ngFor="let item of program">
     <div class="title">{{item.name}}</div>
     <div class="about">
       <div>{{item.description}} </div>
     </div>
+    <div class="about">
+      <div>Стоимость {{item.price}} рублей</div>
+    </div>
+    <div class="about">
+      <button mat-raised-button style="background:  #c9c9f7; color: white; margin:0 10px" (click)="buy(item)">
+        Купить
+      </button>
+    </div>
   </div>
-</div>
-
-<div id="request" (click)="createRequest()">
-  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="36" viewBox="0 -3 25 25">
-    <path class="b24-crm-button-webform-icon" fill=" #FFFFFF" fill-rule="evenodd" d="M815.406703,961 L794.305503,961 C793.586144,961 793,961.586144 793,962.305503 L793,983.406703 C793,984.126062 793.586144,984.712206 794.305503,984.712206 L815.406703,984.712206 C816.126062,984.712206 816.712206,984.126062 816.712206,983.406703 L816.712206,962.296623 C816.703325,961.586144 816.117181,961 815.406703,961 L815.406703,961 Z M806.312583,979.046143 C806.312583,979.454668 805.975106,979.783264 805.575462,979.783264 L796.898748,979.783264 C796.490224,979.783264 796.161627,979.445787 796.161627,979.046143 L796.161627,977.412044 C796.161627,977.003519 796.499105,976.674923 796.898748,976.674923 L805.575462,976.674923 C805.983987,976.674923 806.312583,977.0124 806.312583,977.412044 L806.312583,979.046143 L806.312583,979.046143 Z M813.55946,973.255747 C813.55946,973.664272 813.221982,973.992868 812.822339,973.992868 L796.889868,973.992868 C796.481343,973.992868 796.152746,973.655391 796.152746,973.255747 L796.152746,971.621647 C796.152746,971.213122 796.490224,970.884526 796.889868,970.884526 L812.813458,970.884526 C813.221982,970.884526 813.550579,971.222003 813.550579,971.621647 L813.550579,973.255747 L813.55946,973.255747 Z M813.55946,967.45647 C813.55946,967.864994 813.221982,968.193591 812.822339,968.193591 L796.889868,968.193591 C796.481343,968.193591 796.152746,967.856114 796.152746,967.45647 L796.152746,965.82237 C796.152746,965.413845 796.490224,965.085249 796.889868,965.085249 L812.813458,965.085249 C813.221982,965.085249 813.550579,965.422726 813.550579,965.82237 L813.550579,967.45647 L813.55946,967.45647 Z" transform="translate(-793 -961)"></path>
-  </svg>
 </div>
 
 

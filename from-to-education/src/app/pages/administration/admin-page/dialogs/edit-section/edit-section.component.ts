@@ -21,9 +21,10 @@ export class EditSectionComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
+    console.log(this.data);
     this.form =  new FormGroup({
-      "name": new FormControl(this.data.name, Validators.required),
-      "description": new FormControl(this.data.description, Validators.required)
+      "name": new FormControl(this.data.item.name, Validators.required),
+      "description": new FormControl(this.data.item.description, Validators.required)
     });
   }
 
@@ -32,9 +33,35 @@ export class EditSectionComponent implements OnInit {
   }
 
   editSec() {
-    this.restServise.post('prof/edu/addStudySection', {
+    this.restServise.post('prof/edu/editSection', {
       "name": this.form.get('name').value,
-      "description": this.form.get('description').value
+      "description": this.form.get('description').value,
+      "studySectionId": this.data.item.studySectionId
+    }).subscribe(
+      result => {
+        if (result.type === 'ok') {
+          this.dialogRef.close(true);
+          const dialogRef = this.dialog.open(OkInformComponent, {
+            width: '380px',
+            data: result.message
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
+        } else if (result.type === 'error') {
+          this.err = true;
+          this.errText = result.message;
+        }
+      }, err => {
+      }
+    );
+  }
+
+  editCourse() {
+    this.restServise.post('prof/edu/editCourse', {
+      "name": this.form.get('name').value,
+      "description": this.form.get('description').value,
+      "courseId": this.data.item.courseId
     }).subscribe(
       result => {
         if (result.type === 'ok') {

@@ -13,7 +13,7 @@ public class Answer extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "answer_gen")
-    private Long answerId;
+    public Long answerId;
 
     @Column(name = "answer_text")
     public String answerText;
@@ -27,6 +27,19 @@ public class Answer extends PanacheEntityBase {
     public Question question;
 
     @OneToMany(mappedBy="answer",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<TryAnswers> tryAnswers = new HashSet<>();
+
+    public Answer() {
+    }
+
+    public Answer(String answerText, Boolean isRight, Question question) {
+        this.answerText = answerText;
+        this.isRight = isRight;
+        this.question = question;
+    }
+
+
+
 
 }

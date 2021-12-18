@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {RestService} from '../../../../../services/rest.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
@@ -17,7 +17,8 @@ export class AddNewSectionComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<AddNewSectionComponent>,
               public restServise: RestService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.form =  new FormGroup({
@@ -32,8 +33,33 @@ export class AddNewSectionComponent implements OnInit {
 
   addSec() {
     this.restServise.post('prof/edu/addStudySection', {
+      name: this.form.get('name').value,
+      description: this.form.get('description').value
+    }).subscribe(
+      result => {
+        if (result.type === 'ok') {
+          this.dialogRef.close(true);
+          const dialogRef = this.dialog.open(OkInformComponent, {
+            width: '380px',
+            data: result.message
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
+        } else if (result.type === 'error') {
+          this.err = true;
+          this.errText = result.message;
+        }
+      }, err => {
+      }
+    );
+  }
+
+  addRoute() {
+    this.restServise.post('prof/edu/addCourse', {
       "name": this.form.get('name').value,
-      "description": this.form.get('description').value
+      "description": this.form.get('description').value,
+      "studySectionId": this.data.id
     }).subscribe(
       result => {
         if (result.type === 'ok') {

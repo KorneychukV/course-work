@@ -1,6 +1,7 @@
 package ru.rsatu.tables;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,14 +10,14 @@ import java.util.Set;
 
 @Entity()
 @Table(name = "contract")
-public class Contract {
+public class Contract extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "contract_gen")
     private Long contractId;
 
     @Column(name = "user_id")
-    public Long userID;
+    public String userID;
 
     @Column(name = "enrollment_date")
     public Date enrollmentDate;
@@ -25,10 +26,18 @@ public class Contract {
     public Boolean isComplete;
 
     @ManyToOne
-    @JoinColumn(name="studyGroupsId")
+    @JoinColumn(name="studyProgramId")
     @JsonIgnore
-    public StudyGroups studyGroups;
+    public StudyProgram studyProgram;
 
     @OneToMany(mappedBy="contract",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<TestTry> testTries = new HashSet<>();
+
+    public Contract() {
+    }
+
+    public Contract(String userID, StudyProgram studyProgram) {
+        this.userID = userID;
+        this.studyProgram = studyProgram;
+    }
 }

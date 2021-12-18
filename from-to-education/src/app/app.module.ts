@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './pages/login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
@@ -25,7 +24,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogComponent } from './pages/test/dialog/dialog.component';
 import { ResultComponent } from './pages/result/result.component';
 import {MatCardModule} from '@angular/material/card';
-import { LkComponent } from './pages/lk/lk.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { InfoDialogComponent } from './common/info-dialog/info-dialog.component';
 import { LiteratureComponent } from './pages/literature/literature.component';
@@ -49,11 +47,16 @@ import {AuthService} from './services/auth.service';
 import { AdminPageComponent } from './pages/administration/admin-page/admin-page.component';
 import { AddNewSectionComponent } from './pages/administration/admin-page/dialogs/add-new-section/add-new-section.component';
 import { EditSectionComponent } from './pages/administration/admin-page/dialogs/edit-section/edit-section.component';
+import { AddProgramComponent } from './pages/administration/admin-page/dialogs/add-program/add-program.component';
+import { EditProgramComponent } from './pages/administration/admin-page/dialogs/edit-program/edit-program.component';
+import { QuestionComponent } from './pages/administration/admin-page/question/question.component';
+import { AddQuestionComponent } from './pages/administration/admin-page/question/dialogs/add-question/add-question.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { DialogQuestionComponent } from './pages/administration/admin-page/question/dialogs/dialog-question/dialog-question.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        LoginComponent,
         ShowPageComponent,
         MenuComponent,
         EducationComponent,
@@ -62,7 +65,6 @@ import { EditSectionComponent } from './pages/administration/admin-page/dialogs/
         FormatTimePipe,
         DialogComponent,
         ResultComponent,
-        LkComponent,
         InfoDialogComponent,
         LiteratureComponent,
         OkInformComponent,
@@ -78,6 +80,12 @@ import { EditSectionComponent } from './pages/administration/admin-page/dialogs/
         AdminPageComponent,
         AddNewSectionComponent,
         EditSectionComponent,
+        ProgramComponent,
+        AddProgramComponent,
+        EditProgramComponent,
+        QuestionComponent,
+        AddQuestionComponent,
+        DialogQuestionComponent
     ],
     imports: [
         BrowserModule,
@@ -102,7 +110,8 @@ import { EditSectionComponent } from './pages/administration/admin-page/dialogs/
         MatTabsModule,
         MatSnackBarModule,
         AgGridModule.withComponents([]),
-      KeycloakAngularModule
+        KeycloakAngularModule,
+        MatCheckboxModule
     ],
   providers: [
     AuthGuard,

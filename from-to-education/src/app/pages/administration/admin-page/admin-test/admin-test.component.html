@@ -1,70 +1,109 @@
 <div style="height: 800px">
-  <div class="container" *ngIf="choice == 'section'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addNewSec()">
-      Добавить новый раздел
-    </button>
-  </div>
 
   <ul class="breadcrumb">
     <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="loadSection()">
       <a>Раздел</a>
     </li>
-    <span class="divider"  *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' ">
+    <span class="divider"  *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' ">
       <mat-icon>keyboard_arrow_right</mat-icon></span>
-    <li [ngClass]="{'active': choice == 'route', 'disable':choice != 'route'}"
-        *ngIf="choice == 'program' || choice == 'route' || choice == 'currentProgram' "
-        (click)="clickRoute()">
-      <a>{{currentSec}}</a>
+    <li [ngClass]="{'active': choice == 'courses', 'disable':choice != 'courses'}"
+        *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' "
+        (click)="loadCourses(this.currentSec)">
+      <a>{{this.currentSec.name}}</a>
     </li>
     <span class="divider" *ngIf="choice == 'program' || choice == 'currentProgram' ">
       <mat-icon >keyboard_arrow_right</mat-icon>
     </span>
     <li [ngClass]="{'active': choice == 'program', 'disable':choice != 'program'}"
         *ngIf="choice == 'program'|| choice == 'currentProgram'" (click)="clickProgram()">
-      Программы обучения</li>
+      <a>{{this.currentCourse.name}}</a></li>
     <span class="divider" *ngIf="choice == 'currentProgram' ">/</span>
     <li [ngClass]="{'active': choice == 'currentProgram', 'disable':choice != 'currentProgram'}"
         *ngIf="choice == 'currentProgram' ">
       {{nameProgram}}</li>
   </ul>
 
+  <div class="container" *ngIf="choice == 'section'">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2"
+            (click)="addNewSec('section')">
+      Добавить новый раздел
+    </button>
+  </div>
+
+  <div class="container" *ngIf="choice == 'courses'">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addNewSec('courses')">
+      Добавить новое направление
+    </button>
+  </div>
+
+  <div class="container" *ngIf="choice == 'program'">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addProgram()">
+      Добавить новую программу
+    </button>
+  </div>
 
   <!--Разделы-->
   <div class="flex" *ngIf="choice == 'section'">
-    <mat-card class="item"  *ngFor="let item of program " (click)="choiceRoute(item)">
+    <mat-card class="item"  *ngFor="let item of program ">
       <div class="title">{{item.name}}</div>
       <div class="about">
         <div>{{item.description}} </div>
       </div>
-      <div class="containerbtn" *ngIf="choice == 'section'">
-        <button mat-raised-button style="background:  #146525; color: white" (click)="editSec(item)">
+      <div class="containerbtn" >
+        <button mat-raised-button class="green-btn-card" (click)="editSec(item, 'section')">
           Редактировать
         </button>
-        <button mat-raised-button style="background:  #146525; color: white; margin:0 10px " (click)="addNewSec()">
+        <button mat-raised-button class="green-btn-card" (click)="loadCourses(item)">
           Подробнее
+        </button>
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteSec(item)">
+          Удалить
         </button>
       </div>
     </mat-card>
   </div>
 
   <!--Направления-->
-  <div class="flex" *ngIf="choice == 'route'">
-    <div class="item"   *ngFor="let item of program " (click)="choiceProgram(item)">
+  <div class="flex" *ngIf="choice == 'courses'">
+    <mat-card class="item"  *ngFor="let item of program ">
       <div class="title">{{item.name}}</div>
       <div class="about">
         <div>{{item.description}} </div>
       </div>
-    </div>
+      <div class="containerbtn">
+        <button mat-raised-button class="green-btn-card" (click)="editSec(item, 'courses')">
+          Редактировать
+        </button>
+        <button mat-raised-button class="green-btn-card" (click)="loadProgram(item)">
+          Подробнее
+        </button>
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteCourses(item)">
+          Удалить
+        </button>
+
+      </div>
+    </mat-card>
   </div>
 
   <!--Программа обучения-->
   <div class="flex" *ngIf="choice == 'program'">
-    <div class="item"   *ngFor="let item of program">
+    <mat-card class="item"  *ngFor="let item of program ">
       <div class="title">{{item.name}}</div>
       <div class="about">
-        <button mat-raised-button style="background:  #146525; color: white"(click)="test(item)">Пройти тестирование</button>
+        <div>{{item.description}} </div>
       </div>
-    </div>
+      <div class="containerbtn">
+        <button mat-raised-button class="green-btn-card" (click)="editProgram(item)">
+          Редактировать
+        </button>
+        <button mat-raised-button class="green-btn-card" (click)="question(item.studyProgramId)">
+          Вопросы
+        </button>
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteProgram(item)">
+          Удалить
+        </button>
+      </div>
+    </mat-card>
   </div>
 </div>
 

@@ -34,6 +34,7 @@ public class Course extends PanacheEntityBase {
     private StudySection studySection;
 
     @OneToMany(mappedBy="course", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<StudyProgram> studyPrograms = new HashSet<>();
 
     public Course() {
