@@ -10,7 +10,7 @@ import {MatDialog} from '@angular/material/dialog';
   templateUrl: './education.component.html',
   styleUrls: ['./education.component.css']
 })
-export class EducationComponent implements OnInit, AfterViewInit {
+export class EducationComponent implements OnInit {
 
   eduPrograms = [];
   stat =  'false';
@@ -39,19 +39,15 @@ export class EducationComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private router: Router) { }
 
-  ngAfterViewInit(): void {
-    // this.stat = this.auth.getSuper();
-  }
-
   ngOnInit(): void {
-    this.restService.get('get_programs', {
+    this.restService.get('prof/user/programs', {
     }).subscribe(
       result => {
         console.log(result);
-        this.eduPrograms = result.programs;
+        this.eduPrograms = result.program;
         this.eduPrograms.map(v => {
           v.panelOpenState = false;
-          if (v.is_complete === true) {
+          if (v.complete === true) {
             v.color = '#2ca632';
           } else {
             v.color = '#5ecdb4';

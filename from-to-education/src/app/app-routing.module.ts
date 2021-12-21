@@ -40,7 +40,7 @@ const routes: Routes = [
     path: 'administration',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['admin'] }
+    data: { roles: ['admin', 'razrab'] }
   },
   {
     path: 'request',

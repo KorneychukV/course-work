@@ -35,14 +35,18 @@ export class AuthGuard extends KeycloakAuthGuard {
         if (!this.roles || this.roles.length === 0) {
           permission = false;
         }
-        if (requiredRoles.every((role) => this.roles.indexOf(role) > -1))
-        {
-          permission = true;
-        } else {
-          permission = false;
-        };
+        permission = false;
+        requiredRoles.map(role => {
+          console.log(role);
+          if (this.roles.indexOf(role) > -1) {
+            permission = true;
+          } else {
+            permission = permission || false;
+          }
+        });
+        console.log(permission);
       }
-      if(!permission){
+      if (!permission){
         this.router.navigate(['/']);
       }
       resolve(permission);

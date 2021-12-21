@@ -24,20 +24,20 @@
   </ul>
 
   <div class="container" *ngIf="choice == 'section'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2"
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission"
             (click)="addNewSec('section')">
       Добавить новый раздел
     </button>
   </div>
 
   <div class="container" *ngIf="choice == 'courses'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addNewSec('courses')">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission" (click)="addNewSec('courses')">
       Добавить новое направление
     </button>
   </div>
 
   <div class="container" *ngIf="choice == 'program'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="addProgram()">
+    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission" (click)="addProgram()">
       Добавить новую программу
     </button>
   </div>
@@ -50,13 +50,13 @@
         <div>{{item.description}} </div>
       </div>
       <div class="containerbtn" >
-        <button mat-raised-button class="green-btn-card" (click)="editSec(item, 'section')">
+        <button mat-raised-button class="green-btn-card" *ngIf="permission" (click)="editSec(item, 'section')">
           Редактировать
         </button>
         <button mat-raised-button class="green-btn-card" (click)="loadCourses(item)">
           Подробнее
         </button>
-        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteSec(item)">
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteSec(item)">
           Удалить
         </button>
       </div>
@@ -71,13 +71,13 @@
         <div>{{item.description}} </div>
       </div>
       <div class="containerbtn">
-        <button mat-raised-button class="green-btn-card" (click)="editSec(item, 'courses')">
+        <button mat-raised-button class="green-btn-card" *ngIf="permission" (click)="editSec(item, 'courses')">
           Редактировать
         </button>
         <button mat-raised-button class="green-btn-card" (click)="loadProgram(item)">
           Подробнее
         </button>
-        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteCourses(item)">
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteCourses(item)">
           Удалить
         </button>
 
@@ -99,7 +99,7 @@
         <button mat-raised-button class="green-btn-card" (click)="question(item.studyProgramId)">
           Вопросы
         </button>
-        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" (click)="deleteProgram(item)">
+        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteProgram(item)">
           Удалить
         </button>
       </div>

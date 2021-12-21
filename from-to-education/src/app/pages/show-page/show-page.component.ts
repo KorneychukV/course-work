@@ -40,21 +40,39 @@ export class ShowPageComponent implements OnInit {
   }
 
   loadProgram(item: any): void{
-    this.restService.post('prof/getPrograms', {
-      courseId: item.courseId
-    }).subscribe(
-      result => {
-        console.log(result);
-        this.program = result.list;
-        this.choice = 'program';
-        this.currentCourse =
-          {
-            name: item.name,
-            courseId: item.courseId
-          };
-      }, err => {
-      }
-    );
+    if (this.authService.getLoggedUser() === undefined) {
+      this.restService.post('prof/getPrograms', {
+        courseId: item.courseId
+      }).subscribe(
+        result => {
+          console.log(result);
+          this.program = result.list;
+          this.choice = 'program';
+          this.currentCourse =
+            {
+              name: item.name,
+              courseId: item.courseId
+            };
+        }, err => {
+        }
+      );
+    } else {
+      this.restService.post('prof/user/getPrograms', {
+        courseId: item.courseId
+      }).subscribe(
+        result => {
+          console.log(result);
+          this.program = result.list;
+          this.choice = 'program';
+          this.currentCourse =
+            {
+              name: item.name,
+              courseId: item.courseId
+            };
+        }, err => {
+        }
+      );
+    }
   }
 
   clickProgram(): void {
@@ -90,7 +108,6 @@ export class ShowPageComponent implements OnInit {
         }, err => {
         }
       );
-
 
       const dialogRef1 = this.dialog.open(OkInformComponent, {
         width: '380px',
