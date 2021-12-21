@@ -10,6 +10,7 @@ import {AddProgramComponent} from '../dialogs/add-program/add-program.component'
 import {EditProgramComponent} from '../dialogs/edit-program/edit-program.component';
 import {InfoDialogComponent} from '../../../../common/info-dialog/info-dialog.component';
 import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.component';
+import {AuthService} from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-admin-test',
@@ -27,12 +28,19 @@ export class AdminTestComponent implements OnInit {
   programs: any = [];
   currentSec: any;
   currentCourse: any;
+  permission = false;
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private router: Router,
+              private authService: AuthService,
               public restService: RestService) { }
 
   ngOnInit(): void {
+    this.authService.getRoles().map(role => {
+      if (role === 'admin') {
+        this.permission = true;
+      }
+    });
     this.loadSection();
   }
 
@@ -238,7 +246,7 @@ export class AdminTestComponent implements OnInit {
     });
   }
 
-  editProgram(item: any) {
+  editProgram(item: any): void {
     const dialogRef = this.dialog.open(EditProgramComponent, {
       width: '460px',
       autoFocus: false,

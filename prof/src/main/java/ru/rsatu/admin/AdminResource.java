@@ -20,6 +20,7 @@ import ru.rsatu.admin.adminPOJO.studySection.add.SectionRequest;
 import ru.rsatu.admin.adminPOJO.studySection.edit.EditSectionRequest;
 import ru.rsatu.common.BaseResponse;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -50,8 +51,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response addStudy(SectionRequest request) {
         BaseResponse response = adminService.addSection(request);
         return Response.ok(response).build();
@@ -66,8 +66,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response deleteStudySection(DeleteSecRequest request)  {
         BaseResponse response = adminService.deleteSection(request);
         return Response.ok(response).build();
@@ -82,8 +81,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response deleteCourses(DeleteCoursesRequest request)  {
         BaseResponse response = adminService.deleteCourses(request);
         return Response.ok(response).build();
@@ -96,8 +94,7 @@ public class AdminResource {
     @GET
     @Path("getSection")
     @Produces("application/json")
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response getStudy(){
         BaseResponse response = adminService.getSection();
         return Response.ok(response).build();
@@ -112,8 +109,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response editSection(EditSectionRequest request){
         BaseResponse response = adminService.editSection(request);
         return Response.ok(response).build();
@@ -128,8 +124,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response addCourse(CourseRequest request){
         BaseResponse response = adminService.addCourse(request);
         return Response.ok(response).build();
@@ -144,8 +139,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response editCourse(EditCourseRequest request){
         BaseResponse response = adminService.editCourse(request);
         return Response.ok(response).build();
@@ -160,9 +154,7 @@ public class AdminResource {
     @Path("getCourses")
     @Produces("application/json")
     @Consumes("application/json")
-//    @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response getCourses(GetAllCourseRequest request){
         BaseResponse response = adminService.getCourse(request);
         return Response.ok(response).build();
@@ -176,9 +168,7 @@ public class AdminResource {
     @Path("getAnswer")
     @Produces("application/json")
     @Consumes("application/json")
-//    @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response getAnswer(GetAnswerRequest request){
         BaseResponse response = adminService.getAnswer(request);
         return Response.ok(response).build();
@@ -193,8 +183,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response addProgram(AddProgramRequest request){
         BaseResponse response = adminService.addProgram(request);
         return Response.ok(response).build();
@@ -209,8 +198,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response addQuestion(AddQuestionRequest request){
         BaseResponse response = adminService.addQuestion(request);
         return Response.ok(response).build();
@@ -225,8 +213,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response deleteQuestion(DeleteQuestionRequest request){
         BaseResponse response = adminService.deleteQuestion(request);
         return Response.ok(response).build();
@@ -241,8 +228,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin"})
     public Response deleteProgram(DeleteProgramRequest request){
         BaseResponse response = adminService.deleteProgram(request);
         return Response.ok(response).build();
@@ -257,8 +243,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response editQuestion(EditQuestionRequest request){
         BaseResponse response = adminService.editQuestion(request);
         return Response.ok(response).build();
@@ -273,8 +258,7 @@ public class AdminResource {
     @Produces("application/json")
     @Consumes("application/json")
     @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response getQuestion(GetQuestionsRequest request){
         BaseResponse response = adminService.getQuestion(request);
         return Response.ok(response).build();
@@ -288,9 +272,7 @@ public class AdminResource {
     @Path("getPrograms")
     @Produces("application/json")
     @Consumes("application/json")
-//    @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response getPrograms(GetAllProgramRequest request){
         BaseResponse response = adminService.getPrograms(request);
         return Response.ok(response).build();
@@ -304,9 +286,7 @@ public class AdminResource {
     @Path("editProgram")
     @Produces("application/json")
     @Consumes("application/json")
-//    @Transactional
-    //todo role
-    //@RolesAllowed({"E_ArchiveAdmins", "E_ArchiveOTD", "E_ArchiveSGT", "NotesManagers"})
+    @RolesAllowed({"admin", "razrab"})
     public Response editPrograms(EditProgramRequest request){
         BaseResponse response = adminService.editPrograms(request);
         return Response.ok(response).build();

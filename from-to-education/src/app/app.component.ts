@@ -47,9 +47,11 @@ export class AppComponent  implements OnInit {
 
   getLk(): void {
     console.log('go lk');
-   const link = this.authService.getRoles().filter(role => {
+    const link = this.authService.getRoles().filter(role => {
       let result = false;
-      if (role === 'admin') {
+
+      if ((role === 'admin') || (role === 'razrab')) {
+        console.log(role);
         this.router.navigate(['/administration']);
         result = true;
       }

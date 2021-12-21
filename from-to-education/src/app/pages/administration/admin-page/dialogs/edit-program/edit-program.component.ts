@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {RestService} from '../../../../../services/rest.service';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
+import {AuthService} from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-edit-program',
@@ -14,14 +15,20 @@ export class EditProgramComponent implements OnInit {
   form: FormGroup;
   err = false;
   errText: string;
+  permission = false;
 
   constructor(public dialogRef: MatDialogRef<EditProgramComponent>,
               public restService: RestService,
               public dialog: MatDialog,
+              public authService: AuthService,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    console.log(this.data);
+    this.authService.getRoles().map(role => {
+      if (role === 'admin') {
+        this.permission = true;
+      }
+    });
     this.form =  new FormGroup({
       name: new FormControl(this.data.name, Validators.required),
       description: new FormControl(this.data.description, Validators.required),
@@ -31,6 +38,9 @@ export class EditProgramComponent implements OnInit {
       triesCount: new FormControl(this.data.triesCount, [Validators.required, Validators.min(1)]),
       price: new FormControl(this.data.price, [Validators.required, Validators.min(1)])
     });
+    if (!this.permission) {
+      this.form.get('price').disable();
+    }
   }
 
   onNoClick(): void {

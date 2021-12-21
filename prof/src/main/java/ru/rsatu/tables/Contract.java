@@ -36,8 +36,9 @@ public class Contract extends PanacheEntityBase {
     public Contract() {
     }
 
-    public Contract(String userID, StudyProgram studyProgram) {
+    public Contract(String userID, StudyProgram studyProgram, boolean isComplete) {
         this.userID = userID;
         this.studyProgram = studyProgram;
+        this.isComplete = isComplete;
     }
 }
