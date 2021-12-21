@@ -4,6 +4,8 @@ import ru.rsatu.admin.AdminService;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
 import ru.rsatu.admin.adminPOJO.programs.getAll.GetAllProgramRequest;
 import ru.rsatu.common.BaseResponse;
+import ru.rsatu.testing.TestingService;
+import ru.rsatu.testing.startTest.startRequest.StartRequest;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,6 +17,9 @@ public class ProfResourse {
 
     @Inject
     ProfService profService;
+
+    @Inject
+    TestingService testingService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -57,6 +62,20 @@ public class ProfResourse {
     @Consumes("application/json")
     public Response getPrograms(GetAllProgramRequest request){
         BaseResponse response = profService.getPrograms(request);
+        return Response.ok(response).build();
+    }
+
+
+    /**
+     * начать тестирование
+     * @return
+     */
+    @POST
+    @Path("startTest")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response startTest(StartRequest request){
+        BaseResponse response = testingService.startTest(request);
         return Response.ok(response).build();
     }
 }

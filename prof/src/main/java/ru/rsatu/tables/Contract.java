@@ -40,4 +40,52 @@ public class Contract extends PanacheEntityBase {
         this.userID = userID;
         this.studyProgram = studyProgram;
     }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public Date getEnrollmentDate() {
+        return enrollmentDate;
+    }
+
+    public void setEnrollmentDate(Date enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
+    }
+
+    public Boolean getComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(Boolean complete) {
+        isComplete = complete;
+    }
+
+    public StudyProgram getStudyProgram() {
+        return studyProgram;
+    }
+
+    public void setStudyProgram(StudyProgram studyProgram) {
+        this.studyProgram = studyProgram;
+    }
+
+    public Set<TestTry> getTestTries() {
+        return testTries;
+    }
+
+    public void setTestTries(Set<TestTry> testTries) {
+        this.testTries = testTries;
+    }
 }

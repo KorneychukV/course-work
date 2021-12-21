@@ -46,4 +46,87 @@ public class TestTry extends PanacheEntityBase {
 
     @OneToMany(mappedBy="testTry",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Set<TryAnswers> tryAnswers = new HashSet<>();
+
+    public TestTry() {
+    }
+
+    public Long getTestTryId() {
+        return testTryId;
+    }
+
+    public void setTestTryId(Long testTryId) {
+        this.testTryId = testTryId;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public Boolean getTest() {
+        return isTest;
+    }
+
+    public void setTest(Boolean test) {
+        isTest = test;
+    }
+
+    public Boolean getFinal() {
+        return isFinal;
+    }
+
+    public void setFinal(Boolean aFinal) {
+        isFinal = aFinal;
+    }
+
+    public Boolean getComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(Boolean complete) {
+        isComplete = complete;
+    }
+
+    public Boolean getSuccessful() {
+        return isSuccessful;
+    }
+
+    public void setSuccessful(Boolean successful) {
+        isSuccessful = successful;
+    }
+
+    public StudyProgram getStudyProgram() {
+        return studyProgram;
+    }
+
+    public void setStudyProgram(StudyProgram studyProgram) {
+        this.studyProgram = studyProgram;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public Set<TryAnswers> getTryAnswers() {
+        return tryAnswers;
+    }
+
+    public void setTryAnswers(Set<TryAnswers> tryAnswers) {
+        this.tryAnswers = tryAnswers;
+    }
 }
