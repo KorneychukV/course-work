@@ -1,4 +1,4 @@
-package ru.rsatu.testing.startTest.startRequest;
+package ru.rsatu.testing.startTest.startTest;
 
 import ru.rsatu.common.BaseResponse;
 
@@ -53,5 +53,16 @@ public class StartResponse extends BaseResponse {
 
     public void setTestTime(Integer testTime) {
         this.testTime = testTime;
+    }
+
+    @Override
+    public String toString() {
+        return "StartResponse{" +
+                "testId=" + testId +
+                ", startDate=" + startDate +
+                ", isTest=" + isTest +
+                ", isFinal=" + isFinal +
+                ", testTime=" + testTime +
+                '}';
     }
 }

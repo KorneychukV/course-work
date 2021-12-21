@@ -129,4 +129,5 @@ public class TestTry extends PanacheEntityBase {
     public void setTryAnswers(Set<TryAnswers> tryAnswers) {
         this.tryAnswers = tryAnswers;
     }
+
 }

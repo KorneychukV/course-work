@@ -1,4 +1,6 @@
-package ru.rsatu.testing.startTest.startRequest;
+package ru.rsatu.testing.startTest.startTest;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class StartRequest {
 
@@ -6,6 +8,11 @@ public class StartRequest {
     private Boolean isFinal;
 
     public StartRequest() {
+    }
+
+    public StartRequest(Long programId, Boolean isFinal) {
+        this.programId = programId;
+        this.isFinal = isFinal;
     }
 
     public Long getProgramId() {
@@ -16,11 +23,12 @@ public class StartRequest {
         this.programId = programId;
     }
 
+    @JsonProperty(value = "isFinal")
     public Boolean getFinal() {
         return isFinal;
     }
 
-    public void setFinal(Boolean aFinal) {
-        isFinal = aFinal;
+    public void setFinal(Boolean isFinal) {
+        this.isFinal = isFinal;
     }
 }
