@@ -54,6 +54,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogQuestionComponent } from './pages/administration/admin-page/question/dialogs/dialog-question/dialog-question.component';
 import { AddLiteratureComponent } from './pages/administration/admin-page/add-literature/add-literature.component';
 import { DialogLiterComponent } from './pages/administration/admin-page/add-literature/dialog-liter/dialog-liter.component';
+import { RazdelComponent } from './common/razdel/razdel.component';
 
 @NgModule({
     declarations: [
@@ -87,7 +88,8 @@ import { DialogLiterComponent } from './pages/administration/admin-page/add-lite
         AddQuestionComponent,
         DialogQuestionComponent,
         AddLiteratureComponent,
-        DialogLiterComponent
+        DialogLiterComponent,
+        RazdelComponent
     ],
     imports: [
         BrowserModule,

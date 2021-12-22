@@ -8,7 +8,7 @@ import {RestService} from '../../../services/rest.service';
 })
 export class AdminPageComponent implements OnInit {
 
-  constructor(private restService: RestService,) { }
+  constructor(private restService: RestService) { }
 
   ngOnInit(): void {
   }

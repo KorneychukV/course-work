@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RestService} from '../../../../services/rest.service';
 import {AddNewSectionComponent} from '../dialogs/add-new-section/add-new-section.component';
@@ -15,7 +15,7 @@ import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.componen
 })
 export class QuestionComponent implements OnInit {
 
-  idProgram: number;
+  @Input() idProgram: number;
   questions: any = [];
   constructor(private router: Router,
               public restService: RestService,
@@ -23,7 +23,6 @@ export class QuestionComponent implements OnInit {
               private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.idProgram = this.activatedRoute.snapshot.params.id;
     this.loadQuestion();
   }
 
@@ -36,10 +35,6 @@ export class QuestionComponent implements OnInit {
       }, err => {
       }
     );
-  }
-
-  back(): void {
-    this.router.navigate(['administration']);
   }
 
   newQuestion(): void{

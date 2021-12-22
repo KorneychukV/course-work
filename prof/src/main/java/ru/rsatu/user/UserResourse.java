@@ -20,7 +20,7 @@ public class UserResourse {
     UserService userService;
 
     /**
-     * получение курсов
+     * покупка
      * @return
      */
     @POST

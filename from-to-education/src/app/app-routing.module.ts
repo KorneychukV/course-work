@@ -62,18 +62,18 @@ const routes: Routes = [
     component: ResultComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path: 'question/:id',
-    component: QuestionComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin', 'razrab'] }
-  },
-  {
-    path: 'add-liter/:id',
-    component: AddLiteratureComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin', 'razrab'] }
-  },
+  // {
+  //   path: 'question/:course/:id',
+  //   component: QuestionComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { roles: ['admin', 'razrab'] }
+  // },
+  // {
+  //   path: 'add-liter/:id',
+  //   component: AddLiteratureComponent,
+  //   canActivate: [AuthGuard],
+  //   data: { roles: ['admin', 'razrab'] }
+  // },
   {
     path: 'literature/:id',
     component: LiteratureComponent,
