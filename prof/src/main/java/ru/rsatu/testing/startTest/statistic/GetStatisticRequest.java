@@ -2,34 +2,34 @@ package ru.rsatu.testing.startTest.statistic;
 
 public class GetStatisticRequest {
 
-    private String lastname;
-    private String firstname;
-    private String thirdname;
+    private String username;
+    private Integer pageNumber;
+    private Integer pageSize;
 
     public GetStatisticRequest() {
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
-    public String getThirdname() {
-        return thirdname;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setThirdname(String thirdname) {
-        this.thirdname = thirdname;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

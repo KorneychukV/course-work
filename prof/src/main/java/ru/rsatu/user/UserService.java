@@ -2,6 +2,7 @@ package ru.rsatu.user;
 
 import io.quarkus.security.identity.SecurityIdentity;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.jboss.resteasy.annotations.cache.NoCache;
 import ru.rsatu.admin.adminPOJO.programs.getAll.GetAllProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.getAll.GetAllProgramsResponse;
 import ru.rsatu.admin.adminPOJO.studySection.getAll.SectionResponse;
@@ -16,6 +17,7 @@ import ru.rsatu.user.userPOJO.program.ProgramsByUserResponse;
 import ru.rsatu.user.userPOJO.program.StudyProgramBuy;
 import ru.rsatu.user.userPOJO.program.StudyProgramByUser;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -38,9 +40,10 @@ public class UserService {
      * Покупка
      * @return
      */
-    public BaseResponse buyProgram(BuyProgramRequest request) {
+    public BaseResponse buyProgram(BuyProgramRequest request, String username) {
+
         StudyProgram program = StudyProgram.findById(request.studyProgramId);
-        Contract contract = new Contract(jwt.getSubject(), program, false);
+        Contract contract = new Contract(jwt.getSubject(), username, program, false);
         contract.persist();
         return new BaseResponse("ok", "Покупкааа");
     }

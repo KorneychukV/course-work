@@ -1,6 +1,7 @@
 package ru.rsatu.user;
 
 import io.quarkus.oidc.common.runtime.OidcCommonConfig;
+import io.quarkus.security.identity.SecurityIdentity;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import ru.rsatu.ProfService;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
@@ -16,8 +17,12 @@ import javax.ws.rs.core.Response;
 
 @Path("/prof/user")
 public class UserResourse {
+
     @Inject
     UserService userService;
+
+    @Inject
+    SecurityIdentity securityIdentity;
 
     /**
      * получение курсов
@@ -30,7 +35,8 @@ public class UserResourse {
     @RolesAllowed({"default-roles-prof"})
     @Transactional
     public Response getCourses(BuyProgramRequest request){
-        BaseResponse response = userService.buyProgram(request);
+        String username = securityIdentity.getPrincipal().getName();
+        BaseResponse response = userService.buyProgram(request, username);
         return Response.ok(response).build();
     }
 

@@ -19,6 +19,9 @@ public class Contract extends PanacheEntityBase {
     @Column(name = "user_id")
     public String userID;
 
+    @Column(name = "username")
+    public String username;
+
     @Column(name = "enrollment_date")
     public Date enrollmentDate;
 
@@ -36,8 +39,9 @@ public class Contract extends PanacheEntityBase {
     public Contract() {
     }
 
-    public Contract(String userID, StudyProgram studyProgram, boolean isComplete) {
+    public Contract(String userID, String username, StudyProgram studyProgram, boolean isComplete) {
         this.userID = userID;
+        this.username = username;
         this.studyProgram = studyProgram;
         this.isComplete = isComplete;
     }
@@ -88,5 +92,13 @@ public class Contract extends PanacheEntityBase {
 
     public void setTestTries(Set<TestTry> testTries) {
         this.testTries = testTries;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

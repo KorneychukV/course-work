@@ -12,6 +12,8 @@ import ru.rsatu.testing.startTest.getQuestion.GetQuestionResponse;
 import ru.rsatu.testing.startTest.startTest.StartRequest;
 import ru.rsatu.testing.startTest.startTest.StartResponse;
 import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
+import ru.rsatu.testing.startTest.statistic.Statistic;
+import ru.rsatu.testing.startTest.statistic.StatisticResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,6 +32,35 @@ public class TestingService {
     EntityManager em;
 
     public BaseResponse getStatistic(GetStatisticRequest request){
+
+        List<Contract> contracts = Contract
+                .find("username like ?1", '%'+request.getUsername()+'%')
+                .list();
+        if (contracts.size() == 0){
+            return new StatisticResponse();
+        }
+
+        List<Statistic> statistics = new ArrayList<>();
+        for (Contract contract: contracts){
+            Statistic temp = new Statistic();
+            temp.setContractId(contract.getContractId());
+            temp.setUsername(contract.username);
+            temp.setProgramId(contract.getStudyProgram().getStudyProgramId());
+            temp.setProgramName(contract.getStudyProgram().getName());
+        }
+
+
+//        List<Object> statistics = em.createQuery("select c.contractId, c.username, sp.studyProgramId, sp.name " +
+//                "from Contract c " +
+//                "   inner join StudyProgram sp on c.studyProgram.studyProgramId = sp.studyProgramId " +
+//                "   inner join TestTry tt on tt.contract.contractId = c.contractId " +
+//                "where c.username like :name ", Object.class)
+//                .setFirstResult(request.getPageSize() * (request.getPageNumber()-1))
+//                .setMaxResults(request.getPageSize())
+//                .setParameter("name", '%'+request.getUsername()+'%')
+//                .getResultList();
+
+
 
         return new BaseResponse();
     }
