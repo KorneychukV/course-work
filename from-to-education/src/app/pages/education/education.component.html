@@ -17,7 +17,7 @@
           </mat-expansion-panel-header>
           <div class = 'flex' >
             <ng-container *ngFor="let but of buttons" >
-              <button mat-raised-button (click)="but.action(prog.id)" class="button" >
+              <button mat-raised-button (click)="but.action(prog.studyProgramId)" class="button" >
                 {{but.name}}</button>
             </ng-container>
           </div>
@@ -43,7 +43,7 @@
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class = 'flex'>
-            <button mat-raised-button (click)="getResult(prog.id)" class="button" >
+            <button mat-raised-button (click)="getResult(prog.studyProgramId)" class="button" >
               Смотреть результат</button>
           </div>
         </mat-expansion-panel>

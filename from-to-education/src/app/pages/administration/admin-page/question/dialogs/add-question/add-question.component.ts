@@ -45,7 +45,6 @@ export class AddQuestionComponent implements OnInit {
       };
       list.push(temp);
     }
-    console.log(list);
     this.restService.post('prof/edu/addQuestion', {
       programId: this.data,
       answerList: list,

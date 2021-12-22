@@ -103,6 +103,10 @@ export class AdminTestComponent implements OnInit {
     this.router.navigate(['question/' + id]);
   }
 
+  literature(id: number): void {
+    this.router.navigate(['add-liter/' + id]);
+  }
+
   // добавление нового раздела/курса
   addNewSec(razdel: string): void{
     let data;

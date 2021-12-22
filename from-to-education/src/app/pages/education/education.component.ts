@@ -82,7 +82,8 @@ export class EducationComponent implements OnInit {
     });
   }
 
-  getLiterature(id: number) {
+  getLiterature(id: number): void {
+    console.log(id);
     this.router.navigate(['literature/' + id]);
   }
 

@@ -6,6 +6,7 @@ import ru.rsatu.admin.adminPOJO.course.DeleteCoursesRequest;
 import ru.rsatu.admin.adminPOJO.course.add.CourseRequest;
 import ru.rsatu.admin.adminPOJO.course.edit.EditCourseRequest;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
+import ru.rsatu.admin.adminPOJO.literature.AddLiterRequest;
 import ru.rsatu.admin.adminPOJO.programs.DeleteProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.add.AddProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.edit.EditProgramRequest;
@@ -289,6 +290,21 @@ public class AdminResource {
     @RolesAllowed({"admin", "razrab"})
     public Response editPrograms(EditProgramRequest request){
         BaseResponse response = adminService.editPrograms(request);
+        return Response.ok(response).build();
+    }
+
+    /**
+     * добавление литературы
+     * @return
+     */
+    @POST
+    @Path("addLiter")
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Transactional
+    @RolesAllowed({"admin", "razrab"})
+    public Response addLiter(AddLiterRequest request){
+        BaseResponse response = adminService.addLiter(request);
         return Response.ok(response).build();
     }
 }
