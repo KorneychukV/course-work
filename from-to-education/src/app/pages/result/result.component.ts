@@ -18,14 +18,8 @@ export class ResultComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    // this.restService.getLocalReportData('data.json')
-    //   .then(data => {
-    //     console.log(data);
-    //     this.result = data;
-    //   })
-    //   .catch(e => console.log(e));
-    this.restService.post('get_result', {
-      'test_id': this.activatedRoute.snapshot.params.id
+    this.restService.post('prof/get_result', {
+      testId: this.activatedRoute.snapshot.params.id
     }).subscribe(
       res => {
         console.log(res);

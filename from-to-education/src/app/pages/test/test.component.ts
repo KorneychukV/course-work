@@ -35,13 +35,13 @@ export class TestComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.path = environment.picUrl;
     console.log(this.activatedRoute.snapshot.params.id);
-    this.restService.post('start_test', {
-      "program_id": this.activatedRoute.snapshot.params.id,
-      "is_final": this.activatedRoute.snapshot.params.type
+    this.restService.post('prof/start_test', {
+      programId: this.activatedRoute.snapshot.params.id,
+      isFinal: this.activatedRoute.snapshot.params.type
     }).subscribe(
       result => {
-        this.testId = result.test.test_id;
-        this.counter = result.test.test_time * 60;
+        this.testId = result.testId;
+        this.counter = result.testTime * 60;
         this.getQuestion();
       }, err => {
         console.log(err);
@@ -78,7 +78,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
   onClick(answer: any) {
     this.next = false;
-    this.question.answers.filter(ans => {
+    this.question.answer.filter(ans => {
       ans.select = ans === answer;
     });
   }
@@ -99,20 +99,21 @@ export class TestComponent implements OnInit, OnDestroy {
   }
 
   getQuestion() {
-    this.restService.post('get_question', {
-      'test_id': this.testId
+    this.restService.post('prof/get_question', {
+      testId: this.testId
     }).subscribe(
       res => {
         console.log(res);
         this.progress = (100 / res.test.amount) * res.test.curr;
         this.question = res.test;
-        this.tryAnswerId = res.test.try_answer_id;
+        this.tryAnswerId = res.test.tryAnswerId;
+        this.question.answer.filter(ans => {
+          ans.select = false;
+        });
       }, error => {
       }
     );
-    this.question.answers.filter(ans => {
-      ans.select = false;
-    });
+
   }
 
   getResult() {
@@ -122,12 +123,12 @@ export class TestComponent implements OnInit, OnDestroy {
 
   putAnswer(){
     this.next = true;
-    this.question.answers.map(ans => {
+    this.question.answer.map(ans => {
       console.log(ans);
       if (ans.select === true) {
-        this.restService.post('put_answer', {
-          "answer_id": ans.id,
-          "try_answer_id": this.tryAnswerId
+        this.restService.post('prof/put_answer', {
+          answerId: ans.answerId,
+          tryAnswerId: this.tryAnswerId
         }).subscribe(
           result => {
             this.getQuestion();

@@ -128,7 +128,7 @@ public class ProfResourse {
     }
 
     /**
-     * записать ответ
+     * получить результат
      * @return
      */
     @POST

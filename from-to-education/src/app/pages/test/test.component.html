@@ -12,17 +12,14 @@
     </div>
     <div>
       <mat-progress-bar class="mt-2" id="progress" mode="determinate" value="{{this.progress}}"></mat-progress-bar>
-      <div id="question" >{{question.question_text}}</div>
-      <div *ngIf="question.question_pic !== null" class="image-cell">
-        <img id="pic" src= "{{path}}/media{{question.question_pic}}">
-      </div>
+      <div id="question" >{{question.questionText}}</div>
 
     </div>
 
-    <ng-container *ngFor="let prog of question.answers">
+    <ng-container *ngFor="let prog of question.answer">
       <button mat-stroked-button (click)="onClick(prog)" class="button"
               [ngClass]="{'blue' : prog.select, 'red': !prog.select}">
-        {{prog.answer_text}}</button>
+        {{prog.answerText}}</button>
     </ng-container>
 
     <div style="margin-right: 10%; margin-left: 10%" class="mt-3">
