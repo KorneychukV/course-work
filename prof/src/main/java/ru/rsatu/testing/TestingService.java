@@ -36,9 +36,6 @@ public class TestingService {
         List<Contract> contracts = Contract
                 .find("username like ?1", '%'+request.getUsername()+'%')
                 .list();
-        if (contracts.size() == 0){
-            return new StatisticResponse();
-        }
 
         List<Statistic> statistics = new ArrayList<>();
         for (Contract contract: contracts){
@@ -47,22 +44,29 @@ public class TestingService {
             temp.setUsername(contract.username);
             temp.setProgramId(contract.getStudyProgram().getStudyProgramId());
             temp.setProgramName(contract.getStudyProgram().getName());
+            Long testAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long testSuccAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True and is_successful = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long finalAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long finalFailAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True and is_successful = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            temp.setTestAmount(testAmount);
+            temp.setTestSuccAmount(testSuccAmount);
+            temp.setFinal_amount(finalAmount);
+            temp.setFinal_fail_amount(finalFailAmount);
+            statistics.add(temp);
         }
 
+        StatisticResponse statisticResponse = new StatisticResponse();
+        statisticResponse.setStatistics(statistics);
 
-//        List<Object> statistics = em.createQuery("select c.contractId, c.username, sp.studyProgramId, sp.name " +
-//                "from Contract c " +
-//                "   inner join StudyProgram sp on c.studyProgram.studyProgramId = sp.studyProgramId " +
-//                "   inner join TestTry tt on tt.contract.contractId = c.contractId " +
-//                "where c.username like :name ", Object.class)
-//                .setFirstResult(request.getPageSize() * (request.getPageNumber()-1))
-//                .setMaxResults(request.getPageSize())
-//                .setParameter("name", '%'+request.getUsername()+'%')
-//                .getResultList();
-
-
-
-        return new BaseResponse();
+        return statisticResponse;
     }
 
     public BaseResponse getResult(GetResultRequest request) {
@@ -85,6 +89,8 @@ public class TestingService {
                 contract.setComplete(true);
                 contract.persist();
             }
+        } else {
+            testTry.setSuccessful(false);
         }
         testTry.setEndDate(new Date());
         testTry.persist();

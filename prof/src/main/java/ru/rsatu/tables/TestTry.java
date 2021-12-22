@@ -45,6 +45,7 @@ public class TestTry extends PanacheEntityBase {
     public Contract contract;
 
     @OneToMany(mappedBy="testTry",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     public Set<TryAnswers> tryAnswers = new HashSet<>();
 
     public TestTry() {
