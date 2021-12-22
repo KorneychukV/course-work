@@ -11,6 +11,7 @@ import ru.rsatu.testing.startTest.getQuestion.GetQuestionRequest;
 import ru.rsatu.testing.startTest.getQuestion.GetQuestionResponse;
 import ru.rsatu.testing.startTest.startTest.StartRequest;
 import ru.rsatu.testing.startTest.startTest.StartResponse;
+import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,6 +28,11 @@ public class TestingService {
 //    JsonWebToken jwt;
     @Inject
     EntityManager em;
+
+    public BaseResponse getStatistic(GetStatisticRequest request){
+
+        return new BaseResponse();
+    }
 
     public BaseResponse getResult(GetResultRequest request) {
         TestTry testTry = TestTry.findById(request.getTestId());
@@ -61,8 +67,8 @@ public class TestingService {
             tempResult.setGivenAnswerId(tryAnswer.getAnswer().answerId);
             tempResult.setGivenAnswerText(tryAnswer.getAnswer().answerText);
             Answer rightAnswer = em.createQuery("select a " +
-                    "from Answer a " +
-                    "   inner join TryAnswers ta on ta.answer.answerId = a.answerId " +
+                    "from TryAnswers ta " +
+                    "   inner join Answer a on ta.question.questionId = a.question.questionId " +
                     "where ta.tryAnswersId = :taid and a.isRight = true ", Answer.class)
                     .setParameter("taid", tryAnswer.getTryAnswersId())
                     .getSingleResult();
@@ -154,7 +160,7 @@ public class TestingService {
 //                jwt.getSubject(), sp.getStudyProgramId(), false).singleResult();
                 temp_user_id, sp.getStudyProgramId(), false).singleResult();
 
-        // Сделать незавершенные - заверщенными
+        // Сделать незавершенные - завершенными
         List<TestTry> unfinished = TestTry.find("studyProgramId = ?1 and contractId = ?2 and is_complete = ?3",
                 sp.getStudyProgramId(), contract.getContractId(), false).list();
         if (unfinished.size() > 0) {
@@ -184,13 +190,18 @@ public class TestingService {
             return new BaseResponse("error","Потрачены все попытки прохождения итогового теста");
         }
 
+        StudyProgram studyProgram = StudyProgram.findById(request.getProgramId());
+        int testQuestionCount = studyProgram.questionNums;
         List<Question> questions = Question.find("studyProgramId = ?1", sp.getStudyProgramId()).list();
-        int question_count = questions.size();
-        Random random = new Random();
-        Set<Integer> unique = new HashSet<>();
-        for (int i = 0; i < question_count; i++) {
-//            TODO проверить количество в конце
-            unique.add(random.nextInt(question_count));
+        int questionCount = questions.size();
+        if (questionCount < testQuestionCount) {
+            return new BaseResponse("error","Не хватает вопросов.");
+        }
+
+        Collections.shuffle(questions);
+        List<Question> testQuestions = new ArrayList<>();
+        for (int i = 0; i < testQuestionCount; i++) {
+            testQuestions.add(questions.get(i));
         }
 
         TestTry newTestTry = new TestTry();
@@ -202,9 +213,9 @@ public class TestingService {
         newTestTry.persist();
 
         int npp = 1;
-        for (int i: unique){
+        for (Question testQuestion: testQuestions){
             TryAnswers tryAnswer = new TryAnswers();
-            tryAnswer.setQuestion(questions.get(i));
+            tryAnswer.setQuestion(testQuestion);
             tryAnswer.setTestTry(newTestTry);
             tryAnswer.setNpp(npp);
             tryAnswer.persist();
