@@ -39,7 +39,43 @@ public class Answer extends PanacheEntityBase {
         this.question = question;
     }
 
+    public Long getAnswerId() {
+        return answerId;
+    }
 
+    public void setAnswerId(Long answerId) {
+        this.answerId = answerId;
+    }
 
+    public String getAnswerText() {
+        return answerText;
+    }
 
+    public void setAnswerText(String answerText) {
+        this.answerText = answerText;
+    }
+
+    public Boolean getRight() {
+        return isRight;
+    }
+
+    public void setRight(Boolean right) {
+        isRight = right;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Set<TryAnswers> getTryAnswers() {
+        return tryAnswers;
+    }
+
+    public void setTryAnswers(Set<TryAnswers> tryAnswers) {
+        this.tryAnswers = tryAnswers;
+    }
 }
