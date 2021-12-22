@@ -1,6 +1,7 @@
 package ru.rsatu;
 
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
+import ru.rsatu.admin.adminPOJO.programs.GetProgramIdRequest;
 import ru.rsatu.admin.adminPOJO.programs.getAll.GetAllProgramRequest;
 import ru.rsatu.common.BaseResponse;
 import ru.rsatu.testing.TestingService;
@@ -53,6 +54,19 @@ public class ProfResourse {
     @Consumes("application/json")
     public Response getCourses(GetAllCourseRequest request){
         BaseResponse response = profService.getCourse(request);
+        return Response.ok(response).build();
+    }
+
+    /**
+     * получение литературу
+     * @return
+     */
+    @POST
+    @Path("getLiterature")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response getLiterature(GetProgramIdRequest request){
+        BaseResponse response = profService.getLiterature(request);
         return Response.ok(response).build();
     }
 

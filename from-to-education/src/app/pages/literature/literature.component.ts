@@ -15,6 +15,7 @@ export class LiteratureComponent implements OnInit {
   literatures: any;
   status = false;
   displayURL;
+  textSearch: string | undefined;
   constructor(private restService: RestService,
               public dialog: MatDialog,
               private activatedRoute: ActivatedRoute,
@@ -24,17 +25,26 @@ export class LiteratureComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.restService.post('get_literature', {
-      "program_id": this.activatedRoute.snapshot.params.id,
+    this.loadLiterature();
+  }
+
+  loadLiterature(): void{
+    this.restService.post('prof/getLiterature', {
+      studyProgramId: this.activatedRoute.snapshot.params.id,
+      filter: this.textSearch
     }).subscribe(
       result => {
-        this.literatures = result.literature;
+        this.literatures = result.list;
         this.literatures.map( l => {
           l.status = false;
         });
       }, error => {
       }
     );
+  }
+
+  search(): void{
+    this.loadLiterature();
   }
 
   openLink(link: string): void {

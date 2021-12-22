@@ -19,12 +19,6 @@ export class ProgramComponent implements OnInit {
       action: () => {
         this.test();
       }
-    },
-    {
-      name: 'Итоговое тестирование',
-      action: () => {
-        this.finish();
-      }
     }
     ];
 
@@ -36,9 +30,5 @@ export class ProgramComponent implements OnInit {
   test() {
     console.log('test');
     this.router.navigate(['test/' + this.activatedRoute.snapshot.params.id]);
-  }
-
-  finish() {
-    console.log('finish');
   }
 }

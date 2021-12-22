@@ -7,6 +7,7 @@ import ru.rsatu.admin.adminPOJO.course.add.CourseRequest;
 import ru.rsatu.admin.adminPOJO.course.edit.EditCourseRequest;
 import ru.rsatu.admin.adminPOJO.course.getAll.CourseResponse;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
+import ru.rsatu.admin.adminPOJO.literature.AddLiterRequest;
 import ru.rsatu.admin.adminPOJO.programs.DeleteProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.add.AddProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.edit.EditProgramRequest;
@@ -317,5 +318,25 @@ public class AdminService {
                 .list();
         System.out.println(answers.size());
         return new GetAnswerResponse(answers);
+    }
+
+    /**
+     * Добавление литературы
+     * @return
+     */
+    public BaseResponse addLiter(AddLiterRequest request) {
+        try {
+            StudyProgram studyProgram = StudyProgram.findById(request.studyProgramId);
+            StudyProgramLiterature liter = new StudyProgramLiterature();
+            liter.title = request.title;
+            liter.description = request.description;
+            liter.link = request.link;
+            liter.studyProgram = studyProgram;
+            liter.persist();
+            return new BaseResponse("ok", "Литература добавлена");
+        } catch (Exception ex) {
+            logger.error(String.valueOf(ex));
+            return new BaseResponse("error", "Ошибка при добавлении");
+        }
     }
 }

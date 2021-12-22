@@ -11,11 +11,11 @@ import {PageRequestComponent} from './pages/page-request/page-request.component'
 import {StatisticsComponent} from './pages/administration/admin-page/statistics/statistics.component';
 import {FinalProgramComponent} from './pages/final-program/final-program.component';
 import {FinalAdminTestComponent} from './pages/final-admin-test/final-admin-test.component';
-import {WebinarComponent} from './pages/webinar/webinar.component';
 import {AuthGuard} from './services/guard/auth.guard';
 import {AdminPageComponent} from './pages/administration/admin-page/admin-page.component';
 import {AddProgramComponent} from './pages/administration/admin-page/dialogs/add-program/add-program.component';
 import {QuestionComponent} from './pages/administration/admin-page/question/question.component';
+import {AddLiteratureComponent} from './pages/administration/admin-page/add-literature/add-literature.component';
 
 const routes: Routes = [
   { path: '',
@@ -34,7 +34,6 @@ const routes: Routes = [
   {
     path: 'education',
     component: EducationComponent,
-    // canActivate: [AuthGuard]
   },
   {
     path: 'administration',
@@ -45,12 +44,8 @@ const routes: Routes = [
   {
     path: 'request',
     component: PageRequestComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'webinar',
-    component: WebinarComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'razrab'] }
   },
   {
     path: 'program',
@@ -70,7 +65,14 @@ const routes: Routes = [
   {
     path: 'question/:id',
     component: QuestionComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'razrab'] }
+  },
+  {
+    path: 'add-liter/:id',
+    component: AddLiteratureComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['admin', 'razrab'] }
   },
   {
     path: 'literature/:id',

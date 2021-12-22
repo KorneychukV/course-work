@@ -39,7 +39,6 @@ import { FinalProgramComponent } from './pages/final-program/final-program.compo
 import { AdminTestComponent } from './pages/administration/admin-page/admin-test/admin-test.component';
 import { FinalAdminTestComponent } from './pages/final-admin-test/final-admin-test.component';
 import { MatSnackBarModule} from '@angular/material/snack-bar';
-import { WebinarComponent } from './pages/webinar/webinar.component';
 import {initializeKeycloak} from './services/keycloak-init.factory';
 import {KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService} from 'keycloak-angular';
 import {AuthGuard} from './services/guard/auth.guard';
@@ -53,6 +52,8 @@ import { QuestionComponent } from './pages/administration/admin-page/question/qu
 import { AddQuestionComponent } from './pages/administration/admin-page/question/dialogs/add-question/add-question.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { DialogQuestionComponent } from './pages/administration/admin-page/question/dialogs/dialog-question/dialog-question.component';
+import { AddLiteratureComponent } from './pages/administration/admin-page/add-literature/add-literature.component';
+import { DialogLiterComponent } from './pages/administration/admin-page/add-literature/dialog-liter/dialog-liter.component';
 
 @NgModule({
     declarations: [
@@ -76,7 +77,6 @@ import { DialogQuestionComponent } from './pages/administration/admin-page/quest
         FinalProgramComponent,
         AdminTestComponent,
         FinalAdminTestComponent,
-        WebinarComponent,
         AdminPageComponent,
         AddNewSectionComponent,
         EditSectionComponent,
@@ -85,7 +85,9 @@ import { DialogQuestionComponent } from './pages/administration/admin-page/quest
         EditProgramComponent,
         QuestionComponent,
         AddQuestionComponent,
-        DialogQuestionComponent
+        DialogQuestionComponent,
+        AddLiteratureComponent,
+        DialogLiterComponent
     ],
     imports: [
         BrowserModule,

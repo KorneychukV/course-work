@@ -99,6 +99,9 @@
         <button mat-raised-button class="green-btn-card" (click)="question(item.studyProgramId)">
           Вопросы
         </button>
+        <button mat-raised-button class="green-btn-card" (click)="literature(item.studyProgramId)">
+          Литература
+        </button>
         <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteProgram(item)">
           Удалить
         </button>
