@@ -8,6 +8,7 @@ import ru.rsatu.testing.startTest.getResult.GetResultRequest;
 import ru.rsatu.testing.startTest.putAnswer.PutAnswerRequest;
 import ru.rsatu.testing.startTest.getQuestion.GetQuestionRequest;
 import ru.rsatu.testing.startTest.startTest.StartRequest;
+import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -125,4 +126,19 @@ public class ProfResourse {
         BaseResponse response = testingService.getResult(request);
         return Response.ok(response).build();
     }
+
+    /**
+     * получить статистику по студентам
+     * @return
+     */
+    @POST
+    @Path("statistics")
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Transactional
+    public Response getStatistics(GetStatisticRequest request){
+        BaseResponse response = testingService.getStatistic(request);
+        return Response.ok(response).build();
+    }
+
 }
