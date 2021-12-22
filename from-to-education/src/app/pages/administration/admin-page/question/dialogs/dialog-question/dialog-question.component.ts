@@ -36,7 +36,7 @@ export class DialogQuestionComponent implements OnInit {
               answerText: new FormControl(answer.answerText, Validators.required),
               rightAnswer: new FormControl(answer.isRight, Validators.required),
               answerId: new FormControl(answer.answerId, Validators.required),
-              delete: new FormControl(null, Validators.required)
+              delete: new FormControl(null)
             }));
           });
       }, err => {

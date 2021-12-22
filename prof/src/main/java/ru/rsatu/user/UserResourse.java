@@ -25,7 +25,7 @@ public class UserResourse {
     SecurityIdentity securityIdentity;
 
     /**
-     * получение курсов
+     * покупка
      * @return
      */
     @POST

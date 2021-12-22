@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {RestService} from '../../../../services/rest.service';
 import {DialogRequestComponent} from '../../../../common/dialog-request/dialog-request.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AddNewSectionComponent} from '../dialogs/add-new-section/add-new-section.component';
 import {EditSectionComponent} from '../dialogs/edit-section/edit-section.component';
 import {AddProgramComponent} from '../dialogs/add-program/add-program.component';
@@ -28,20 +28,27 @@ export class AdminTestComponent implements OnInit {
   programs: any = [];
   currentSec: any;
   currentCourse: any;
+  currentQuestion: any;
+  currentLit: any;
   permission = false;
   constructor(private formBuilder: FormBuilder,
               public dialog: MatDialog,
               private router: Router,
               private authService: AuthService,
-              public restService: RestService) { }
+              public restService: RestService,
+              private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.authService.getRoles().map(role => {
+   const course = this.activateRoute.snapshot.params.prog;
+   console.log(course);
+   if (course !== course) {
+   }
+   this.authService.getRoles().map(role => {
       if (role === 'admin') {
         this.permission = true;
       }
     });
-    this.loadSection();
+   this.loadSection();
   }
 
   loadProgram(item: any): void{
@@ -99,12 +106,24 @@ export class AdminTestComponent implements OnInit {
     this.router.navigate(['admintest/' + program.id]);
   }
 
-  question(id: number): void {
-    this.router.navigate(['question/' + id]);
+  question(item: any): void {
+    this.currentQuestion =
+      {
+        name: item.name,
+        id: item.studyProgramId
+      };
+    this.choice = 'question';
+    //this.router.navigate(['question/' + this.currentCourse.courseId + '/' + id]);
   }
 
-  literature(id: number): void {
-    this.router.navigate(['add-liter/' + id]);
+  literature(item: any): void {
+    this.currentLit =
+      {
+        name: item.name,
+        id: item.studyProgramId
+      };
+    this.choice = 'liter';
+    // this.router.navigate(['add-liter/' + id]);
   }
 
   // добавление нового раздела/курса

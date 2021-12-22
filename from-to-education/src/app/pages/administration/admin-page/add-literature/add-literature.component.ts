@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RestService} from '../../../../services/rest.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -13,16 +13,14 @@ import {DialogLiterComponent} from './dialog-liter/dialog-liter.component';
 })
 export class AddLiteratureComponent implements OnInit {
 
-  idProgram: number;
   literatures: any;
   textSearch: string | undefined;
+  @Input() idProgram: number;
   constructor(private router: Router,
               public restService: RestService,
-              public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute) { }
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.idProgram = this.activatedRoute.snapshot.params.id;
     this.loadLiterature();
   }
 

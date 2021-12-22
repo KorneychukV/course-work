@@ -28,7 +28,7 @@ export class AddQuestionComponent implements OnInit {
     });
     this.answerList.push(new FormGroup({
       answerText: new FormControl(null, Validators.required),
-      rightAnswer: new FormControl(null, Validators.required)
+      rightAnswer: new FormControl(true, Validators.required)
     }));
   }
 
@@ -80,7 +80,7 @@ export class AddQuestionComponent implements OnInit {
   addAnswer(): void{
     this.answerList.push(new FormGroup({
       answerText: new FormControl(null, Validators.required),
-      rightAnswer: new FormControl(null, Validators.required)
+      rightAnswer: new FormControl(false, Validators.required)
     }));
   }
 
@@ -92,7 +92,6 @@ export class AddQuestionComponent implements OnInit {
   checkParam(): boolean {
     let temp = false;
     for (const item of Object.keys( this.answerList)) {
-      console.log(this.answerList[item].invalid + item);
       temp = (this.answerList[item].invalid || temp);
     }
     return temp;

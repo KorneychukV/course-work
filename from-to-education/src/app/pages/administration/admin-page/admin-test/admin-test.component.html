@@ -4,23 +4,39 @@
     <li [ngClass]="{'active': choice == 'section', 'disable':choice != 'section'}" (click)="loadSection()">
       <a>Раздел</a>
     </li>
-    <span class="divider"  *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' ">
+    <span class="divider"  *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram'
+  || choice == 'question' || choice == 'liter'">
       <mat-icon>keyboard_arrow_right</mat-icon></span>
     <li [ngClass]="{'active': choice == 'courses', 'disable':choice != 'courses'}"
-        *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' "
+        *ngIf="choice == 'program' || choice == 'courses' || choice == 'currentProgram' || choice == 'question'
+    || choice == 'liter'"
         (click)="loadCourses(this.currentSec)">
       <a>{{this.currentSec.name}}</a>
     </li>
-    <span class="divider" *ngIf="choice == 'program' || choice == 'currentProgram' ">
+<!--    //направления-->
+    <span class="divider" *ngIf="choice == 'program' || choice == 'currentProgram' || choice == 'question'
+  || choice == 'liter'">
       <mat-icon >keyboard_arrow_right</mat-icon>
     </span>
     <li [ngClass]="{'active': choice == 'program', 'disable':choice != 'program'}"
-        *ngIf="choice == 'program'|| choice == 'currentProgram'" (click)="clickProgram()">
+        *ngIf="choice == 'program'|| choice == 'currentProgram' || choice == 'question' || choice == 'liter'"
+        (click)="loadProgram(this.currentCourse)">
       <a>{{this.currentCourse.name}}</a></li>
-    <span class="divider" *ngIf="choice == 'currentProgram' ">/</span>
-    <li [ngClass]="{'active': choice == 'currentProgram', 'disable':choice != 'currentProgram'}"
-        *ngIf="choice == 'currentProgram' ">
-      {{nameProgram}}</li>
+<!--    //вопросы-->
+    <span class="divider" *ngIf="choice == 'question' ">
+      <mat-icon >keyboard_arrow_right</mat-icon>
+    </span>
+    <li [ngClass]="{'active': choice == 'question', 'disable':choice != 'question'}"
+        *ngIf="choice == 'question'" (click)="clickProgram()">
+      <a> {{currentQuestion.name}} Вопросы</a></li>
+
+    <!--    //литература-->
+    <span class="divider" *ngIf="choice == 'liter' ">
+      <mat-icon >keyboard_arrow_right</mat-icon>
+    </span>
+    <li [ngClass]="{'active': choice == 'liter', 'disable':choice != 'liter'}"
+        *ngIf="choice == 'liter'" (click)="clickProgram()">
+      <a> {{currentLit.name}} Литература</a></li>
   </ul>
 
   <div class="container" *ngIf="choice == 'section'">
@@ -43,24 +59,26 @@
   </div>
 
   <!--Разделы-->
-  <div class="flex" *ngIf="choice == 'section'">
-    <mat-card class="item"  *ngFor="let item of program ">
-      <div class="title">{{item.name}}</div>
-      <div class="about">
-        <div>{{item.description}} </div>
-      </div>
-      <div class="containerbtn" >
-        <button mat-raised-button class="green-btn-card" *ngIf="permission" (click)="editSec(item, 'section')">
-          Редактировать
-        </button>
-        <button mat-raised-button class="green-btn-card" (click)="loadCourses(item)">
-          Подробнее
-        </button>
-        <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteSec(item)">
-          Удалить
-        </button>
-      </div>
-    </mat-card>
+  <div  *ngIf="choice == 'section'">
+    <div class="flex" >
+      <mat-card class="item"  *ngFor="let item of program ">
+        <div class="title">{{item.name}}</div>
+        <div class="about">
+          <div>{{item.description}} </div>
+        </div>
+        <div class="containerbtn" >
+          <button mat-raised-button class="green-btn-card" *ngIf="permission" (click)="editSec(item, 'section')">
+            Редактировать
+          </button>
+          <button mat-raised-button class="green-btn-card" (click)="loadCourses(item)">
+            Подробнее
+          </button>
+          <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteSec(item)">
+            Удалить
+          </button>
+        </div>
+      </mat-card>
+    </div>
   </div>
 
   <!--Направления-->
@@ -96,10 +114,10 @@
         <button mat-raised-button class="green-btn-card" (click)="editProgram(item)">
           Редактировать
         </button>
-        <button mat-raised-button class="green-btn-card" (click)="question(item.studyProgramId)">
+        <button mat-raised-button class="green-btn-card" (click)="question(item)">
           Вопросы
         </button>
-        <button mat-raised-button class="green-btn-card" (click)="literature(item.studyProgramId)">
+        <button mat-raised-button class="green-btn-card" (click)="literature(item)">
           Литература
         </button>
         <button mat-raised-button style="background:  #f44336; color: white; margin:0 10px" *ngIf="permission" (click)="deleteProgram(item)">
@@ -107,6 +125,15 @@
         </button>
       </div>
     </mat-card>
+  </div>
+
+<!--  литература-->
+  <div *ngIf="choice == 'question'">
+    <app-question [idProgram] = "currentQuestion.id"></app-question>
+  </div>
+
+  <div *ngIf="choice == 'liter'">
+    <app-add-literature [idProgram] = "currentLit.id"></app-add-literature>
   </div>
 </div>
 

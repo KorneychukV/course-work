@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {RestService} from '../../services/rest.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -19,9 +19,7 @@ export class LiteratureComponent implements OnInit {
   constructor(private restService: RestService,
               public dialog: MatDialog,
               private activatedRoute: ActivatedRoute,
-              private router: Router,
-              public sanitizer: DomSanitizer) {
-    this.displayURL = sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/tgbNymZ7vqY');
+              private router: Router,) {
   }
 
   ngOnInit(): void {
