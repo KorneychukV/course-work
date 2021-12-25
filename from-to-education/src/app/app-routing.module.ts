@@ -2,12 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ShowPageComponent} from './pages/show-page/show-page.component';
 import {EducationComponent} from './pages/education/education.component';
-import {ProgramComponent} from './pages/program/program.component';
 import {TestComponent} from './pages/test/test.component';
 import {ResultComponent} from './pages/result/result.component';
 import {LiteratureComponent} from './pages/literature/literature.component';
-import {RequestComponent} from './common/request/request.component';
-import {PageRequestComponent} from './pages/page-request/page-request.component';
 import {StatisticsComponent} from './pages/administration/admin-page/statistics/statistics.component';
 import {FinalProgramComponent} from './pages/final-program/final-program.component';
 import {FinalAdminTestComponent} from './pages/final-admin-test/final-admin-test.component';
@@ -42,17 +39,6 @@ const routes: Routes = [
     data: { roles: ['admin', 'razrab'] }
   },
   {
-    path: 'request',
-    component: PageRequestComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['admin', 'razrab'] }
-  },
-  {
-    path: 'program',
-    component: ProgramComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'test/:id/:type',
     component: TestComponent,
     canActivate: [AuthGuard]
@@ -62,18 +48,6 @@ const routes: Routes = [
     component: ResultComponent,
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'question/:course/:id',
-  //   component: QuestionComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { roles: ['admin', 'razrab'] }
-  // },
-  // {
-  //   path: 'add-liter/:id',
-  //   component: AddLiteratureComponent,
-  //   canActivate: [AuthGuard],
-  //   data: { roles: ['admin', 'razrab'] }
-  // },
   {
     path: 'literature/:id',
     component: LiteratureComponent,

@@ -31,7 +31,6 @@ export class FinalAdminTestComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               private router: Router) { }
   ngOnInit(): void {
-    this.path = environment.picUrl;
     this.restService.post('get_question_admin', {
       "program_id": this.activatedRoute.snapshot.params.id,
       "offset": 0

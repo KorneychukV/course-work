@@ -6,7 +6,7 @@
         <input matInput formControlName="username">
       </mat-form-field>
 
-      <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="search()">
+      <button mat-raised-button class=" mr-2 mt-2 btn-green" (click)="search()">
         Поиск
       </button>
     </div>
@@ -19,14 +19,15 @@
     class="ag-theme-alpine"
     [rowData]="rowData"
     [columnDefs]="columnDefs"
-    [pagination]="true"
     [rowClassRules]="rowClassRules">
   </ag-grid-angular>
-
-  <div class="journal-info-container  mb-2">
-    <button mat-raised-button color="primary" [disabled]="page <= 1" (click)="previousPage()" > << </button>
-    <span class="page-info">Страница {{page}} из {{pageCount}}</span>
-    <button mat-raised-button color="primary" [disabled]="page>= pageCount" (click)="nextPage()" > >></button>
-  </div>
 </div>
+  <div class="journal-info-container  mt-2 ">
+    <button mat-raised-button class="btn-green" [disabled]="page <= 1" (click)="previousPage()" >
+      <mat-icon>keyboard_arrow_left</mat-icon></button>
+    <span class="ms-2 me-2">Страница {{page}} из {{pageCount}}</span>
+    <button mat-raised-button class="btn-green" [disabled]="page>= pageCount" (click)="nextPage()" >
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+  </div>
 </form>

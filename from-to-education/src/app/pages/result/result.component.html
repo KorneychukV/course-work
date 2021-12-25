@@ -8,7 +8,6 @@
   <div class="answer " *ngFor="let ans of result.answers">
     <mat-card>
       <mat-card-title class="title ml-2">
-<!--        <div style="font-size: 1.25rem; font-weight: 500;">Вопрос: </div> -->
         {{ans.questionText}}</mat-card-title>
       <mat-card-content>
         <div *ngIf="ans.rightAnswerId !== ans.givenAnswerId"  class="mt-2 mb-2">

@@ -51,10 +51,6 @@ export class AddLiteratureComponent implements OnInit {
     lit.status = !lit.status;
   }
 
-  fileDownload(link): void {
-    window.open(environment.picUrl + '/media/' +  link, '_blank');
-  }
-
   addLiter(): void{
     const dialogRef = this.dialog.open(DialogLiterComponent, {
       width: '660px',

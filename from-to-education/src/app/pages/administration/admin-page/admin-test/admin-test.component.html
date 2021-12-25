@@ -40,20 +40,20 @@
   </ul>
 
   <div class="container" *ngIf="choice == 'section'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission"
+    <button mat-raised-button class=" mr-2 mt-2 btn-green" *ngIf="permission"
             (click)="addNewSec('section')">
       Добавить новый раздел
     </button>
   </div>
 
   <div class="container" *ngIf="choice == 'courses'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission" (click)="addNewSec('courses')">
+    <button mat-raised-button  class="btn-green mr-2 mt-2" *ngIf="permission" (click)="addNewSec('courses')">
       Добавить новое направление
     </button>
   </div>
 
   <div class="container" *ngIf="choice == 'program'">
-    <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" *ngIf="permission" (click)="addProgram()">
+    <button mat-raised-button class="btn-green mr-2 mt-2" *ngIf="permission" (click)="addProgram()">
       Добавить новую программу
     </button>
   </div>

@@ -2,9 +2,6 @@
   <div class="animate">
     <button mat-icon-button (click)="exit()" id="home-icon" title="Завершить тест"><mat-icon>close</mat-icon></button>
     <div style="margin-top: 5px;">{{counter | formatTime}}
-  <!--    <div class="box">-->
-  <!--      <div class="clock"></div>-->
-  <!--    </div>-->
     </div>
 
     <div>
@@ -13,7 +10,6 @@
     <div>
       <mat-progress-bar class="mt-2" id="progress" mode="determinate" value="{{this.progress}}"></mat-progress-bar>
       <div id="question" >{{question.questionText}}</div>
-
     </div>
 
     <ng-container *ngFor="let prog of question.answer">

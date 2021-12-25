@@ -8,6 +8,7 @@ import java.util.List;
 public class StatisticResponse extends BaseResponse {
 
     List<Statistic> statistics = new ArrayList<>();
+    Long countPage;
 
     public StatisticResponse() {
     }
@@ -18,5 +19,13 @@ public class StatisticResponse extends BaseResponse {
 
     public void setStatistics(List<Statistic> statistics) {
         this.statistics = statistics;
+    }
+
+    public Long getCountPage() {
+        return countPage;
+    }
+
+    public void setCountPage(Long countPage) {
+        this.countPage = countPage;
     }
 }

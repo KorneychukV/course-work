@@ -45,9 +45,12 @@ export class StatisticsComponent implements OnInit {
   search(): void{
     this.restService.post('prof/statistics', {
       username: this.form.get('username').value,
+      pageNumber: this.page - 1,
+      pageSize: 13
     }).subscribe(
       res => {
         this.rowData = res.statistics;
+        this.pageCount = res.countPage;
       }, error => {
       }
     );

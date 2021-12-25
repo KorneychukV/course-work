@@ -39,8 +39,10 @@ export class ShowPageComponent implements OnInit {
     this.loadSection();
   }
 
+  //закгрузка программ
   loadProgram(item: any): void{
     if (this.authService.getLoggedUser() === undefined) {
+      //если пользователь не авторизован
       this.restService.post('prof/getPrograms', {
         courseId: item.courseId
       }).subscribe(
@@ -57,6 +59,7 @@ export class ShowPageComponent implements OnInit {
         }
       );
     } else {
+      //если пользователь не авторизован
       this.restService.post('prof/user/getPrograms', {
         courseId: item.courseId
       }).subscribe(
@@ -97,6 +100,7 @@ export class ShowPageComponent implements OnInit {
     );
   }
 
+  //покупка
   buy(item): void{
     if (this.authService.getLoggedUser() === undefined) {
       this.authService.login();
@@ -109,6 +113,7 @@ export class ShowPageComponent implements OnInit {
         }
       );
 
+      // вызываем диалоговое окно
       const dialogRef1 = this.dialog.open(OkInformComponent, {
         width: '380px',
         data: 'Поздравляю с покупкой'
@@ -129,14 +134,6 @@ export class ShowPageComponent implements OnInit {
       }, err => {
       }
     );
-  }
-
-  test(program: any): void {
-    this.router.navigate(['admintest/' + program.id]);
-  }
-
-  question(id: number): void {
-    this.router.navigate(['question/' + id]);
   }
 
 }

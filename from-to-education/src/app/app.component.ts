@@ -37,10 +37,6 @@ export class AppComponent  implements OnInit {
     this.authService.login();
   }
 
-  openLink(link: string): void {
-    window.open(environment.picUrl + '/media/' +  link, '_blank');
-  }
-
   logout(): void {
    this.authService.logout();
   }

@@ -24,20 +24,4 @@
   <p *ngIf="lit.status" id="false-info-block" class="mt-2 mb-2"
      [ngClass]="'info-block-click'">
     {{lit.description}}</p>
-
-  <div *ngIf="lit.document_url">
-    <button mat-button
-            style="padding: 0;"
-            class="example-margin login"
-            (click)="fileDownload(lit.document_url)"  title="Скачать">
-      Скачать документ
-      <mat-icon>file_download</mat-icon>
-    </button>
-  </div>
-  <div *ngIf="lit.status" id="visor-video">
-    <iframe *ngIf="lit.youtube_link" width="600" height="300" style=" margin-left: auto;display: block;margin-right: auto;"
-            allowfullscreen
-            [src]=sanitizer.bypassSecurityTrustResourceUrl(lit.youtube_link)>
-    </iframe>
-    </div>
 </mat-card>

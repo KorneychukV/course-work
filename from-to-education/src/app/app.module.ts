@@ -18,7 +18,6 @@ import {MenuComponent} from './common/menu/menu.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {CookieModule, CookieService} from 'ngx-cookie';
 import { EducationComponent } from './pages/education/education.component';
-import { ProgramComponent } from './pages/program/program.component';
 import {FormatTimePipe, TestComponent} from './pages/test/test.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DialogComponent } from './pages/test/dialog/dialog.component';
@@ -29,10 +28,8 @@ import { InfoDialogComponent } from './common/info-dialog/info-dialog.component'
 import { LiteratureComponent } from './pages/literature/literature.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { OkInformComponent } from './common/ok-inform/ok-inform.component';
-import { RequestComponent } from './common/request/request.component';
 import { DialogRequestComponent } from './common/dialog-request/dialog-request.component';
 import { PhoneDirective } from './common/directive/phone.directive';
-import { PageRequestComponent } from './pages/page-request/page-request.component';
 import { StatisticsComponent } from './pages/administration/admin-page/statistics/statistics.component';
 import {AgGridModule} from 'ag-grid-angular';
 import { FinalProgramComponent } from './pages/final-program/final-program.component';
@@ -62,7 +59,6 @@ import { RazdelComponent } from './common/razdel/razdel.component';
         ShowPageComponent,
         MenuComponent,
         EducationComponent,
-        ProgramComponent,
         TestComponent,
         FormatTimePipe,
         DialogComponent,
@@ -70,10 +66,8 @@ import { RazdelComponent } from './common/razdel/razdel.component';
         InfoDialogComponent,
         LiteratureComponent,
         OkInformComponent,
-        RequestComponent,
         DialogRequestComponent,
         PhoneDirective,
-        PageRequestComponent,
         StatisticsComponent,
         FinalProgramComponent,
         AdminTestComponent,
@@ -81,7 +75,6 @@ import { RazdelComponent } from './common/razdel/razdel.component';
         AdminPageComponent,
         AddNewSectionComponent,
         EditSectionComponent,
-        ProgramComponent,
         AddProgramComponent,
         EditProgramComponent,
         QuestionComponent,

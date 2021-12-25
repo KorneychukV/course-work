@@ -18,8 +18,7 @@ export class LiteratureComponent implements OnInit {
   textSearch: string | undefined;
   constructor(private restService: RestService,
               public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute,
-              private router: Router,) {
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -49,12 +48,8 @@ export class LiteratureComponent implements OnInit {
     window.open(link);
   }
 
-  clickEvent(lit){
+  clickEvent(lit): void{
     lit.status = !lit.status;
-  }
-
-  fileDownload(link) {
-    window.open(environment.picUrl + '/media/' +  link, '_blank');
   }
 
 }

@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   restUrl: '/rest',
-  picUrl: '/picture',
   keycloakUrl: 'http://localhost:8082/auth',
   keycloak_realm: 'prof',
   keycloak_client_id: 'app-auth'

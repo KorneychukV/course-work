@@ -33,7 +33,6 @@ export class TestComponent implements OnInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.path = environment.picUrl;
     console.log(this.activatedRoute.snapshot.params.id);
     this.restService.post('prof/start_test', {
       programId: this.activatedRoute.snapshot.params.id,
@@ -75,7 +74,7 @@ export class TestComponent implements OnInit, OnDestroy {
       }
     });
   }
-  ngOnDestroy(){
+  ngOnDestroy(): void{
     this.countDown = null;
   }
 
@@ -90,18 +89,17 @@ export class TestComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-
     });
   }
 
-  onClick(answer: any) {
+  onClick(answer: any): void {
     this.next = false;
     this.question.answer.filter(ans => {
       ans.select = ans === answer;
     });
   }
 
-  exit() {
+  exit(): void {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
       width: '380px',
       data: 'Вы действиельно хотите выйти?',
@@ -111,12 +109,13 @@ export class TestComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.router.navigate(["/education"]);
+        this.router.navigate(['/education']);
       }
     });
   }
 
-  getQuestion() {
+  //получение вопросов
+  getQuestion(): void {
     this.restService.post('prof/get_question', {
       testId: this.testId
     }).subscribe(
@@ -133,15 +132,16 @@ export class TestComponent implements OnInit, OnDestroy {
       }, error => {
       }
     );
-
   }
 
-  getResult() {
+  //если отвечаем на последний вопрос
+  getResult(): void {
     this.putAnswer();
     this.router.navigate(['result/' + this.testId]);
   }
 
-  putAnswer(){
+  //отправляем ответы
+  putAnswer(): void{
     this.next = true;
     this.question.answer.map(ans => {
       console.log(ans);
@@ -160,7 +160,7 @@ export class TestComponent implements OnInit, OnDestroy {
 }
 
 @Pipe({
-  name: "formatTime"
+  name: 'formatTime'
 })
 export class FormatTimePipe implements PipeTransform {
   transform(value: number): string {

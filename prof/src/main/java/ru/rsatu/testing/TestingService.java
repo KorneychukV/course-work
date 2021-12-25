@@ -68,6 +68,14 @@ public class TestingService {
         StatisticResponse statisticResponse = new StatisticResponse();
         statisticResponse.setStatistics(statistics);
 
+        Long cnt = Contract
+                .find("username like ?1", '%'+request.getUsername()+'%')
+                .count();
+
+        System.out.println(cnt);
+
+        statisticResponse.setCountPage((long) Math.ceil(cnt / (double) request.getPageSize()));
+
         return statisticResponse;
     }
 
