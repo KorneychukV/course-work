@@ -9,25 +9,22 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
-  width = '100%';
+  width = '50%';
   height = '601px';
   form: FormGroup;
 
   columnDefs = [
-    { headerName: 'Фамилия',
-      field: 'lastname'},
-    { headerName: 'Имя',
-      field: 'firstname' },
-    { headerName: 'Отчество',
-      field: 'thirdname' },
+    { headerName: 'Логин',
+      field: 'username'},
+
     { headerName: 'Название программы',
-      field: 'program_name' },
+      field: 'programName' },
     { headerName: 'Пробное тестирование',
-      field: 'test_amount',
+      field: 'testAmount',
       valueGetter: mergeValueTest
     },
     { headerName: 'Финальное тестирование',
-      field: 'final_amount',
+      field: 'finalAmount',
       valueGetter: mergeValueFinal}
   ];
   public rowData = [];
@@ -38,29 +35,24 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.form =  new FormGroup({
-      "lastname": new FormControl(''),
-      "firstname": new FormControl(''),
-      "thirdname": new FormControl(''),
+      username: new FormControl('')
     });
     this.search();
 
   }
   search(): void{
-    this.restService.post('statistics', {
-      "lastname": this.form.get('lastname').value,
-      "firstname": this.form.get('firstname').value,
-      "thirdname": this.form.get('thirdname').value
+    this.restService.post('prof/statistics', {
+      username: this.form.get('username').value,
     }).subscribe(
       res => {
-        console.log(res.literature);
-        this.rowData = res.statistic;
+        this.rowData = res.statistics;
       }, error => {
       }
     );
   }
 }
 var mergeValueTest = function(params) {
-  return params.node.data.test_succ_amount + '/' + params.node.data.test_amount;
+  return params.node.data.testSuccAmount + '/' + params.node.data.testAmount;
 };
 
 var mergeValueFinal = function(params) {

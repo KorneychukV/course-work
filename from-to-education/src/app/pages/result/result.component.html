@@ -1,7 +1,7 @@
 <div >
   <div class="mb-3 mt-3">
-    <h2 *ngIf="!result.test.is_successful">Тест провален</h2>
-    <h2 *ngIf="result.test.is_successful">Тест пройден</h2>
+    <h2 *ngIf="!result.test.isSuccessful">Тест провален</h2>
+    <h2 *ngIf="result.test.isSuccessful">Тест пройден</h2>
   </div>
 
 
@@ -9,18 +9,18 @@
     <mat-card>
       <mat-card-title class="title ml-2">
 <!--        <div style="font-size: 1.25rem; font-weight: 500;">Вопрос: </div> -->
-        {{ans.question_text}}</mat-card-title>
+        {{ans.questionText}}</mat-card-title>
       <mat-card-content>
-        <div *ngIf="ans.right_answer_id !== ans.given_answer_id"  class="mt-2 mb-2">
-          <p id="false-ans" class="mt-2 mb-2 ml-2"> {{ans.given_answer_text}}</p>
+        <div *ngIf="ans.rightAnswerId !== ans.givenAnswerId"  class="mt-2 mb-2">
+          <p id="false-ans" class="mt-2 mb-2 ml-2"> {{ans.givenAnswerText}}</p>
         </div>
         <div  class="mt-2 mb-2">
-          <p class="mt-2 mb-2 ml-2" id="true-ans">{{ans.right_answer_text}}</p>
+          <p class="mt-2 mb-2 ml-2" id="true-ans">{{ans.rightAnswerText}}</p>
         </div>
         <div class="mt-2 mb-2 "  >
-          <p *ngIf="ans.right_answer_info" id="false-info-block" class="mt-2 mb-2"
+          <p *ngIf="ans.rightAnswerInfo" id="false-info-block" class="mt-2 mb-2"
              [ngClass]="status ? 'info-block-click' : 'info-block'"(click)="clickEvent()">
-            {{ans.right_answer_info}}</p>
+            {{ans.rightAnswerInfo}}</p>
         </div>
       </mat-card-content>
     </mat-card>

@@ -40,6 +40,9 @@ export class TestComponent implements OnInit, OnDestroy {
       isFinal: this.activatedRoute.snapshot.params.type
     }).subscribe(
       result => {
+        if (result.type === 'error') {
+          this.errorMsg(result);
+        }
         this.testId = result.testId;
         this.counter = result.testTime * 60;
         this.getQuestion();
@@ -76,6 +79,21 @@ export class TestComponent implements OnInit, OnDestroy {
     this.countDown = null;
   }
 
+  errorMsg(err: any): void{
+    this.tick = 0;
+    this.router.navigate(['education']);
+    const dialogRef = this.dialog.open(OkInformComponent, {
+      width: '380px',
+      data: err.message,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
+
   onClick(answer: any) {
     this.next = false;
     this.question.answer.filter(ans => {
@@ -104,12 +122,14 @@ export class TestComponent implements OnInit, OnDestroy {
     }).subscribe(
       res => {
         console.log(res);
-        this.progress = (100 / res.test.amount) * res.test.curr;
-        this.question = res.test;
-        this.tryAnswerId = res.test.tryAnswerId;
-        this.question.answer.filter(ans => {
-          ans.select = false;
-        });
+        if ( res.test !== null) {
+          this.progress = (100 / res.test.amount) * res.test.curr;
+          this.question = res.test;
+          this.tryAnswerId = res.test.tryAnswerId;
+          this.question.answer.filter(ans => {
+            ans.select = false;
+          });
+        }
       }, error => {
       }
     );

@@ -147,10 +147,12 @@ export class AdminTestComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      console.log(razdel);
-      if ((razdel === 'section') || result) {
+
+      if ((razdel === 'section') && result) {
+        console.log('sec');
         this.loadSection();
-      } else  if ((razdel === 'courses') || result) {
+      } else  if ((razdel === 'courses') && result) {
+        console.log(razdel);
         this.loadCourses(this.currentSec);
       }
     });

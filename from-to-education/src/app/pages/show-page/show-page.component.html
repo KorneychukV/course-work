@@ -67,8 +67,9 @@
         Купить
       </button>
 
-      <button *ngIf="item.contractId !== null && item.contractId !== undefined" mat-raised-button style="background:  #c9c9f7; color: white; margin:0 10px">
-        Куплено
+      <button *ngIf="item.contractId !== null && item.contractId !== undefined" mat-raised-button
+              style="background:  #c9c9f7; color: white; margin:0 10px" disabled="true">
+        Куплено  <mat-icon>check_circle_outline</mat-icon>
       </button>
     </div>
   </div>

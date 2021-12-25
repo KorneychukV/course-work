@@ -1,5 +1,6 @@
 package ru.rsatu.testing;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import ru.rsatu.common.BaseResponse;
 import ru.rsatu.tables.*;
 import ru.rsatu.testing.startTest.getResult.GetResultRequest;
@@ -26,8 +27,8 @@ import static java.util.Collections.shuffle;
 @ApplicationScoped
 public class TestingService {
 
-//    @Inject
-//    JsonWebToken jwt;
+    @Inject
+    JsonWebToken jwt;
     @Inject
     EntityManager em;
 
@@ -191,11 +192,11 @@ public class TestingService {
     public BaseResponse startTest(StartRequest request) {
         StudyProgram sp = StudyProgram.findById(request.getProgramId());
 
-        String temp_user_id = "360f4169-6812-4688-a1fd-228a874bdf04";
+//        String temp_user_id = "360f4169-6812-4688-a1fd-228a874bdf04";
 
         Contract contract = Contract.find("user_id = ?1 and studyProgramId = ?2 and is_complete = ?3",
-//                jwt.getSubject(), sp.getStudyProgramId(), false).singleResult();
-                temp_user_id, sp.getStudyProgramId(), false).singleResult();
+                jwt.getSubject(), sp.getStudyProgramId(), false).singleResult();
+//                temp_user_id, sp.getStudyProgramId(), false).singleResult();
 
         // Сделать незавершенные - завершенными
         List<TestTry> unfinished = TestTry.find("studyProgramId = ?1 and contractId = ?2 and is_complete = ?3",

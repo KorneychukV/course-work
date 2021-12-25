@@ -4,7 +4,7 @@
     <div class="mt-3"></div>
     <mat-accordion >
       <div  *ngFor="let prog of eduPrograms">
-        <mat-expansion-panel  class="panel" *ngIf="!prog.studygroups__contract__is_complete"
+        <mat-expansion-panel  class="panel" *ngIf="!prog.complete"
                               (opened)="prog.panelOpenState = true"
                               (closed)="prog.panelOpenState = false">
           <mat-expansion-panel-header >
@@ -31,7 +31,7 @@
     <div class="mt-3"></div>
     <mat-accordion class="mt-2">
       <div *ngFor="let prog of eduPrograms">
-        <mat-expansion-panel  class="panel"  *ngIf="prog.studygroups__contract__is_complete"
+        <mat-expansion-panel  class="panel"  *ngIf="prog.complete"
                               (opened)="prog.panelOpenState = true"
                               (closed)="prog.panelOpenState = false">
           <mat-expansion-panel-header >

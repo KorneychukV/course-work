@@ -22,8 +22,8 @@ export class ResultComponent implements OnInit {
       testId: this.activatedRoute.snapshot.params.id
     }).subscribe(
       res => {
-        console.log(res);
-        this.result = res.result;
+        this.result = res;
+        console.log(this.result);
       }, error => {
       }
     );

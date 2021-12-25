@@ -2,16 +2,8 @@
   <div >
     <div class="container">
       <mat-form-field class="example-full-width">
-        <mat-label>Фамилия</mat-label>
-        <input matInput formControlName="lastname">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Имя</mat-label>
-        <input matInput formControlName="firstname">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <mat-label>Отчество</mat-label>
-        <input  matInput formControlName="thirdname">
+        <mat-label>Логин</mat-label>
+        <input matInput formControlName="username">
       </mat-form-field>
 
       <button mat-raised-button style="background:  #146525; color: white" class=" mr-2 mt-2" (click)="search()">
@@ -22,7 +14,7 @@
   </div>
 <div style="width: 90%; margin: auto; height: 600px; align-items: center">
   <ag-grid-angular
-    style="width: 1206px; height: 600px; margin-left: auto;
+    style="width: 810px; height: 600px; margin-left: auto;
     margin-right: auto;"
     class="ag-theme-alpine"
     [rowData]="rowData"
