@@ -11,6 +11,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 export class StatisticsComponent implements OnInit {
   width = '50%';
   height = '601px';
+  public page = 1;
+  public pageCount;
   form: FormGroup;
 
   columnDefs = [
@@ -49,6 +51,16 @@ export class StatisticsComponent implements OnInit {
       }, error => {
       }
     );
+  }
+
+  public previousPage(): void {
+    this.page--;
+    this.search();
+  }
+
+  public nextPage(): void {
+    this.page++;
+    this.search();
   }
 }
 var mergeValueTest = function(params) {
