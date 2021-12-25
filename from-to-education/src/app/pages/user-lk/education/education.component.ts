@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {RestService} from '../../services/rest.service';
-import {Program} from '../../classes/Program';
+import {RestService} from '../../../services/rest.service';
+import {Program} from '../../../classes/Program';
 import {ActivatedRoute, Router} from '@angular/router';
-import {InfoDialogComponent} from '../../common/info-dialog/info-dialog.component';
+import {InfoDialogComponent} from '../../../common/info-dialog/info-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 
 @Component({

@@ -3,7 +3,7 @@ import {Subscription, timer} from 'rxjs';
 import {RestService} from '../../services/rest.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogComponent} from '../test/dialog/dialog.component';
+import {DialogComponent} from '../user-lk/test/dialog/dialog.component';
 import {InfoDialogComponent} from '../../common/info-dialog/info-dialog.component';
 import {environment} from '../../../environments/environment';
 

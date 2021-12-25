@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ShowPageComponent} from './pages/show-page/show-page.component';
-import {EducationComponent} from './pages/education/education.component';
-import {TestComponent} from './pages/test/test.component';
-import {ResultComponent} from './pages/result/result.component';
-import {LiteratureComponent} from './pages/literature/literature.component';
+import {EducationComponent} from './pages/user-lk/education/education.component';
+import {TestComponent} from './pages/user-lk/test/test.component';
+import {ResultComponent} from './pages/user-lk/result/result.component';
+import {LiteratureComponent} from './pages/user-lk/literature/literature.component';
 import {StatisticsComponent} from './pages/administration/admin-page/statistics/statistics.component';
-import {FinalProgramComponent} from './pages/final-program/final-program.component';
+import {FinalProgramComponent} from './pages/user-lk/final-program/final-program.component';
 import {FinalAdminTestComponent} from './pages/final-admin-test/final-admin-test.component';
 import {AuthGuard} from './services/guard/auth.guard';
 import {AdminPageComponent} from './pages/administration/admin-page/admin-page.component';

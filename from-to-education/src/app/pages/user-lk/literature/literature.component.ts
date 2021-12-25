@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RestService} from '../../services/rest.service';
+import {RestService} from '../../../services/rest.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-literature',

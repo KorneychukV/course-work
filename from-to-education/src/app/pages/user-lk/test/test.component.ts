@@ -1,13 +1,13 @@
 import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
-import {RestService} from '../../services/rest.service';
+import {RestService} from '../../../services/rest.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription, timer} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogComponent} from './dialog/dialog.component';
-import {InfoDialogComponent} from '../../common/info-dialog/info-dialog.component';
+import {InfoDialogComponent} from '../../../common/info-dialog/info-dialog.component';
 import {error} from 'protractor';
-import {OkInformComponent} from '../../common/ok-inform/ok-inform.component';
-import {environment} from '../../../environments/environment';
+import {OkInformComponent} from '../../../common/ok-inform/ok-inform.component';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-test',
