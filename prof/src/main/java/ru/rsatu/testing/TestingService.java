@@ -35,6 +35,7 @@ public class TestingService {
 
         List<Contract> contracts = Contract
                 .find("username like ?1", '%'+request.getUsername()+'%')
+                .page(request.getPageNumber(), request.getPageSize())
                 .list();
 
         List<Statistic> statistics = new ArrayList<>();

@@ -54,11 +54,11 @@ public class UserService {
      */
     public BaseResponse getPrograms(GetAllProgramRequest request) {
 
-        Query query = em.createQuery("select new ru.rsatu.user.userPOJO.program.StudyProgramBuy(" +
-                "study.studyProgramId, study.name, study.description, study.price,\n" +
-                "                 c.contractId) from StudyProgram study\n" +
-                "                left join Contract c on study.studyProgramId = c.studyProgram.studyProgramId and c.userID like :userid \n" +
-                "                where study.course.courseId = :paramCourseId");
+        Query query = em.createQuery("select new ru.rsatu.user.userPOJO.program.StudyProgramBuy( " +
+                "   study.studyProgramId, study.name, study.description, study.price, c.contractId) " +
+                "from StudyProgram study " +
+                "   left join Contract c on study.studyProgramId = c.studyProgram.studyProgramId and c.userID like :userid " +
+                "where study.course.courseId = :paramCourseId");
         query.setParameter("paramCourseId", request.courseId);
         query.setParameter("userid", jwt.getSubject());
         List<StudyProgramBuy> list = query.getResultList();
