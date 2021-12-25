@@ -43,7 +43,7 @@ export class StatisticsComponent implements OnInit {
 
   }
   search(): void{
-    this.restService.post('prof/statistics', {
+    this.restService.post('prof/edu/statistics', {
       username: this.form.get('username').value,
       pageNumber: this.page - 1,
       pageSize: 13

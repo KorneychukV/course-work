@@ -7,6 +7,7 @@ import ru.rsatu.admin.adminPOJO.course.add.CourseRequest;
 import ru.rsatu.admin.adminPOJO.course.edit.EditCourseRequest;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
 import ru.rsatu.admin.adminPOJO.literature.AddLiterRequest;
+import ru.rsatu.admin.adminPOJO.literature.DeleteLitRequest;
 import ru.rsatu.admin.adminPOJO.programs.DeleteProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.add.AddProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.edit.EditProgramRequest;
@@ -20,6 +21,7 @@ import ru.rsatu.admin.adminPOJO.studySection.DeleteSecRequest;
 import ru.rsatu.admin.adminPOJO.studySection.add.SectionRequest;
 import ru.rsatu.admin.adminPOJO.studySection.edit.EditSectionRequest;
 import ru.rsatu.common.BaseResponse;
+import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -236,6 +238,21 @@ public class AdminResource {
     }
 
     /**
+     * удаление литературы
+     * @return
+     */
+    @POST
+    @Path("deleteLit")
+    @Produces("application/json")
+    @Consumes("application/json")
+    @Transactional
+    @RolesAllowed({"admin", "razrab"})
+    public Response deleteLit(DeleteLitRequest request){
+        BaseResponse response = adminService.deleteLit(request);
+        return Response.ok(response).build();
+    }
+
+    /**
      * изменение вопроса
      * @return
      */
@@ -305,6 +322,21 @@ public class AdminResource {
     @RolesAllowed({"admin", "razrab"})
     public Response addLiter(AddLiterRequest request){
         BaseResponse response = adminService.addLiter(request);
+        return Response.ok(response).build();
+    }
+
+    /**
+     * получить статистику по студентам
+     * @return
+     */
+    @POST
+    @Path("statistics")
+    @Produces("application/json")
+    @Consumes("application/json")
+    @RolesAllowed({"admin", "razrab"})
+    @Transactional
+    public Response getStatistics(GetStatisticRequest request){
+        BaseResponse response = adminService.getStatistic(request);
         return Response.ok(response).build();
     }
 }

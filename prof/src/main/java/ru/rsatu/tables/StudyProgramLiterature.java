@@ -11,7 +11,7 @@ public class StudyProgramLiterature extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "study_program_literature_gen")
-    private Long studyProgramLiteratureId;
+    public Long studyProgramLiteratureId;
 
     @Column(name = "title")
     public String title;
@@ -32,5 +32,7 @@ public class StudyProgramLiterature extends PanacheEntityBase {
     @JoinColumn(name="studyProgramId")
     @JsonIgnore
     public StudyProgram studyProgram;
+
+
 
 }

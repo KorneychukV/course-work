@@ -41,7 +41,7 @@ public class UserResourse {
     }
 
     /**
-     * получение программ обучения главной страницы с отображением купленым программ
+     * получение программ обучения главной страницы с отображением купленых программ
      * @return
      */
     @POST
@@ -59,6 +59,7 @@ public class UserResourse {
      */
     @GET
     @Path("programs")
+    @RolesAllowed({"default-roles-prof"})
     @Produces("application/json")
     public Response programsByUser(){
         BaseResponse response = userService.programsByUser();

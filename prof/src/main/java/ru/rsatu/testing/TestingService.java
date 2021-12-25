@@ -32,53 +32,6 @@ public class TestingService {
     @Inject
     EntityManager em;
 
-    public BaseResponse getStatistic(GetStatisticRequest request){
-
-        List<Contract> contracts = Contract
-                .find("username like ?1", '%'+request.getUsername()+'%')
-                .page(request.getPageNumber(), request.getPageSize())
-                .list();
-
-        List<Statistic> statistics = new ArrayList<>();
-        for (Contract contract: contracts){
-            Statistic temp = new Statistic();
-            temp.setContractId(contract.getContractId());
-            temp.setUsername(contract.username);
-            temp.setProgramId(contract.getStudyProgram().getStudyProgramId());
-            temp.setProgramName(contract.getStudyProgram().getName());
-            Long testAmount = TestTry
-                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True",
-                            temp.getProgramId(), temp.getContractId()).count();
-            Long testSuccAmount = TestTry
-                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True and is_successful = True",
-                            temp.getProgramId(), temp.getContractId()).count();
-            Long finalAmount = TestTry
-                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True",
-                            temp.getProgramId(), temp.getContractId()).count();
-            Long finalFailAmount = TestTry
-                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True and is_successful = True",
-                            temp.getProgramId(), temp.getContractId()).count();
-            temp.setTestAmount(testAmount);
-            temp.setTestSuccAmount(testSuccAmount);
-            temp.setFinal_amount(finalAmount);
-            temp.setFinal_fail_amount(finalFailAmount);
-            statistics.add(temp);
-        }
-
-        StatisticResponse statisticResponse = new StatisticResponse();
-        statisticResponse.setStatistics(statistics);
-
-        Long cnt = Contract
-                .find("username like ?1", '%'+request.getUsername()+'%')
-                .count();
-
-        System.out.println(cnt);
-
-        statisticResponse.setCountPage((long) Math.ceil(cnt / (double) request.getPageSize()));
-
-        return statisticResponse;
-    }
-
     public BaseResponse getResult(GetResultRequest request) {
         TestTry testTry = TestTry.findById(request.getTestId());
         testTry.setComplete(true);

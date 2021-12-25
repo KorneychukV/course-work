@@ -8,6 +8,7 @@ import ru.rsatu.admin.adminPOJO.course.edit.EditCourseRequest;
 import ru.rsatu.admin.adminPOJO.course.getAll.CourseResponse;
 import ru.rsatu.admin.adminPOJO.course.getAll.GetAllCourseRequest;
 import ru.rsatu.admin.adminPOJO.literature.AddLiterRequest;
+import ru.rsatu.admin.adminPOJO.literature.DeleteLitRequest;
 import ru.rsatu.admin.adminPOJO.programs.DeleteProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.add.AddProgramRequest;
 import ru.rsatu.admin.adminPOJO.programs.edit.EditProgramRequest;
@@ -28,6 +29,9 @@ import ru.rsatu.admin.adminPOJO.studySection.edit.EditSectionRequest;
 import ru.rsatu.admin.adminPOJO.studySection.getAll.SectionResponse;
 import ru.rsatu.common.BaseResponse;
 import ru.rsatu.tables.*;
+import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
+import ru.rsatu.testing.startTest.statistic.Statistic;
+import ru.rsatu.testing.startTest.statistic.StatisticResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
@@ -72,7 +76,7 @@ public class AdminService {
             }
         }
 
-        return new BaseResponse("ok", "Раздел обучения создан");
+        return new BaseResponse("ok", "Раздел обучения удален");
     }
 
     /**
@@ -89,7 +93,7 @@ public class AdminService {
             program.persist();
         }
 
-        return new BaseResponse("ok", "Раздел обучения создан");
+        return new BaseResponse("ok", "Направление обучения удалено");
     }
 
 
@@ -102,7 +106,17 @@ public class AdminService {
         StudyProgram program = StudyProgram.findById(request.studyProgramId);
         program.isDeprecated = true;
         program.persist();
-        return new BaseResponse("ok", "Раздел обучения создан");
+        return new BaseResponse("ok", "Программа удалена");
+    }
+
+    /**
+     * Удаление программы
+     * @param request
+     * @return
+     */
+    public BaseResponse deleteLit(DeleteLitRequest request) {
+        StudyProgramLiterature.delete("studyProgramLiteratureId", request.id);
+        return new BaseResponse("ok", "Источник удален");
     }
 
 
@@ -142,7 +156,7 @@ public class AdminService {
         StudySection studySection = StudySection.findById(request.getStudySectionId());
         newCourse.setStudySection(studySection);
         newCourse.persist();
-        return new BaseResponse("ok", "Курс создан");
+        return new BaseResponse("ok", "Направление создано");
     }
 
     /**
@@ -284,11 +298,11 @@ public class AdminService {
     }
 
     /**
-     * Получение всех курсов
+     * Получение всех программ
      * @return
      */
     public BaseResponse getPrograms(GetAllProgramRequest request) {
-        List<StudyProgram> allPrograms = StudyProgram.find("courseId = ?1 order by studyProgramId", request.getCourseId())
+        List<StudyProgram> allPrograms = StudyProgram.find("courseId = ?1 and isDeprecated = false order by studyProgramId", request.getCourseId())
                 .list();
         return new GetAllProgramsResponse(allPrograms.size(), allPrograms);
     }
@@ -316,7 +330,6 @@ public class AdminService {
         List<ru.rsatu.tables.Answer> answers = ru.rsatu.tables.Answer
                 .find("questionId = ?1 order by answerId", request.getQuestionId())
                 .list();
-        System.out.println(answers.size());
         return new GetAnswerResponse(answers);
     }
 
@@ -338,5 +351,49 @@ public class AdminService {
             logger.error(String.valueOf(ex));
             return new BaseResponse("error", "Ошибка при добавлении");
         }
+    }
+
+    public BaseResponse getStatistic(GetStatisticRequest request){
+
+        List<Contract> contracts = Contract
+                .find("username like ?1", '%'+request.getUsername()+'%')
+                .page(request.getPageNumber(), request.getPageSize())
+                .list();
+
+        List<Statistic> statistics = new ArrayList<>();
+        for (Contract contract: contracts){
+            Statistic temp = new Statistic();
+            temp.setContractId(contract.getContractId());
+            temp.setUsername(contract.username);
+            temp.setProgramId(contract.getStudyProgram().getStudyProgramId());
+            temp.setProgramName(contract.getStudyProgram().getName());
+            Long testAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long testSuccAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_test = True and is_successful = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long finalAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            Long finalFailAmount = TestTry
+                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True and is_successful = True",
+                            temp.getProgramId(), temp.getContractId()).count();
+            temp.setTestAmount(testAmount);
+            temp.setTestSuccAmount(testSuccAmount);
+            temp.setFinal_amount(finalAmount);
+            temp.setFinal_fail_amount(finalFailAmount);
+            statistics.add(temp);
+        }
+
+        StatisticResponse statisticResponse = new StatisticResponse();
+        statisticResponse.setStatistics(statistics);
+
+        Long cnt = Contract
+                .find("username like ?1", '%'+request.getUsername()+'%')
+                .count();
+        statisticResponse.setCountPage((long) Math.ceil(cnt / (double) request.getPageSize()));
+
+        return statisticResponse;
     }
 }

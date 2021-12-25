@@ -11,6 +11,7 @@ import ru.rsatu.testing.startTest.getQuestion.GetQuestionRequest;
 import ru.rsatu.testing.startTest.startTest.StartRequest;
 import ru.rsatu.testing.startTest.statistic.GetStatisticRequest;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
@@ -65,6 +66,7 @@ public class ProfResourse {
     @Path("getLiterature")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"default-roles-prof"})
     public Response getLiterature(GetProgramIdRequest request){
         BaseResponse response = profService.getLiterature(request);
         return Response.ok(response).build();
@@ -92,6 +94,7 @@ public class ProfResourse {
     @Path("start_test")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"default-roles-prof"})
     @Transactional
     public Response startTest(StartRequest request){
         BaseResponse response = testingService.startTest(request);
@@ -107,6 +110,7 @@ public class ProfResourse {
     @Path("get_question")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"default-roles-prof"})
     @Transactional
     public Response getQuestion(GetQuestionRequest request){
         BaseResponse response = testingService.getQuestion(request);
@@ -121,6 +125,7 @@ public class ProfResourse {
     @Path("put_answer")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"default-roles-prof"})
     @Transactional
     public Response putAnswer(PutAnswerRequest request){
         BaseResponse response = testingService.putAnswer(request);
@@ -135,24 +140,12 @@ public class ProfResourse {
     @Path("get_result")
     @Produces("application/json")
     @Consumes("application/json")
+    @RolesAllowed({"default-roles-prof"})
     @Transactional
     public Response getResult(GetResultRequest request){
         BaseResponse response = testingService.getResult(request);
         return Response.ok(response).build();
     }
 
-    /**
-     * получить статистику по студентам
-     * @return
-     */
-    @POST
-    @Path("statistics")
-    @Produces("application/json")
-    @Consumes("application/json")
-    @Transactional
-    public Response getStatistics(GetStatisticRequest request){
-        BaseResponse response = testingService.getStatistic(request);
-        return Response.ok(response).build();
-    }
 
 }

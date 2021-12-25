@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {environment} from '../../../../../environments/environment';
 import {AddQuestionComponent} from '../question/dialogs/add-question/add-question.component';
 import {DialogLiterComponent} from './dialog-liter/dialog-liter.component';
+import {InfoDialogComponent} from '../../../../common/info-dialog/info-dialog.component';
+import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.component';
 
 @Component({
   selector: 'app-add-literature',
@@ -49,6 +51,36 @@ export class AddLiteratureComponent implements OnInit {
 
   clickEvent(lit): void{
     lit.status = !lit.status;
+  }
+
+  deletelit(item: any): void{
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      width: '380px',
+      data: 'Вы действиельно хотите удалить источник?',
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.restService.post('prof/edu/deleteLit', {
+          id: item.studyProgramLiteratureId
+        }).subscribe(res => {
+            if (res.type === 'ok') {
+              const dialogRef1 = this.dialog.open(OkInformComponent, {
+                width: '380px',
+                data: res.message
+              });
+              dialogRef1.afterClosed().subscribe(res1 => {
+                console.log('The dialog was closed');
+              });
+              this.loadLiterature();
+            }
+          }, err => {
+          }
+        );
+      }
+    });
   }
 
   addLiter(): void{

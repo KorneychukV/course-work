@@ -171,9 +171,17 @@ export class AdminTestComponent implements OnInit {
         this.restService.post('prof/edu/deleteStudySection', {
           studySectionId: item.studySectionId
         }).subscribe(res => {
-            if (result.type === 'ok') {
-              this.loadSection();
-            }
+          console.log(res.type);
+          if (res.type === 'ok') {
+            const dialogRef1 = this.dialog.open(OkInformComponent, {
+              width: '380px',
+              data: res.message
+            });
+            dialogRef1.afterClosed().subscribe(res1 => {
+              console.log('The dialog was closed');
+            });
+            this.loadSection();
+          }
           }, err => {
           }
         );
@@ -226,8 +234,18 @@ export class AdminTestComponent implements OnInit {
         this.restService.post('prof/edu/deleteCourses', {
           courseId: item.courseId
         }).subscribe(res => {
-            if (result.type === 'ok') {
-              this.loadSection();
+            if (res.type === 'ok') {
+              console.log(res.type);
+              if (res.type === 'ok') {
+                const dialogRef1 = this.dialog.open(OkInformComponent, {
+                  width: '380px',
+                  data: res.message
+                });
+                dialogRef1.afterClosed().subscribe(res1 => {
+                  console.log('The dialog was closed');
+                });
+                this.loadCourses(this.currentSec);
+              }
             }
           }, err => {
           }
@@ -249,8 +267,15 @@ export class AdminTestComponent implements OnInit {
         this.restService.post('prof/edu/deleteProgram', {
           studyProgramId: item.studyProgramId
         }).subscribe(res => {
-            if (result.type === 'ok') {
-              this.loadSection();
+            if (res.type === 'ok') {
+                  const dialogRef1 = this.dialog.open(OkInformComponent, {
+                    width: '380px',
+                    data: res.message
+                  });
+                  dialogRef1.afterClosed().subscribe(res1 => {
+                    console.log('The dialog was closed');
+                  });
+                  this.loadProgram(this.currentCourse);
             }
           }, err => {
           }

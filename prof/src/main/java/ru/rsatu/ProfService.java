@@ -41,7 +41,6 @@ public class ProfService {
 
 
     public BaseResponse getLiterature(GetProgramIdRequest request) {
-        System.out.println(request.getFilter() + "kjnk");
         List<StudyProgramLiterature> allLit = StudyProgramLiterature.find("title like ?2 and studyProgramId = ?1 " +
                         " order by studyProgramLiteratureId",
                         request.getStudyProgramId(), "%" + request.getFilter()+"%")

@@ -87,6 +87,7 @@ export class QuestionComponent implements OnInit {
             dialogRef1.afterClosed().subscribe(res2 => {
               console.log('The dialog was closed');
             });
+            this.loadQuestion();
           }, err => {
           }
         );
