@@ -377,7 +377,8 @@ public class AdminService {
                     .find("studyProgramId = ?1 and contractId = ?2 and is_final = True",
                             temp.getProgramId(), temp.getContractId()).count();
             Long finalFailAmount = TestTry
-                    .find("studyProgramId = ?1 and contractId = ?2 and is_final = True and is_successful = True",
+                    .find("(studyProgramId = ?1 and contractId = ?2 and is_final = True " +
+                                    "and is_successful = False) or end_date = null",
                             temp.getProgramId(), temp.getContractId()).count();
             temp.setTestAmount(testAmount);
             temp.setTestSuccAmount(testSuccAmount);

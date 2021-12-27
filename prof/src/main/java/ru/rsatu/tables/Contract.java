@@ -23,7 +23,7 @@ public class Contract extends PanacheEntityBase {
     public String username;
 
     @Column(name = "enrollment_date")
-    public Date enrollmentDate;
+    public Date enrollmentDate = new Date();
 
     @Column(name = "is_complete")
     public Boolean isComplete;

@@ -19,12 +19,6 @@ public class StudyProgramLiterature extends PanacheEntityBase {
     @Column(name = "link")
     public String link;
 
-    @Column(name = "youtube_link")
-    public String youtubeLink;
-
-    @Column(name = "document_url")
-    public String documentURL;
-
     @Column(name = "description")
     public String description;
 
@@ -32,7 +26,5 @@ public class StudyProgramLiterature extends PanacheEntityBase {
     @JoinColumn(name="studyProgramId")
     @JsonIgnore
     public StudyProgram studyProgram;
-
-
 
 }

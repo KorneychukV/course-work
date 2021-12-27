@@ -3,9 +3,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:14.0.0
     volumes:
-      - "./keycloak/theme:/opt/jboss/keycloak/themes/archive-theme"
       - "./keycloak/standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml"
-#    container_name: keycloak
     environment:
       PROXY_ADDRESS_FORWARDING: "true"
       VIRTUAL_HOST: keycloak

@@ -22,12 +22,12 @@
     [rowClassRules]="rowClassRules">
   </ag-grid-angular>
 </div>
-  <div class="journal-info-container  mt-2 ">
-    <button mat-raised-button class="btn-green" [disabled]="page <= 1" (click)="previousPage()" >
-      <mat-icon>keyboard_arrow_left</mat-icon></button>
-    <span class="ms-2 me-2">Страница {{page}} из {{pageCount}}</span>
-    <button mat-raised-button class="btn-green" [disabled]="page>= pageCount" (click)="nextPage()" >
-      <mat-icon>keyboard_arrow_right</mat-icon>
-    </button>
-  </div>
+<div class="journal-info-container  mt-2 ">
+  <button mat-raised-button class="btn-green" [disabled]="page <= 1" (click)="previousPage()" >
+    <mat-icon>keyboard_arrow_left</mat-icon></button>
+  <span class="ms-2 me-2">Страница {{page}} из {{pageCount}}</span>
+  <button mat-raised-button class="btn-green" [disabled]="page>= pageCount" (click)="nextPage()" >
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>
 </form>

@@ -161,12 +161,13 @@ public class TestingService {
 //                temp_user_id, sp.getStudyProgramId(), false).singleResult();
 
         // Сделать незавершенные - завершенными
-        List<TestTry> unfinished = TestTry.find("studyProgramId = ?1 and contractId = ?2 and is_complete = ?3",
-                sp.getStudyProgramId(), contract.getContractId(), false).list();
+        List<TestTry> unfinished = TestTry.find("studyProgramId = ?1 and contractId = ?2 and is_complete = false",
+                sp.getStudyProgramId(), contract.getContractId()).list();
         if (unfinished.size() > 0) {
             for (TestTry test: unfinished) {
                 test.endDate = new Date();
                 test.isComplete = true;
+                test.isSuccessful = false;
                 test.persist();
             }
         }

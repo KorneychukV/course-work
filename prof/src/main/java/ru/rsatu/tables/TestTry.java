@@ -29,10 +29,10 @@ public class TestTry extends PanacheEntityBase {
     public Boolean isFinal;
 
     @Column(name = "is_complete")
-    public Boolean isComplete;
+    public Boolean isComplete = false;
 
     @Column(name = "is_successful")
-    public Boolean isSuccessful;
+    public Boolean isSuccessful = false;
 
     @ManyToOne
     @JoinColumn(name="studyProgramId")
