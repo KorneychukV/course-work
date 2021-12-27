@@ -136,8 +136,23 @@ export class TestComponent implements OnInit, OnDestroy {
 
   //если отвечаем на последний вопрос
   getResult(): void {
-    this.putAnswer();
-    this.router.navigate(['result/' + this.testId]);
+    // this.putAnswer();
+    // const start = Date.now();
+    // let now = start;
+    // while (now - start < 3000) {
+    //   now = Date.now();
+    // }
+    this.question.answer.map(ans => {
+      if (ans.select === true) {
+        this.restService.post('prof/put_answer', {
+          answerId: ans.answerId,
+          tryAnswerId: this.tryAnswerId
+        }).subscribe(
+          result => {
+            this.router.navigate(['result/' + this.testId]);
+          });
+      }
+    });
   }
 
   //отправляем ответы

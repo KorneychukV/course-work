@@ -219,7 +219,7 @@ public class AdminService {
                     ru.rsatu.tables.Answer newAnswer = new ru.rsatu.tables.Answer(answer.getAnswerText(), answer.rightAnswer, question);
                     newAnswer.persist();
                 }
-            return new BaseResponse("ok", "Программа обучения создана");
+            return new BaseResponse("ok", "Вопрос добавлен");
         } catch (Exception ex) {
             logger.error(String.valueOf(ex));
             return new BaseResponse("error", "Ошибка при добавлении");
@@ -293,7 +293,7 @@ public class AdminService {
             return new GetQuestionsResponse( allQuestion.size(), allQuestion);
         } catch (Exception ex) {
             logger.error(String.valueOf(ex));
-            return new BaseResponse("error", "Ошибка при добавлении");
+            return new BaseResponse("error", "Ошибка при выгрузке");
         }
     }
 
