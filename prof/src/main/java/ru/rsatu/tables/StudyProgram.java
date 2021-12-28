@@ -172,10 +172,6 @@ public class StudyProgram extends PanacheEntityBase {
                 ", triesCount=" + triesCount +
                 ", price=" + price +
                 ", isDeprecated=" + isDeprecated +
-                ", course=" + course +
-                ", studyProgramLiteratures=" + studyProgramLiteratures +
-                ", questions=" + questions +
-                ", testTries=" + testTries +
                 '}';
     }
 }

@@ -29,6 +29,7 @@ export class AppComponent  implements OnInit {
   ngOnInit(): void {
     //выгрузка username
     const userInfo = this.keycloakService.getKeycloakInstance().loadUserInfo();
+    console.log(userInfo);
     // @ts-ignore
     userInfo.then( res => this.userName = res.preferred_username);
   }

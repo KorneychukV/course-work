@@ -323,6 +323,7 @@ public class AdminService {
         program.questionNums = request.getQuestionNums();
         program.triesCount = request.getTriesCount();
         program.persist();
+        System.out.println(program.toString());
         return new BaseResponse("ok", "Изменения сохранены");
     }
 

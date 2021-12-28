@@ -304,6 +304,7 @@ public class AdminResource {
     @Path("editProgram")
     @Produces("application/json")
     @Consumes("application/json")
+    @Transactional
     @RolesAllowed({"admin", "razrab"})
     public Response editPrograms(EditProgramRequest request){
         BaseResponse response = adminService.editPrograms(request);
