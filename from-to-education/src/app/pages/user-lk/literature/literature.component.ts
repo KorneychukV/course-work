@@ -15,7 +15,7 @@ export class LiteratureComponent implements OnInit {
   literatures: any;
   status = false;
   displayURL;
-  textSearch: string | undefined;
+  textSearch: string = "";
   constructor(private restService: RestService,
               public dialog: MatDialog,
               private activatedRoute: ActivatedRoute) {
@@ -26,12 +26,12 @@ export class LiteratureComponent implements OnInit {
   }
 
   loadLiterature(): void{
-    this.restService.post('prof/getLiterature', {
+    this.restService.get(environment.lkUrl,'study/literature', {
       studyProgramId: this.activatedRoute.snapshot.params.id,
       filter: this.textSearch
     }).subscribe(
       result => {
-        this.literatures = result.list;
+        this.literatures = result;
         this.literatures.map( l => {
           l.status = false;
         });

@@ -19,12 +19,11 @@
     </ng-container>
 
     <div style="margin-right: 10%; margin-left: 10%" class="mt-3">
-      <button *ngIf="question.curr < question.amount" style="float: right; background: #eaeaf2;"
+      <button  style="float: right; background: #eaeaf2;"
               mat-raised-button [disabled]="next" (click)="putAnswer() ">
-        Следующий вопрос</button>
-      <button *ngIf="question.curr === question.amount"  style="float: right; background: #eaeaf2;"
-              mat-raised-button [disabled]="next" (click)="getResult()">
-        Смотреть результат</button>
+        <span *ngIf="question.curr < question.amount">Следующий вопрос</span>
+        <span *ngIf="question.curr >= question.amount">Смотреть результат</span>
+      </button>
     </div>
 
   </div>

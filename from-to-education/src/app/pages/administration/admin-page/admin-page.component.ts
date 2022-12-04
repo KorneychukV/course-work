@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {RestService} from '../../../services/rest.service';
 
 @Component({
   selector: 'app-admin-page',
@@ -8,7 +7,7 @@ import {RestService} from '../../../services/rest.service';
 })
 export class AdminPageComponent implements OnInit {
 
-  constructor(private restService: RestService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

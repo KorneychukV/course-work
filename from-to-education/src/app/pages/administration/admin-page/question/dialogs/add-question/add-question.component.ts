@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {RestService} from '../../../../../../services/rest.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OkInformComponent} from '../../../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../../../environments/environment";
 
 @Component({
   selector: 'app-add-question',
@@ -28,7 +29,7 @@ export class AddQuestionComponent implements OnInit {
     });
     this.answerList.push(new FormGroup({
       answerText: new FormControl(null, Validators.required),
-      rightAnswer: new FormControl(true, Validators.required)
+      isRight: new FormControl(true, Validators.required)
     }));
   }
 
@@ -41,11 +42,11 @@ export class AddQuestionComponent implements OnInit {
     for (const item of Object.keys(this.answerList)) {
       const temp = {
         answerText: this.answerList[item].get('answerText').value,
-        rightAnswer: this.answerList[item].get('rightAnswer').value,
+        isRight: this.answerList[item].get('isRight').value,
       };
       list.push(temp);
     }
-    this.restService.post('prof/edu/addQuestion', {
+    this.restService.post(environment.adminUrl, 'manage/question', {
       programId: this.data,
       answerList: list,
       questionText: this.form.get('questionText').value,
@@ -73,14 +74,14 @@ export class AddQuestionComponent implements OnInit {
   check(item: FormGroup): void{
     this.answerList.forEach(val => {
       if (item !== val)
-      { val.get('rightAnswer').setValue(false); }
+      { val.get('isRight').setValue(false); }
     });
   }
 
   addAnswer(): void{
     this.answerList.push(new FormGroup({
       answerText: new FormControl(null, Validators.required),
-      rightAnswer: new FormControl(false, Validators.required)
+      isRight: new FormControl(false, Validators.required)
     }));
   }
 

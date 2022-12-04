@@ -31,7 +31,7 @@ export class FinalAdminTestComponent implements OnInit, OnDestroy {
               public dialog: MatDialog,
               private router: Router) { }
   ngOnInit(): void {
-    this.restService.post('get_question_admin', {
+    this.restService.get(environment.lkUrl, 'study/exam/question', {
       "program_id": this.activatedRoute.snapshot.params.id,
       "offset": 0
     }).subscribe(
@@ -72,7 +72,7 @@ export class FinalAdminTestComponent implements OnInit, OnDestroy {
   }
 
   nextAnswer(): void{
-    this.restService.post('get_question_admin', {
+    this.restService.get(environment.lkUrl, 'study/exam/question', {
       "program_id": this.activatedRoute.snapshot.params.id,
       "offset": this.question.curr + 1
     }).subscribe(

@@ -16,7 +16,7 @@ import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.componen
 export class AddLiteratureComponent implements OnInit {
 
   literatures: any;
-  textSearch: string | undefined;
+  textSearch: string = "";
   @Input() idProgram: number;
   constructor(private router: Router,
               public restService: RestService,
@@ -31,12 +31,12 @@ export class AddLiteratureComponent implements OnInit {
   }
 
   loadLiterature(): void{
-    this.restService.post('prof/getLiterature', {
+    this.restService.get(environment.lkUrl, 'study/literature', {
       studyProgramId: this.idProgram,
       filter: this.textSearch
     }).subscribe(
       result => {
-        this.literatures = result.list;
+        this.literatures = result;
         this.literatures.map( l => {
           l.status = false;
         });
@@ -63,8 +63,8 @@ export class AddLiteratureComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.restService.post('prof/edu/deleteLit', {
-          id: item.studyProgramLiteratureId
+        this.restService.delete(environment.adminUrl, 'manage/literature', {
+          studyProgramLiteratureId: item.studyProgramLiteratureId
         }).subscribe(res => {
             if (res.type === 'ok') {
               const dialogRef1 = this.dialog.open(OkInformComponent, {

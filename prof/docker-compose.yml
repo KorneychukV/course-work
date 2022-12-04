@@ -1,0 +1,13 @@
+version: '3'
+services:
+      
+  study-service:
+    image: study-service
+    ports:
+      - 8080:8080
+    environment:
+      APP_PORT: 8080
+      DB_URL: 192.168.0.199:5432
+      KEYCLOAK_URL: http://192.168.0.199:8082
+      LOGSTASH_URL: 192.168.0.199:12202
+      ORDER_SERVICE_URL: http://192.168.0.199/order

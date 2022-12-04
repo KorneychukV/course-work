@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {RestService} from '../../../../../services/rest.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-add-new-section',
@@ -32,7 +33,7 @@ export class AddNewSectionComponent implements OnInit {
   }
 
   addSec() {
-    this.restServise.post('prof/edu/addStudySection', {
+    this.restServise.post(environment.adminUrl, 'manage/studySection', {
       name: this.form.get('name').value,
       description: this.form.get('description').value
     }).subscribe(
@@ -56,7 +57,7 @@ export class AddNewSectionComponent implements OnInit {
   }
 
   addRoute() {
-    this.restServise.post('prof/edu/addCourse', {
+    this.restServise.post(environment.adminUrl, 'manage/course', {
       "name": this.form.get('name').value,
       "description": this.form.get('description').value,
       "studySectionId": this.data.id

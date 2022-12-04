@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RestService} from '../../../services/rest.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-result',
@@ -18,7 +19,7 @@ export class ResultComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.restService.post('prof/get_result', {
+    this.restService.get(environment.lkUrl, 'study/exam/result', {
       testId: this.activatedRoute.snapshot.params.id
     }).subscribe(
       res => {

@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {RestService} from '../../../../../services/rest.service';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-edit-section',
@@ -33,7 +34,7 @@ export class EditSectionComponent implements OnInit {
   }
 
   editSec() {
-    this.restServise.post('prof/edu/editSection', {
+    this.restServise.put(environment.adminUrl, 'manage/section', {
       "name": this.form.get('name').value,
       "description": this.form.get('description').value,
       "studySectionId": this.data.item.studySectionId
@@ -58,7 +59,7 @@ export class EditSectionComponent implements OnInit {
   }
 
   editCourse() {
-    this.restServise.post('prof/edu/editCourse', {
+    this.restServise.put(environment.adminUrl, 'manage/course', {
       "name": this.form.get('name').value,
       "description": this.form.get('description').value,
       "courseId": this.data.item.courseId

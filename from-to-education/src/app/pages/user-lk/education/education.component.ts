@@ -4,6 +4,7 @@ import {Program} from '../../../classes/Program';
 import {ActivatedRoute, Router} from '@angular/router';
 import {InfoDialogComponent} from '../../../common/info-dialog/info-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-education',
@@ -40,14 +41,14 @@ export class EducationComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.restService.get('prof/user/programs', {
+    this.restService.get(environment.lkUrl, 'study/user_programs', {
     }).subscribe(
       result => {
         console.log(result);
-        this.eduPrograms = result.program;
+        this.eduPrograms = result;
         this.eduPrograms.map(v => {
           v.panelOpenState = false;
-          if (v.complete === true) {
+          if (v.contract.isComplete === true) {
             v.color = '#2ca632';
           } else {
             v.color = '#5ecdb4';

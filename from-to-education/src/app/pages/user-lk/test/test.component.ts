@@ -34,7 +34,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log(this.activatedRoute.snapshot.params.id);
-    this.restService.post('prof/start_test', {
+    this.restService.post(environment.lkUrl, 'study/exam', {
       programId: this.activatedRoute.snapshot.params.id,
       isFinal: this.activatedRoute.snapshot.params.type
     }).subscribe(
@@ -116,11 +116,10 @@ export class TestComponent implements OnInit, OnDestroy {
 
   //получение вопросов
   getQuestion(): void {
-    this.restService.post('prof/get_question', {
+    this.restService.get(environment.lkUrl, 'study/exam/question', {
       testId: this.testId
     }).subscribe(
       res => {
-        console.log(res);
         if ( res.test !== null) {
           this.progress = (100 / res.test.amount) * res.test.curr;
           this.question = res.test;
@@ -128,6 +127,8 @@ export class TestComponent implements OnInit, OnDestroy {
           this.question.answer.filter(ans => {
             ans.select = false;
           });
+        } else if (res.isComplete === true){
+          this.getResult();
         }
       }, error => {
       }
@@ -136,17 +137,10 @@ export class TestComponent implements OnInit, OnDestroy {
 
   //если отвечаем на последний вопрос
   getResult(): void {
-    // this.putAnswer();
-    // const start = Date.now();
-    // let now = start;
-    // while (now - start < 3000) {
-    //   now = Date.now();
-    // }
     this.question.answer.map(ans => {
       if (ans.select === true) {
-        this.restService.post('prof/put_answer', {
-          answerId: ans.answerId,
-          tryAnswerId: this.tryAnswerId
+        this.restService.get(environment.lkUrl, 'study/exam/result', {
+          testId: this.testId
         }).subscribe(
           result => {
             this.router.navigate(['result/' + this.testId]);
@@ -159,15 +153,11 @@ export class TestComponent implements OnInit, OnDestroy {
   putAnswer(): void{
     this.next = true;
     this.question.answer.map(ans => {
-      console.log(ans);
       if (ans.select === true) {
-        this.restService.post('prof/put_answer', {
+        this.restService.post(environment.lkUrl, 'study/exam/answer', {
           answerId: ans.answerId,
           tryAnswerId: this.tryAnswerId
-        }).subscribe(
-          result => {
-            this.getQuestion();
-          });
+        }).subscribe(() => this.getQuestion());
       }
     });
   }

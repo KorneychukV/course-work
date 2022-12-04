@@ -2,7 +2,6 @@ import {Component, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
 import {RestService} from '../../../../services/rest.service';
-import {DialogRequestComponent} from '../../../../common/dialog-request/dialog-request.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AddNewSectionComponent} from '../dialogs/add-new-section/add-new-section.component';
 import {EditSectionComponent} from '../dialogs/edit-section/edit-section.component';
@@ -11,6 +10,7 @@ import {EditProgramComponent} from '../dialogs/edit-program/edit-program.compone
 import {InfoDialogComponent} from '../../../../common/info-dialog/info-dialog.component';
 import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.component';
 import {AuthService} from '../../../../services/auth.service';
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-admin-test',
@@ -52,12 +52,9 @@ export class AdminTestComponent implements OnInit {
   }
 
   loadProgram(item: any): void{
-    this.restService.post('prof/edu/getPrograms', {
-      courseId: item.courseId
-    }).subscribe(
+    this.restService.get(environment.lkUrl, 'study/programs', {courseId: item.courseId}).subscribe(
       result => {
-        console.log(result);
-        this.program = result.list;
+        this.program = result;
         this.choice = 'program';
         this.currentCourse =
           {
@@ -76,7 +73,7 @@ export class AdminTestComponent implements OnInit {
 
   // загрузка всех направлений определенного раздела
   loadCourses(item: any): void {
-    this.restService.post('prof/edu/getCourses', {
+    this.restService.get(environment.lkUrl, 'study/courses', {
       studySectionId: item.studySectionId
     }).subscribe(result => {
         this.program = result.list;
@@ -93,7 +90,7 @@ export class AdminTestComponent implements OnInit {
 
   // загрузка всех направлений
   loadSection(): void {
-    this.restService.get('prof/edu/getSection').subscribe(
+    this.restService.get(environment.lkUrl, 'study/section').subscribe(
       result => {
         this.program = result.list;
         this.choice = 'section';
@@ -113,7 +110,6 @@ export class AdminTestComponent implements OnInit {
         id: item.studyProgramId
       };
     this.choice = 'question';
-    //this.router.navigate(['question/' + this.currentCourse.courseId + '/' + id]);
   }
 
   literature(item: any): void {
@@ -168,9 +164,8 @@ export class AdminTestComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.restService.post('prof/edu/deleteStudySection', {
-          studySectionId: item.studySectionId
-        }).subscribe(res => {
+        this.restService.delete(environment.adminUrl, 'manage/studySection',
+          {studySectionId: item.studySectionId}).subscribe(res => {
           console.log(res.type);
           if (res.type === 'ok') {
             const dialogRef1 = this.dialog.open(OkInformComponent, {
@@ -231,7 +226,7 @@ export class AdminTestComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.restService.post('prof/edu/deleteCourses', {
+        this.restService.delete(environment.adminUrl, 'manage/course', {
           courseId: item.courseId
         }).subscribe(res => {
             if (res.type === 'ok') {
@@ -264,7 +259,7 @@ export class AdminTestComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.restService.post('prof/edu/deleteProgram', {
+        this.restService.delete(environment.adminUrl, 'manage/program', {
           studyProgramId: item.studyProgramId
         }).subscribe(res => {
             if (res.type === 'ok') {

@@ -16,46 +16,56 @@ export class RestService {
 
   private jsonHeaders = new HttpHeaders({'Content-Type': 'application/json; charset=UTF-8'});
 
-  post(method: string, params: any): Observable<any> {
-    return this.request('POST', method, params);
+  post(srcURL: string, method: string, params: any): Observable<any> {
+    return this.request('POST', method, params, srcURL);
   }
 
 
-  postFile(method: string, params: any, file: any): Observable<any> {
+  postFile(srcURL: string, method: string, params: any, file: any): Observable<any> {
     const formData = new FormData();
     if (file != null) {
       formData.append('file', file, file.name);
     };
     formData.append('data', JSON.stringify(params));
-    const req = new HttpRequest('POST', environment.restUrl + '/' + method, formData);
+    const req = new HttpRequest('POST', srcURL + '/' + method, formData);
     return this.http.request(req);
-    //return this.request('POST', method, params);
   }
 
-  put(method: string, params: any): Observable<any> {
-    return this.request('PUT', method, params);
+  put(srcURL: string, method: string, params: any): Observable<any> {
+    return this.request('PUT', method, params, srcURL);
   }
 
-  get(method: string, params: any = {}): Observable<any> {
-    return this.request('GET', method, params);
+  delete(srcURL: string, method: string, params: any): Observable<any> {
+    return this.request('DELETE', method, params, srcURL);
   }
 
-  request(httpMethod: 'POST'|'GET'|'PUT', method: string, params: any): Observable<any> {
+  get(srcURL: string, method: string, params: any = {}): Observable<any> {
     if (!method.startsWith('/')) {
       method = '/' + method;
     }
-    const url = environment.restUrl + method;
-    if (httpMethod === 'POST') {
+    const url = srcURL + method;
+    return this.http.get(url, {params: params}).pipe(
+      map((value: any) => {
+        if (value.error_code !== undefined && value.error_code > 0) {
+          throw value;
+        }
+        return value;
+      })
+    );
+  }
 
+  request(httpMethod: 'POST'|'PUT'|'DELETE', method: string, params: any, srcURL: string): Observable<any> {
+    if (!method.startsWith('/')) {
+      method = '/' + method;
     }
+    const url = srcURL + method;
+
     const options = {
       body: undefined,
       headers: this.jsonHeaders
-      // withCredentials: true
     };
-    if (httpMethod === 'POST') {
-      options.body = params;
-    }
+
+    options.body = params;
     return this.http.request(httpMethod, url, options).pipe(
       map((value: any) => {
         if (value.error_code !== undefined && value.error_code > 0) {

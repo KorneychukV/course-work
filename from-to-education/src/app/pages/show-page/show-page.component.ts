@@ -1,17 +1,11 @@
 import {AfterViewInit, Component, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {RestService} from '../../services/rest.service';
-import {InfoDialogComponent} from '../../common/info-dialog/info-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
-import {DialogRequestComponent} from '../../common/dialog-request/dialog-request.component';
 import {OkInformComponent} from '../../common/ok-inform/ok-inform.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
-import {AddNewSectionComponent} from '../administration/admin-page/dialogs/add-new-section/add-new-section.component';
-import {EditSectionComponent} from '../administration/admin-page/dialogs/edit-section/edit-section.component';
-import {AddProgramComponent} from '../administration/admin-page/dialogs/add-program/add-program.component';
-import {EditProgramComponent} from '../administration/admin-page/dialogs/edit-program/edit-program.component';
 import {AuthService} from '../../services/auth.service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-show-page',
@@ -20,8 +14,6 @@ import {AuthService} from '../../services/auth.service';
 })
 export class ShowPageComponent implements OnInit {
 
-
-  firstFormGroup: FormGroup;
   @Output() program: any = [];
   choice: string;
   section: any = [];
@@ -29,53 +21,25 @@ export class ShowPageComponent implements OnInit {
   programs: any = [];
   currentSec: any;
   currentCourse: any;
-  constructor(private formBuilder: FormBuilder,
-              public dialog: MatDialog,
+  constructor(public dialog: MatDialog,
               public authService: AuthService,
-              private router: Router,
               public restService: RestService) { }
 
   ngOnInit(): void {
     this.loadSection();
   }
 
-  //закгрузка программ
+  // загрузка программ
   loadProgram(item: any): void{
-    if (this.authService.getLoggedUser() === undefined) {
-      //если пользователь не авторизован
-      this.restService.post('prof/getPrograms', {
-        courseId: item.courseId
-      }).subscribe(
-        result => {
-          console.log(result);
-          this.program = result.list;
-          this.choice = 'program';
-          this.currentCourse =
-            {
-              name: item.name,
-              courseId: item.courseId
-            };
-        }, err => {
-        }
-      );
-    } else {
-      //если пользователь не авторизован
-      this.restService.post('prof/user/getPrograms', {
-        courseId: item.courseId
-      }).subscribe(
-        result => {
-          console.log(result);
-          this.program = result.list;
-          this.choice = 'program';
-          this.currentCourse =
-            {
-              name: item.name,
-              courseId: item.courseId
-            };
-        }, err => {
-        }
-      );
-    }
+    this.restService.get(environment.lkUrl, 'study/programs', {
+      courseId: item.courseId
+    }).subscribe(
+      result => {
+        this.program = result;
+        this.choice = 'program';
+        this.currentCourse = {name: item.name, courseId: item.courseId};
+      }, err => {}
+    );
   }
 
   clickProgram(): void {
@@ -85,7 +49,7 @@ export class ShowPageComponent implements OnInit {
 
   // загрузка всех направлений определенного раздела
   loadCourses(item: any): void {
-    this.restService.post('prof/getCourses', {
+    this.restService.get(environment.lkUrl, 'study/courses', {
       studySectionId: item.studySectionId
     }).subscribe(result => {
         this.program = result.list;
@@ -100,39 +64,36 @@ export class ShowPageComponent implements OnInit {
     );
   }
 
-  //покупка
   buy(item): void{
     if (this.authService.getLoggedUser() === undefined) {
       this.authService.login();
     } else {
-      this.restService.post('prof/user/buyProgram', {
+      this.restService.post(environment.orderUrl, 'contract', {
         studyProgramId: item.studyProgramId
-      }).subscribe(result => {
-
-        }, err => {
-        }
+      }).subscribe(
+        () => {this.showAfterBought('Поздравляю с покупкой')},
+        err => {this.showAfterBought('Ошибка при покупке (Возможно покупка уже была совершена)')}
       );
-
-      // вызываем диалоговое окно
-      const dialogRef1 = this.dialog.open(OkInformComponent, {
-        width: '380px',
-        data: 'Поздравляю с покупкой'
-      });
-      dialogRef1.afterClosed().subscribe(res2 => {
-        console.log('The dialog was closed');
-        this.loadProgram(this.currentCourse);
-      });
     }
   }
 
-  // загрузка всех направлений
+  showAfterBought(text: string){
+    const dialogRef1 = this.dialog.open(OkInformComponent, {
+      width: '380px',
+      data: text
+    });
+    dialogRef1.afterClosed().subscribe(() => {
+      this.loadProgram(this.currentCourse);
+    });
+  }
+
   loadSection(): void {
-    this.restService.get('prof/getSection').subscribe(
+    this.restService.get(environment.lkUrl, 'study/section').subscribe(
       result => {
         this.program = result.list;
         this.choice = 'section';
-      }, err => {
-      }
+      },
+      err => {}
     );
   }
 

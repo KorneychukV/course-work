@@ -7,6 +7,7 @@ import {AddQuestionComponent} from './dialogs/add-question/add-question.componen
 import {DialogQuestionComponent} from './dialogs/dialog-question/dialog-question.component';
 import {InfoDialogComponent} from '../../../../common/info-dialog/info-dialog.component';
 import {OkInformComponent} from '../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-question',
@@ -27,11 +28,11 @@ export class QuestionComponent implements OnInit {
   }
 
   loadQuestion(): void{
-    this.restService.post('prof/edu/getQuestion', {
+    this.restService.get(environment.lkUrl, 'study/question', {
       studyProgramId: this.idProgram
     }).subscribe(result => {
         console.log(result);
-        this.questions = result.list;
+        this.questions = result;
       }, err => {
       }
     );
@@ -77,7 +78,7 @@ export class QuestionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result) {
-        this.restService.post('prof/edu/deleteQuestion', {
+        this.restService.delete(environment.adminUrl, 'manage/question', {
           questionId: question.questionId
         }).subscribe(res => {
             const dialogRef1 = this.dialog.open(OkInformComponent, {

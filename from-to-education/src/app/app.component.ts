@@ -27,7 +27,7 @@ export class AppComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    //выгрузка username
+    // выгрузка username
     const userInfo = this.keycloakService.getKeycloakInstance().loadUserInfo();
     console.log(userInfo);
     // @ts-ignore
@@ -47,6 +47,7 @@ export class AppComponent  implements OnInit {
     const link = this.authService.getRoles().filter(role => {
       let result = false;
 
+      console.log(role);
       if ((role === 'admin') || (role === 'razrab')) {
         console.log(role);
         this.router.navigate(['/administration']);

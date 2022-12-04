@@ -1,31 +1,15 @@
 package ru.rsatu.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseResponse {
 
     private String type;
     private String message;
-
-    public BaseResponse() {
-    }
-
-    public BaseResponse(String type, String message) {
-        this.type = type;
-        this.message = message;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }

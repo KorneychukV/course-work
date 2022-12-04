@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {RestService} from '../../../../services/rest.service';
 import {ColDef} from 'ag-grid-community';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-statistics',
@@ -16,8 +17,8 @@ export class StatisticsComponent implements OnInit {
   form: FormGroup;
 
   columnDefs = [
-    { headerName: 'Логин',
-      field: 'username'},
+    { headerName: 'ID пользователя',
+      field: 'userId'},
 
     { headerName: 'Название программы',
       field: 'programName' },
@@ -31,7 +32,7 @@ export class StatisticsComponent implements OnInit {
   ];
   public rowData = [];
   public rowClassRules = {
-    'final-test': 'data.final_fail_amount < data.final_amount'
+    'final-test': 'data.finalFailAmount < data.finalAmount'
   };
   constructor(private restService: RestService) { }
 
@@ -43,16 +44,15 @@ export class StatisticsComponent implements OnInit {
 
   }
   search(): void{
-    this.restService.post('prof/edu/statistics', {
-      username: this.form.get('username').value,
+    this.restService.get(environment.adminUrl, 'manage/statistics', {
       pageNumber: this.page - 1,
       pageSize: 13
     }).subscribe(
       res => {
         this.rowData = res.statistics;
         this.pageCount = res.countPage;
-      }, error => {
-      }
+      },
+        error => {}
     );
   }
 
@@ -71,5 +71,6 @@ var mergeValueTest = function(params) {
 };
 
 var mergeValueFinal = function(params) {
-  return params.node.data.final_fail_amount + '/' + params.node.data.final_amount;
+  console.log(params.node.data);
+  return params.node.data.finalFailAmount + '/' + params.node.data.finalAmount;
 };

@@ -17,7 +17,7 @@
     <ng-container *ngFor="let answer of answerList; let i = index">
       <div class="d-flex align-items-center w-100 container" [formGroup]="answer">
         <div class="answer-container example-full-width" *ngIf="answer.value.delete === null">
-          <mat-checkbox style="margin-right: 21px" formControlName="rightAnswer" (click)="check(answer)"></mat-checkbox>
+          <mat-checkbox style="margin-right: 21px" formControlName="isRight" (click)="check(answer)"></mat-checkbox>
           <mat-form-field class=" mt-1" style="width: 89%">
             <mat-label>Ответ</mat-label>
             <input matInput formControlName="answerText">

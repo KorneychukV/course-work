@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RestService} from '../../../../../services/rest.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-add-program',
@@ -38,7 +39,7 @@ export class AddProgramComponent implements OnInit {
   }
 
   addProgram(): void{
-    this.restService.post('prof/edu/addProgram', {
+    this.restService.post(environment.adminUrl, 'manage/program', {
       name: this.form.get('name').value,
       description: this.form.get('description').value,
       minimalDuration: this.form.get('minimalDuration').value,

@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {RestService} from '../../../../../services/rest.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-liter',
@@ -34,7 +35,7 @@ export class DialogLiterComponent implements OnInit {
   }
 
   addLiter(): void{
-    this.restService.post('prof/edu/addLiter',  {
+    this.restService.post(environment.adminUrl, 'manage/literature',  {
       studyProgramId: this.data,
       title: this.form.get('title').value,
       description: this.form.get('description').value,

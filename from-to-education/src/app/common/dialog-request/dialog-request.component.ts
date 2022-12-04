@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {RestService} from '../../services/rest.service';
-import {OkInformComponent} from '../ok-inform/ok-inform.component';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-request',
@@ -30,7 +30,7 @@ export class DialogRequestComponent implements OnInit {
   }
 
   request(): void {
-    this.restService.postFile('put_order', {
+    this.restService.postFile(environment.orderUrl, 'put_order', {
       'fio': this.form.get('name').value,
       'organization': this.form.get('organization').value,
       'email': this.form.get('email').value,

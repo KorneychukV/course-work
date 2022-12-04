@@ -4,6 +4,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {RestService} from '../../../../../services/rest.service';
 import {OkInformComponent} from '../../../../../common/ok-inform/ok-inform.component';
 import {AuthService} from '../../../../../services/auth.service';
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
   selector: 'app-edit-program',
@@ -48,7 +49,7 @@ export class EditProgramComponent implements OnInit {
   }
 
   editProgram(): void{
-    this.restService.post('prof/edu/editProgram', {
+    this.restService.put(environment.adminUrl, 'manage/program', {
       name: this.form.get('name').value,
       description: this.form.get('description').value,
       minimalDuration: this.form.get('minimalDuration').value,

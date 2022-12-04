@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "from-to-education"
+  "defaultProject": "from-to-education",
+  "cli": {
+    "analytics": false
+  }
 }
