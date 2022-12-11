@@ -1,0 +1,28 @@
+0. Сначала нужно собрать докер образы для прометеуса и графаны (находясь в папках с докер файлами):
+0.1 docker build -t prometheus .
+0.2 docker build -t grafana . 
+
+1. Запуск через: docker compose up
+
+2. Prometheus для собирания и хранения данных мониторига, Grafana для отображения
+
+3. В конфиге прометеуса: config.yml прописывается:
+3.1 откуда брать данные мониторинга:
+	job_name: application
+	metrics_path: '/q/metrics'
+	static_configs:
+		- targets: ['192.168.0.199:8080'] 
+3.2 с какой частотой это делать: scrape_interval:     15s
+
+4. Для графаны тоже прописываются конфиги. Не буду их подробно описывать, т. к. в них завания говорят сами за себя.
+
+5. Для того, чтобы наш сервис выдавал данные для мониторига, нужно:
+5.1 сначала добавить зависимость:	
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-smallrye-metrics</artifactId>
+    </dependency>
+5.2 затем в endpoint-методы добавить, что мы будем мониторить. Например:
+	@Counted(name = "helloCount", description = "Количество запросов к ресурсу hello") - мониторим количество обращений к endpoint
+
+6. Посмотреть данные можно в grafana по адресу: http://localhost:3000/ в разделе Explore, выбрав нужную метрику

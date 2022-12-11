@@ -1,7 +1,7 @@
 version: '3'
 services:
       
-  manage-service:
+  manage-service-1:
     image: manage-service
     ports:
       - 8083:8083
@@ -10,4 +10,17 @@ services:
       DB_URL: 192.168.0.199:5432
       KEYCLOAK_URL: http://192.168.0.199:8082
       LOGSTASH_URL: 192.168.0.199:12202
-      ORDER_SERVICE_URL: http://192.168.0.199/order
+      ORDER_SERVICE_URL: http://192.168.0.199/order-service
+      CONSUL_URL: http://192.168.0.199:8500
+  
+  manage-service-2:
+    image: manage-service
+    ports:
+      - 8085:8085
+    environment:
+      APP_PORT: 8085
+      DB_URL: 192.168.0.199:5432
+      KEYCLOAK_URL: http://192.168.0.199:8082
+      LOGSTASH_URL: 192.168.0.199:12202
+      ORDER_SERVICE_URL: http://192.168.0.199/order-service
+      CONSUL_URL: http://192.168.0.199:8500

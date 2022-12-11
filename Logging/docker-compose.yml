@@ -39,7 +39,3 @@ services:
 networks:
   elk:
     driver: bridge
-#networks:
-#  elk:
-#    external:
-#      name: elk

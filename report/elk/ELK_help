@@ -1,0 +1,25 @@
+ELK
+1. Запустить docker-compose с ELK
+1.1 Зайти в папку logging
+1.2 docker-compose up
+Дополнительно
+д.1 конфиг logstash расположен в logging/pipelines/gelf.conf
+
+2. Запустить приложение
+2.1 При обращении к некоторым endpoint сервис отправляет в лог сообщения
+2.2 В приложение нужно добавить зависимость:
+    <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-logging-gelf</artifactId>
+    </dependency>
+
+
+Дополнительно
+д.1 конфиг для отправки в application.properties 
+д.1.1 quarkus.log.syslog.endpoint=${LOGSTASH_URL:localhost:12202} - адрес logstash, куда слать логи
+д.1.2 quarkus.log.syslog.enable=true - видимо ключает режим, чтобы отправлять логи типа syslog
+д.1.3 quarkus.log.syslog.protocol=udp - использовать протокол udp для отправки лога 
+д.1.4 quarkus.log.syslog.app-name=study-service - имя логирующего приложения
+
+3. Зайти в интерфейс kibana (http://localhost:5601)
+3.1 если elastic вырубается с ошибкой, то ему возможно не хватает памяти в heap(область памяти приложения), нужно выполнить следующую машину на хост-машине: sysctl -w vm.max_map_count=262144
+3.2 лог можно посмотреть в разделе Discover
