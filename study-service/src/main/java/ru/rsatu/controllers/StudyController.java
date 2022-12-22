@@ -34,6 +34,7 @@ public class StudyController {
     @GET
     @Path("programs")
     public Response getProgramsByCourseId(@QueryParam("courseId") Long courseId){
+        LOGGER.info("fddfgdfg");
         List<StudyProgram> studyPrograms = studyService.getProgramsByCourseId(courseId);
         return Response.ok(studyPrograms).build();
     }
